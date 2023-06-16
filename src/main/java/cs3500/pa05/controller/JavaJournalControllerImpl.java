@@ -12,14 +12,13 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.Text;
+import javafx.scene.paint.ImagePattern;
+import javafx.scene.shape.Circle;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 /**
@@ -36,7 +35,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   JavaJournal journal;
 
   @FXML
-  TableColumn<TableView<String>, TableCell> sunday;
+  Circle profilePicture;
 
   public JavaJournalControllerImpl() {
     journal = new JavaJournal();
@@ -44,6 +43,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   public void run() {
     initButtons();
+    profilePicture.setOnMouseClicked(event -> {
+      selectProfilePicture();
+    });
   }
 
   @Override
@@ -231,6 +233,36 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     invalidInput.setGraphic(errorIcon);
     invalidInput.setContentText(message);
     invalidInput.show();
+  }
+
+  @FXML
+  private void selectProfilePicture() {
+    Stage stage = new Stage();
+    FileChooser chooser = new FileChooser();
+    try {
+      File tmp = chooser.showOpenDialog(stage);
+      Image img = new Image(tmp.getAbsolutePath());
+      ImageView image1 = new ImageView();
+      image1.setPreserveRatio(true);
+      image1.setImage(img);
+      profilePicture.setFill(pattern(img, profilePicture.getRadius()));
+    } catch (Exception ignored){}
+  }
+
+  private ImagePattern pattern(Image img, double radius) {
+    double hRad = radius;   // horizontal "radius"
+    double vRad = radius;   // vertical "radius"
+    if (img.getWidth() != img.getHeight()) {
+      double ratio = img.getWidth() / img.getHeight();
+      if (ratio > 1) {
+        // Width is longer, left anchor is outside
+        hRad = radius * ratio;
+      } else {
+        // Height is longer, top anchor is outside
+        vRad = radius / ratio;
+      }
+    }
+    return new ImagePattern(img, -hRad, -vRad, 2 * hRad, 2 * vRad, false);
   }
 }
 
