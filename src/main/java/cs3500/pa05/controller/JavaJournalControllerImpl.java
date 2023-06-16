@@ -66,22 +66,32 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Label[] labels = {new Label("Event Name: "), new Label("Description: "),
         new Label("Weekday: "),
         new Label("Start Time: "), new Label("Duration: ")};
+    Label newEvent = new Label("New Event");
+    newEvent.setStyle("-fx-font-size: 20; -fx-font: bold");
+    Button save = new Button("Save");
+    save.setPrefHeight(35);
+    save.setPrefWidth(50);
+    save.setStyle("-fx-background-color: pink");
+
     for (int row = 1; row < 6; row++) {
       System.out.println(row);
       pane.add(labels[row - 1], 0, row);
       pane.add(fields[row - 1], 1, row);
     }
     pane.add(imageView, 1, 0);
-    pane.add(new Label("New Event"), 0, 0);
+    pane.add(save, 1, 6);
+    pane.add(newEvent, 0, 0);
+
+    GridPane.setHalignment(save, HPos.RIGHT);
     GridPane.setHalignment(imageView, HPos.RIGHT);
-    eventStage.setScene(eventScene);
+
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
     eventStage.setResizable(false);
-    eventStage.show();
-    Button save = new Button("Save");
 
+    eventStage.setScene(eventScene);
+    eventStage.show();
   }
 
   private void taskScene() {
@@ -98,7 +108,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         new Label("Weekday: ")};
     // adding a label and giving it a style
     Label newTask = new Label("New Task");
-    newTask.setStyle("-fx-font-size: 24; -fx-font: bold");
+    newTask.setStyle("-fx-font-size: 21; -fx-font: bold");
     // adding a button and giving it a style
     Button save = new Button("Save");
     save.setPrefHeight(35);
