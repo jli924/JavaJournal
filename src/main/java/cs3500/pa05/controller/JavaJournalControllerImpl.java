@@ -87,6 +87,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   private void taskScene() {
     GridPane pane = new GridPane();
     Scene eventScene = new Scene(pane, 400, 450);
+    // an icon for the popup!
     Image image = new Image("https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png");
     ImageView imageView = new ImageView(image);
     imageView.setFitHeight(64);
@@ -95,30 +96,35 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     TextField[] fields = {new TextField(), new TextField(), new TextField() };
     Label[] labels = {new Label("Task Name: "), new Label("Description: "),
         new Label("Weekday: ")};
+    // adding a label and giving it a style
+    Label newTask = new Label("New Task");
+    newTask.setStyle("-fx-font-size: 24; -fx-font: bold");
+    // adding a button and giving it a style
     Button save = new Button("Save");
     save.setPrefHeight(35);
     save.setPrefWidth(50);
     save.setStyle("-fx-background-color: pink");
 
+    // adding controls to a gridpane
     for (int row = 1; row < 4; row++) {
       pane.add(labels[row - 1], 0, row);
       pane.add(fields[row - 1], 1, row);
     }
     pane.add(imageView, 1, 0);
-    Label newTask = new Label("New Task");
-
-    newTask.setStyle("-fx-font-size: 24; -fx-font: bold");
     pane.add(newTask, 0, 0);
     pane.add(save, 1, 4);
 
+    // setting alignment for style
     GridPane.setHalignment(save, HPos.RIGHT);
     GridPane.setHalignment(imageView, HPos.RIGHT);
 
+    // borders and spacing
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
     eventStage.setResizable(false);
 
+    // setting & showing the scene!
     eventStage.setScene(eventScene);
     eventStage.show();
   }
