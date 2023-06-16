@@ -3,14 +3,7 @@ package cs3500.pa05.view;
 import cs3500.pa05.controller.JavaJournalController;
 import java.io.IOException;
 import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
 import javafx.scene.Scene;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
-import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 public class JavaJournalViewImpl implements JavaJournalView {
 
