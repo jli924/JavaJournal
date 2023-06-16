@@ -53,13 +53,27 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     });
   }
 
+  private ImageView addIcon(String url, int width, int height) {
+    Image image = new Image(url);
+    ImageView imageView = new ImageView(image);
+    imageView.setFitWidth(width);
+    imageView.setFitHeight(height);
+    return imageView;
+  }
+
+  private Button addPrettyButton(String text, int width, int height, String color) {
+    Button button = new Button(text);
+    button.setPrefWidth(width);
+    button.setPrefHeight(height);
+    button.setStyle("-fx-background-color: " + color);
+    return button;
+  }
+
   private void eventScene() {
     GridPane pane = new GridPane();
     Scene eventScene = new Scene(pane, 400, 600);
-    Image image = new Image("https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png");
-    ImageView imageView = new ImageView(image);
-    imageView.setFitHeight(64);
-    imageView.setFitWidth(64);
+    ImageView icon = addIcon(
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 64, 64);
     Stage eventStage = new Stage();
     TextField[] fields = {new TextField(), new TextField(),
         new TextField(), new TextField(), new TextField()};
@@ -68,22 +82,18 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         new Label("Start Time: "), new Label("Duration: ")};
     Label newEvent = new Label("New Event");
     newEvent.setStyle("-fx-font-size: 20; -fx-font: bold");
-    Button save = new Button("Save");
-    save.setPrefHeight(35);
-    save.setPrefWidth(50);
-    save.setStyle("-fx-background-color: pink");
+    Button save = addPrettyButton("Save", 50, 40, "pink");
 
     for (int row = 1; row < 6; row++) {
-      System.out.println(row);
       pane.add(labels[row - 1], 0, row);
       pane.add(fields[row - 1], 1, row);
     }
-    pane.add(imageView, 1, 0);
+    pane.add(icon, 1, 0);
     pane.add(save, 1, 6);
     pane.add(newEvent, 0, 0);
 
     GridPane.setHalignment(save, HPos.RIGHT);
-    GridPane.setHalignment(imageView, HPos.RIGHT);
+    GridPane.setHalignment(icon, HPos.RIGHT);
 
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
@@ -97,12 +107,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   private void taskScene() {
     GridPane pane = new GridPane();
     Scene eventScene = new Scene(pane, 400, 450);
-    // an icon for the popup!
-    Image image = new Image("https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png");
-    ImageView imageView = new ImageView(image);
-    imageView.setFitHeight(64);
-    imageView.setFitWidth(64);
     Stage eventStage = new Stage();
+    // an icon for the popup!
+    ImageView icon = addIcon(
+        "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 64, 64);
     TextField[] fields = {new TextField(), new TextField(), new TextField() };
     Label[] labels = {new Label("Task Name: "), new Label("Description: "),
         new Label("Weekday: ")};
@@ -110,23 +118,20 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Label newTask = new Label("New Task");
     newTask.setStyle("-fx-font-size: 21; -fx-font: bold");
     // adding a button and giving it a style
-    Button save = new Button("Save");
-    save.setPrefHeight(35);
-    save.setPrefWidth(50);
-    save.setStyle("-fx-background-color: pink");
+    Button save = addPrettyButton("Save", 50, 40, "pink");
 
     // adding controls to a gridpane
     for (int row = 1; row < 4; row++) {
       pane.add(labels[row - 1], 0, row);
       pane.add(fields[row - 1], 1, row);
     }
-    pane.add(imageView, 1, 0);
+    pane.add(icon, 1, 0);
     pane.add(newTask, 0, 0);
     pane.add(save, 1, 4);
 
     // setting alignment for style
     GridPane.setHalignment(save, HPos.RIGHT);
-    GridPane.setHalignment(imageView, HPos.RIGHT);
+    GridPane.setHalignment(icon, HPos.RIGHT);
 
     // borders and spacing
     pane.setPadding(new Insets(50));
