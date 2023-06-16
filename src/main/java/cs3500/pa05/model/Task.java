@@ -47,7 +47,7 @@ public class Task extends JournalEntry {
   /**
    * Sets the status of a given task
    *
-   * @param status the boolean to set the complete status too
+   * @param status the boolean to set the complete status to
    */
   public void setStatus(boolean status) {
     this.complete = status;
@@ -61,9 +61,4 @@ public class Task extends JournalEntry {
   public String journalToString() {
     return null;
   }
-
-
-
-
-
 }

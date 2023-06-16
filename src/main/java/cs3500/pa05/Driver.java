@@ -24,13 +24,13 @@ public class Driver extends Application {
     JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
     try {
       // load and place the cs3500.view's scene onto the stage
-      stage.getIcons().add(new Image(
-          getClass().getClassLoader().getResource("sky.jpg").openStream()));
+//      stage.getIcons().add(new Image(
+//          getClass().getClassLoader().getResource("sky.jpg").openStream()));
       stage.setScene(javaJournalView.load());
       stage.setTitle("Java-Journal");
       stage.show();
       journalController.run();
-    } catch (IllegalStateException | IOException exc) {
+    } catch (IllegalStateException e) {
       System.err.println("Unable to load GUI.");
     }
   }

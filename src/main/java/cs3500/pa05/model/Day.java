@@ -39,12 +39,21 @@ public class Day {
     return tasks;
   }
 
-
-  public void addEvent(Event e) {
-    events.add(e);
+  /**
+   * Adds an event to the day
+   *
+   * @param event the event
+   */
+  public void addEvent(Event event) {
+    events.add(event);
   }
 
-  public void addTask(Task t) {
-    tasks.add(t);
+  /**
+   * Adds a task to the day
+   *
+   * @param task the event
+   */
+  public void addTask(Task task) {
+    tasks.add(task);
   }
 }
