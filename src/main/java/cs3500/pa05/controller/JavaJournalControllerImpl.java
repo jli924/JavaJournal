@@ -1,17 +1,25 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.Event;
 import cs3500.pa05.model.JavaJournal;
+import cs3500.pa05.model.Task;
+import cs3500.pa05.model.Weekday;
 import java.io.File;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableCell;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
 /**
@@ -26,6 +34,13 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   Button addTask;
 
   JavaJournal journal;
+
+  @FXML
+  TableColumn<TableView<String>, TableCell> sunday;
+
+  public JavaJournalControllerImpl() {
+    journal = new JavaJournal();
+  }
 
   public void run() {
     initButtons();
@@ -72,13 +87,19 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     ImageView icon = addIcon(
         "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 64, 64);
     Stage eventStage = new Stage();
-    TextField[] fields = {new TextField(), new TextField(),
-        new TextField(), new TextField(), new TextField()};
+    TextField name = new TextField();
+    TextField description = new TextField();
+    TextField weekday = new TextField();
+    TextField startTime = new TextField();
+    TextField duration = new TextField();
+
+    TextField[] fields = {name, description,
+        weekday, startTime, duration};
     Label[] labels = {new Label("Event Name: "), new Label("Description: "),
         new Label("Weekday: "),
         new Label("Start Time: "), new Label("Duration: ")};
     Label newEvent = new Label("New Event");
-    newEvent.setStyle("-fx-font-size: 20; -fx-font: bold");
+    newEvent.setStyle("-fx-font-size: 20;");
     Button save = addPrettyButton("Save", 50, 40, "pink");
 
     for (int row = 1; row < 6; row++) {
@@ -98,6 +119,34 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     eventStage.setResizable(false);
 
     eventStage.setScene(eventScene);
+    eventStage.setTitle("New Event");
+
+    // add functionality while the dialog runs
+    save.setOnAction(event -> {
+      if (description.getText().isEmpty()) {
+        try {
+          Event userEvent = new Event(name.getText(),
+              Weekday.valueOf(weekday.getText().toUpperCase()),
+              startTime.getText(), duration.getText());
+          journal.addEvent(userEvent);
+          eventStage.close();
+        } catch (Exception ignored){
+          invalidInputAlert("Please ensure you entered a valid name, day, start time, "
+              + "and duration. Descriptions are optional");
+        }
+      } else {
+        try {
+          Event userEvent = new Event(name.getText(), description.getText(),
+              Weekday.valueOf(weekday.getText().toUpperCase()),
+              startTime.getText(), duration.getText());
+          journal.addEvent(userEvent);
+          eventStage.close();
+        } catch (Exception ignored){
+          invalidInputAlert("Please ensure you entered a valid name, day, start time, "
+              + "and duration. Descriptions are optional");
+        }
+      }
+    });
     eventStage.show();
   }
 
@@ -108,12 +157,15 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     // an icon for the popup!
     ImageView icon = addIcon(
         "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 64, 64);
-    TextField[] fields = {new TextField(), new TextField(), new TextField() };
+    TextField name = new TextField();
+    TextField description = new TextField();
+    TextField weekday = new TextField();
+    TextField[] fields = {name, description, weekday};
     Label[] labels = {new Label("Task Name: "), new Label("Description: "),
         new Label("Weekday: ")};
     // adding a label and giving it a style
     Label newTask = new Label("New Task");
-    newTask.setStyle("-fx-font-size: 21; -fx-font: bold");
+    newTask.setStyle("-fx-font-size: 21;");
     // adding a button and giving it a style
     Button save = addPrettyButton("Save", 50, 40, "pink");
 
@@ -136,9 +188,49 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     pane.setVgap(50);
     eventStage.setResizable(false);
 
-    // setting & showing the scene!
+    // setting the scene
     eventStage.setScene(eventScene);
+    eventStage.setTitle("New Task");
+
+    // add functionality while the dialog runs
+    save.setOnAction(event -> {
+      if (description.getText().isEmpty()) {
+        try {
+          Task userTask = new Task(name.getText(),
+              Weekday.valueOf(weekday.getText().toUpperCase()), false);
+          journal.addTask(userTask);
+          eventStage.close();
+        } catch (Exception ignored){
+          invalidInputAlert("Please ensure you entered a valid name, day, start time, "
+              + "and duration. Descriptions are optional");
+        }
+      } else {
+        try {
+          Task userTask = new Task(name.getText(), description.getText(),
+              Weekday.valueOf(weekday.getText().toUpperCase()), false);
+          journal.addTask(userTask);
+          eventStage.close();
+        } catch (Exception ignored){
+          invalidInputAlert("Please ensure you entered a valid name and day. "
+              + "Descriptions are optional");
+        }
+      }
+    });
+
+    // showing the scene
     eventStage.show();
+  }
+
+  private void invalidInputAlert(String message) {
+    Alert invalidInput = new Alert(Alert.AlertType.ERROR);
+    invalidInput.setResizable(false);
+    invalidInput.setHeaderText("Invalid event");
+    ImageView errorIcon = addIcon(
+        "https://image.pngaaa.com/987/3732987-middle.png",
+        45, 28);
+    invalidInput.setGraphic(errorIcon);
+    invalidInput.setContentText(message);
+    invalidInput.show();
   }
 }
 

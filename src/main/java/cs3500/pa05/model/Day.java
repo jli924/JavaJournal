@@ -38,4 +38,13 @@ public class Day {
   public List<Task> getTasks() {
     return tasks;
   }
+
+
+  public void addEvent(Event e) {
+    events.add(e);
+  }
+
+  public void addTask(Task t) {
+    tasks.add(t);
+  }
 }

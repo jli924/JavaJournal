@@ -9,6 +9,7 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
+<?import javafx.scene.shape.Circle?>
 <?import javafx.scene.text.Font?>
 
 <Scene stylesheets="@scene.css" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
@@ -18,13 +19,13 @@
             <children>
                <TableView prefHeight="618.0" prefWidth="702.0">
                  <columns>
-                   <TableColumn prefWidth="100.0" text="SUNDAY" />
-                   <TableColumn prefWidth="100.0" text="MONDAY" />
-                     <TableColumn prefWidth="100.0" text="TUESDAY" />
-                     <TableColumn prefWidth="100.0" text="WEDNESDAY" />
-                     <TableColumn prefWidth="100.0" text="THURSDAY" />
-                     <TableColumn prefWidth="100.0" text="FRIDAY" />
-                     <TableColumn prefWidth="100.0" text="SATURDAY" />
+                   <TableColumn fx:id="sunday" prefWidth="100.0" text="SUNDAY" />
+                   <TableColumn fx:id="monday" prefWidth="100.0" text="MONDAY" />
+                     <TableColumn fx:id="tuesday" prefWidth="100.0" text="TUESDAY" />
+                     <TableColumn fx:id="wednesday" prefWidth="100.0" text="WEDNESDAY" />
+                     <TableColumn fx:id="thursday" prefWidth="100.0" text="THURSDAY" />
+                     <TableColumn fx:id="friday" prefWidth="100.0" text="FRIDAY" />
+                     <TableColumn fx:id="saturday" prefWidth="100.0" text="SATURDAY" />
                  </columns>
                </TableView>
             </children>
@@ -47,5 +48,6 @@
             </font>
          </Label>
          <ListView layoutX="18.0" layoutY="473.0" prefHeight="200.0" prefWidth="145.0" />
+         <Circle fx:id="profilePicture" fill="#fff7f5" layoutX="90.0" layoutY="65.0" radius="49.0" stroke="#c46a5e" strokeType="INSIDE" />
       </children></AnchorPane>
 </Scene>

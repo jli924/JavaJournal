@@ -20,4 +20,7 @@ public abstract class JournalEntry implements IJournalEntry {
     return name;
   }
 
+  public Weekday getWeekday() {
+    return weekday;
+  }
 }

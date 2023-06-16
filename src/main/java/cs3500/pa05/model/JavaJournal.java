@@ -1,14 +1,27 @@
 package cs3500.pa05.model;
 
+import cs3500.pa05.controller.JavaJournalController;
 import java.util.ArrayList;
 import java.util.List;
 
 public class JavaJournal {
-  Day[] days = new Day[7];
+  private Day[] days = new Day[7];
+
+  public JavaJournal(Day[] days) {
+    days = days;
+  }
+
+  public JavaJournal() {
+    for (int i = 0; i < 7; i++) {
+      days[i] = new Day(Weekday.values()[i], new ArrayList<>(),
+          new ArrayList<>(), 10, 10);
+    }
+  }
 
   /**
    * Finds the percentage of tasks completed for a given week
-   * @return
+   *
+   * @return the percentage of tasks completed for a given week
    */
   public double percentComplete() {
     int totalTasks = 0;
@@ -52,6 +65,34 @@ public class JavaJournal {
       outputTasks.add(str);
     }
     return outputTasks;
+  }
+
+  /**
+   *
+   *
+   * @param e
+   */
+  public void addEvent(Event e) {
+    for (Day day: days) {
+      if (day.equals(e.getWeekday())) {
+        day.addEvent(e);
+        break;
+      }
+    }
+  }
+
+  /**
+   *
+   *
+   * @param t
+   */
+  public void addTask(Task t) {
+    for (Day day: days) {
+      if (day.equals(t.getWeekday())) {
+        day.addTask(t);
+        break;
+      }
+    }
   }
 
 }

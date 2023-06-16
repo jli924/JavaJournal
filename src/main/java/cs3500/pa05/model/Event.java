@@ -47,4 +47,5 @@ public class Event extends JournalEntry {
     return null;
   }
 
+
 }

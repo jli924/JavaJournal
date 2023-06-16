@@ -10,5 +10,5 @@ public enum Weekday {
   WEDNESDAY,
   THURSDAY,
   FRIDAY,
-  SATURDAY;
+  SATURDAY
 }
