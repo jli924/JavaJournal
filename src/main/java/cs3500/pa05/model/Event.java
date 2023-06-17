@@ -1,5 +1,7 @@
 package cs3500.pa05.model;
 
+import cs3500.pa05.model.json.EventJson;
+
 /**
  * To represent an event
  */
@@ -36,6 +38,7 @@ public class Event extends JournalEntry {
     super(name, weekday);
     this.startTime = startTime;
     this.duration = duration;
+    description = "";
   }
 
   /**
@@ -47,5 +50,7 @@ public class Event extends JournalEntry {
     return null;
   }
 
-
+  public EventJson toEventJson() {
+    return new EventJson(name, description, weekday, startTime, duration);
+  }
 }

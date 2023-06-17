@@ -1,5 +1,7 @@
 package cs3500.pa05.model;
 
+import cs3500.pa05.model.json.TaskJson;
+
 public class Task extends JournalEntry {
   Boolean complete;
 
@@ -25,6 +27,7 @@ public class Task extends JournalEntry {
    */
   public Task(String name, Weekday weekday, Boolean complete) {
     super(name, weekday);
+    description = "";
     this.complete = complete;
   }
 
@@ -60,5 +63,9 @@ public class Task extends JournalEntry {
    */
   public String journalToString() {
     return null;
+  }
+
+  public TaskJson toTaskJson() {
+    return new TaskJson(name, description, weekday, complete);
   }
 }

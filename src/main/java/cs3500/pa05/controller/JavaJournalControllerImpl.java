@@ -31,6 +31,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   @FXML
   Circle profilePicture;
+
   PopupView popupView = new PopupView();
 
   /**
@@ -45,9 +46,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    */
   public void run() {
     initButtons();
+    profilePicture.setFill(new ImagePattern
+        (new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
     profilePicture.setOnMouseClicked(event -> {
       selectProfilePicture();
     });
+
   }
 
   @Override
