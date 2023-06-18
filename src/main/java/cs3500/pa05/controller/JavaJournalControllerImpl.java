@@ -10,6 +10,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -111,6 +112,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
               Weekday.valueOf(weekday.getText().toUpperCase()),
               startTime.getText(), duration.getText());
           journal.addEvent(userEvent);
+          mainGrid.add(new Label(userEvent.getName()),
+              userEvent.getWeekday().ordinal(),
+              findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal()));
           eventStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
@@ -123,6 +127,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
               Weekday.valueOf(weekday.getText().toUpperCase()),
               startTime.getText(), duration.getText());
           journal.addEvent(userEvent);
+          mainGrid.add(new Label(userEvent.getName()),
+              userEvent.getWeekday().ordinal(),
+              findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal()));
           eventStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
@@ -152,6 +159,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           Task userTask = new Task(name.getText(),
               Weekday.valueOf(weekday.getText().toUpperCase()), false);
           journal.addTask(userTask);
+          mainGrid.add(new Label(userTask.getName()),
+              userTask.getWeekday().ordinal(),
+              findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal()));
           taskStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
@@ -163,6 +173,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           Task userTask = new Task(name.getText(), description.getText(),
               Weekday.valueOf(weekday.getText().toUpperCase()), false);
           journal.addTask(userTask);
+          mainGrid.add(new Label(userTask.getName()),
+              userTask.getWeekday().ordinal(),
+              findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal()));
           taskStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
@@ -224,6 +237,30 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       }
       colIdx +=1;
     }
+  }
+
+  private static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
+    int numRows = gridPane.getRowCount();
+    for (int row = 0; row < numRows; row++) {
+      Node node = getNodeFromGridPane(gridPane, columnIndex, row);
+      if (node == null) {
+        return row;
+      }
+    }
+    return -1; // Indicates no empty row found
+  }
+
+  private static Node getNodeFromGridPane(GridPane gridPane, int colIndex, int rowIndex) {
+    for (Node node : gridPane.getChildren()) {
+      Integer colIdx = GridPane.getColumnIndex(node);
+      Integer rowIdx = GridPane.getRowIndex(node);
+      colIdx = (colIdx == null) ? 0 : colIdx;
+      rowIdx = (rowIdx == null) ? 0 : rowIdx;
+      if (colIdx == colIndex && rowIdx == rowIndex) {
+        return node;
+      }
+    }
+    return null;
   }
 }
 
