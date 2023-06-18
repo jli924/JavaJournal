@@ -21,6 +21,8 @@ import java.util.List;
 public class JavaJournal {
   public Day[] days = new Day[7];
   private File bujoFile;
+  private String notesAndQuotes;
+  private String weekTitle;
 
   public JavaJournal(Day[] days, File file) {
     this.days = days;
@@ -52,7 +54,11 @@ public class JavaJournal {
         }
       }
     }
-    return (double) taskCompleted / totalTasks;
+    if (totalTasks == 0) {
+      return 0;
+    } else {
+      return (double) (taskCompleted / totalTasks) * 100;
+    }
   }
 
   /**
@@ -82,6 +88,19 @@ public class JavaJournal {
       outputTasks.add(str);
     }
     return outputTasks;
+  }
+
+  /**
+   * Total events of this journal
+   *
+   * @return total events of this journal
+   */
+  public List<Event> totalEvents() {
+    List<Event> events = new ArrayList<>();
+    for (Day day : days) {
+      events.addAll(day.getEvents());
+    }
+    return events;
   }
 
   /**

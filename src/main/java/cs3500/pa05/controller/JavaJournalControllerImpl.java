@@ -20,6 +20,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -70,6 +71,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   @FXML
   Label year;
 
+  @FXML
+  TextArea weeklyOverview;
 
   JavaJournal journal;
 
@@ -154,10 +157,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           break;
         }
       }
-      String text = clickedNode.toString().substring(
-          clickedNode.toString().indexOf("text=") + 5, clickedNode.toString().indexOf(","));
-      String entry = (text.substring(1, text.length() - 1));
-      miniViewer(journal.getDays()[columnIndex], entry);
+      try {
+        String text = clickedNode.toString().substring(
+            clickedNode.toString().indexOf("text=") + 5, clickedNode.toString().indexOf(","));
+        String entry = (text.substring(1, text.length() - 1));
+        miniViewer(journal.getDays()[columnIndex], entry);
+      } catch (Exception ignored){
+        //user clicked invalid text, do nothing
+      }
     });
     addMenuEvent.setOnAction(event -> eventHandler());
     addMenuTask.setOnAction(event -> taskHandler());
@@ -166,6 +173,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     newYear.setOnAction(event -> newYearHandler());
     initTasksandEvents();
     setDays();
+    update();
   }
 
   /**
@@ -195,6 +203,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           mainGrid.add(newEvent,
               userEvent.getWeekday().ordinal(),
               findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal()));
+          update();
           eventStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
@@ -212,6 +221,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           mainGrid.add(newEvent,
               userEvent.getWeekday().ordinal(),
               findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal()));
+          update();
           eventStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
@@ -246,6 +256,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           mainGrid.add(newTask,
               userTask.getWeekday().ordinal(),
               findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal()));
+          update();
           taskStage.close();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
@@ -259,6 +270,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           journal.addTask(userTask);
           Label newTask = new Label(userTask.getName());
           newTask.setPadding(new Insets(5));
+          update();
           mainGrid.add(newTask,
               userTask.getWeekday().ordinal(),
               findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal()));
@@ -393,6 +405,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         Stage stage = new Stage();
         completeTask.setOnAction(event -> {
           t.completeTask();
+          update();
           stage.close();
         });
         stage.setScene(s);
@@ -473,6 +486,18 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       yearStage.close();
     });
     yearStage.show();
+  }
+
+  private void update() {
+    weeklyOverview.setEditable(false);
+    weeklyOverview.setText("Total tasks: " + journal.getTasks().size()
+        + System.lineSeparator()
+        + System.lineSeparator()
+        + "Total events: " + journal.totalEvents().size()
+        + System.lineSeparator()
+        + System.lineSeparator()
+        + "Tasks completed: "
+        + journal.percentComplete() + "%");
   }
 }
 

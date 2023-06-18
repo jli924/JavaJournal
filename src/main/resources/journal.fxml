@@ -15,9 +15,9 @@
 <?import javafx.scene.text.Font?>
 
 <Scene xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <AnchorPane prefHeight="714.0" prefWidth="894.0">
+    <AnchorPane prefHeight="714.0" prefWidth="1074.0">
       <children>
-         <HBox alignment="CENTER" layoutX="172.0" layoutY="96.0" prefHeight="604.0" prefWidth="708.0">
+         <HBox alignment="CENTER" layoutX="178.0" layoutY="96.0" prefHeight="604.0" prefWidth="708.0">
             <children>
                <GridPane fx:id="mainGrid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="703.0">
                   <columnConstraints>
@@ -51,12 +51,12 @@
             <font>
                <Font name="American Typewriter" size="27.0" />
             </font></Label>
-         <Label fx:id="month" alignment="CENTER_RIGHT" layoutX="521.0" layoutY="49.0" prefHeight="39.0" prefWidth="269.0" text="June" textFill="#050404b0">
+         <Label fx:id="month" alignment="CENTER_RIGHT" layoutX="532.0" layoutY="49.0" prefHeight="39.0" prefWidth="269.0" text="June" textFill="#050404b0">
             <font>
                <Font name="American Typewriter" size="27.0" />
             </font>
          </Label>
-         <Label fx:id="year" alignment="CENTER_RIGHT" layoutX="790.0" layoutY="49.0" prefHeight="39.0" prefWidth="78.0" text="2023" textFill="#050404b0">
+         <Label fx:id="year" alignment="CENTER_RIGHT" layoutX="808.0" layoutY="49.0" prefHeight="39.0" prefWidth="78.0" text="2023" textFill="#050404b0">
             <font>
                <Font name="American Typewriter" size="27.0" />
             </font>
@@ -88,5 +88,14 @@
          <Circle fx:id="profilePicture" fill="#fff7f5" layoutX="91.0" layoutY="88.0" radius="49.0" stroke="#c46a5e" strokeType="INSIDE" />
          <Button fx:id="addEvent" layoutX="26.0" layoutY="148.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" stylesheets="@scene.css" text="Add event" />
          <Button fx:id="addTask" layoutX="26.0" layoutY="190.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" stylesheets="@scene.css" text="Add task" />
+         <Label fx:id="totalEvents" layoutX="994.0" layoutY="128.0" prefHeight="17.0" prefWidth="48.0" />
+         <Label fx:id="totalTasks" layoutX="993.0" layoutY="148.0" prefHeight="17.0" prefWidth="49.0" />
+         <Label fx:id="tasksCompleted" layoutX="993.0" layoutY="169.0" prefHeight="17.0" prefWidth="49.0" />
+         <TextArea fx:id="weeklyOverview" layoutX="900.0" layoutY="129.0" prefHeight="129.0" prefWidth="162.0" />
+         <Label layoutX="908.0" layoutY="96.0" prefHeight="29.0" prefWidth="145.0" text="Weekly Overview">
+            <font>
+               <Font name="American Typewriter" size="13.0" />
+            </font>
+         </Label>
       </children></AnchorPane>
 </Scene>
