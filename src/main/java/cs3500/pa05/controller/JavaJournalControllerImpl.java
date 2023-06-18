@@ -16,9 +16,14 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCharacterCombination;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -26,12 +31,36 @@ import javafx.stage.Stage;
  * The implementation of the JavaJournalController interface
  */
 public class JavaJournalControllerImpl implements JavaJournalController {
+  @FXML
+  Button saveToFile;
+
+  @FXML
+  Button openFile;
 
   @FXML
   Button addEvent;
+  @FXML
+  Button addMenuEvent;
 
   @FXML
   Button addTask;
+  @FXML
+  Button addMenuTask;
+
+  @FXML
+  Button newWeek;
+  @FXML
+  Label weekOf;
+
+  @FXML
+  Button newMonth;
+  @FXML
+  Label month;
+
+  @FXML
+  Button newYear;
+  @FXML
+  Label year;
 
   JavaJournal journal;
 
@@ -58,13 +87,13 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * To run the application
    */
   public void run() {
+    initCommands();
     initButtons();
-    profilePicture.setFill(new ImagePattern
-        (new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
-    profilePicture.setOnMouseClicked(event -> {
-      selectProfilePicture();
-    });
-
+//    profilePicture.setFill(new ImagePattern
+//        (new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
+//    profilePicture.setOnMouseClicked(event -> {
+//      selectProfilePicture();
+//    });
   }
 
   @Override
@@ -77,16 +106,30 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   }
 
+  public void initCommands() {
+    addMenuEvent.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_ANY), () -> addMenuEvent.fire());
+    addMenuTask.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.T, KeyCombination.CONTROL_ANY), () -> addMenuTask.fire());
+    newWeek.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.N, KeyCombination.CONTROL_ANY), () -> newWeek.fire());
+    newMonth.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_ANY), () -> newMonth.fire());
+    newYear.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_ANY), () -> newYear.fire());
+  }
+
   /**
    * Set functionality for add task and add event button
    */
   public void initButtons() {
-    addEvent.setOnAction(event -> {
-      eventHandler();
-    });
-    addTask.setOnAction(event -> {
-      taskHandler();
-    });
+    addEvent.setOnAction(event -> eventHandler());
+    addMenuEvent.setOnAction(event -> eventHandler());
+    addTask.setOnAction(event -> taskHandler());
+    addMenuTask.setOnAction(event -> taskHandler());
+    newWeek.setOnAction(event -> newWeekHandler());
+    newMonth.setOnAction(event -> newMonthHandler());
+    newYear.setOnAction(event -> newYearHandler());
     initTasksandEvents();
   }
 
@@ -187,6 +230,54 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
     // showing the scene
     taskStage.show();
+  }
+
+  /**
+   * Handles the new week popup
+   */
+  private void newWeekHandler() {
+    TextField field = new TextField();
+    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+    Stage weekStage = popupView.newTimeScene("New Week", "Week of: ",
+        "New Week", field, save,
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
+    save.setOnAction(event -> {
+      weekOf.setText("Week of  " + field.getText());
+      weekStage.close();
+    });
+    weekStage.show();
+  }
+
+  /**
+   * Handles the new month popup
+   */
+  private void newMonthHandler() {
+    TextField field = new TextField();
+    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+    Stage monthStage = popupView.newTimeScene("New Month", "Month: ",
+        "New Month", field, save,
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 18);
+    save.setOnAction(event -> {
+      month.setText(field.getText());
+      monthStage.close();
+    });
+    monthStage.show();
+  }
+
+  /**
+   * Handles the new year popup
+   */
+  private void newYearHandler() {
+    TextField field = new TextField();
+    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+    Stage yearStage = popupView.newTimeScene("New Year", "Year: ",
+        "New Year", field, save,
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
+    save.setOnAction(event -> {
+      year.setText(field.getText());
+      yearStage.close();
+    });
+    yearStage.show();
   }
 
   @FXML

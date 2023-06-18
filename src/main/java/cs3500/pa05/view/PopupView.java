@@ -153,4 +153,41 @@ public class PopupView {
     taskStage.setTitle("New Task");
     return taskStage;
   }
+
+  /**
+   * The stage for the new week popup
+   *
+   * @param field the text-field to show
+   * @param save the button to show
+   * @return the stage
+   */
+  public Stage newTimeScene(String header, String description, String stageTitle,
+      TextField field, Button save, String iconUrl, int fontSize) {
+    GridPane pane = new GridPane();
+    Scene weekScene = new Scene(pane, 400, 300);
+    ImageView icon = addIcon(iconUrl, 64, 64);
+    Stage weekStage = new Stage();
+    Label weekOf = new Label(description);
+    Label newWeek = new Label(header);
+    newWeek.setStyle("-fx-font-size: " + fontSize + ";");
+
+    pane.add(newWeek, 0, 0);
+    pane.add(weekOf, 0, 1);
+    pane.add(icon, 1, 0);
+    pane.add(field, 1, 1);
+    pane.add(save, 1, 2);
+
+    GridPane.setHalignment(save, HPos.RIGHT);
+    GridPane.setHalignment(icon, HPos.RIGHT);
+
+    pane.setPadding(new Insets(50));
+    pane.setHgap(50);
+    pane.setVgap(50);
+    weekStage.setResizable(false);
+
+    weekStage.setScene(weekScene);
+    weekStage.setTitle(stageTitle);
+    return weekStage;
+  }
+
 }
