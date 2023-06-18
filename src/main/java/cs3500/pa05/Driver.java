@@ -46,7 +46,9 @@ public class Driver extends Application {
     }
   }
 
-  public static void main(String[] args) {launch();}
+  public static void main(String[] args) {
+    launch();
+  }
 }
 
   //Stuff for testing file methods
