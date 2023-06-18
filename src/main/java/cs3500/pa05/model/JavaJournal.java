@@ -89,7 +89,7 @@ public class JavaJournal {
    */
   public void addEvent(Event e) {
     for (Day day : days) {
-      if (day.equals(e.getWeekday())) {
+      if (day.getDay().equals(e.getWeekday())) {
         day.addEvent(e);
         break;
       }
@@ -101,7 +101,7 @@ public class JavaJournal {
    */
   public void addTask(Task t) {
     for (Day day : days) {
-      if (day.equals(t.getWeekday())) {
+      if (day.getDay().equals(t.getWeekday())) {
         day.addTask(t);
         break;
       }
@@ -121,15 +121,6 @@ public class JavaJournal {
             + System.lineSeparator() + System.lineSeparator());
       }
       writer.close();
-    } catch (Exception e) {
-      System.err.println("Cannot write to .bujoFile");
-    }
-  }
-
-  public void write(String message) {
-    try {
-      FileWriter writer = new FileWriter(bujoFile);
-      writer.write(message);
     } catch (Exception e) {
       System.err.println("Cannot write to .bujoFile");
     }

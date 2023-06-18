@@ -80,4 +80,24 @@ public class Day {
   public List<Event> getEvents() {
     return events;
   }
+
+  public Event findEvent(String event) {
+    for (Event e : events) {
+      if (e.getName().equals(event)) {
+        return e;
+      }
+    }
+    return null;
+  }
+
+  public Task findTask(String task) {
+    for (Task t : tasks) {
+      if (t.getName().equals(task)) {
+        return t;
+      }
+    }
+    return null;
+  }
+
+  public Weekday getDay() {return day;}
 }

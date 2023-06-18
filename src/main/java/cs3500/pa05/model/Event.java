@@ -53,4 +53,9 @@ public class Event extends JournalEntry {
   public EventJson toEventJson() {
     return new EventJson(name, description, weekday, startTime, duration);
   }
+
+  public String getStartTime() { return startTime;}
+
+  public String getDuration() { return duration;}
+
 }

@@ -36,6 +36,9 @@ public abstract class JournalEntry implements IJournalEntry {
     return name;
   }
 
+  public String getDescription() {
+    return description;
+  }
 
   public Weekday getWeekday() {
     return weekday;
