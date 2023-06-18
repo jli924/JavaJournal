@@ -18,7 +18,7 @@
       <children>
          <HBox alignment="CENTER" layoutX="175.0" layoutY="78.0" prefHeight="607.0" prefWidth="708.0">
             <children>
-               <GridPane alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="703.0">
+               <GridPane fx:id="mainGrid" alignment="CENTER" gridLinesVisible="true" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="600.0" prefWidth="703.0">
                   <columnConstraints>
                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                      <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
@@ -44,7 +44,7 @@
                      <RowConstraints maxHeight="397.0" minHeight="10.0" prefHeight="47.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                   <children>
-                     <Label alignment="CENTER" prefHeight="32.0" prefWidth="101.0" text="SUNDAY" />
+                     <Label alignment="CENTER" prefHeight="32.0" prefWidth="101.0" style="-fx-background-color: pink;" text="SUNDAY" />
                      <Label alignment="CENTER" prefHeight="43.0" prefWidth="103.0" text="MONDAY" GridPane.columnIndex="1" />
                      <Label alignment="CENTER" prefHeight="43.0" prefWidth="103.0" text="TUESDAY" GridPane.columnIndex="2" />
                      <Label alignment="CENTER" prefHeight="43.0" prefWidth="103.0" text="WEDNESDAY" GridPane.columnIndex="3" />

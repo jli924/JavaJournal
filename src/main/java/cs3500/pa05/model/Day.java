@@ -76,4 +76,8 @@ public class Day {
     events.forEach((event) -> eventList.add(event.toEventJson()));
     return new DayJson(day, taskList, eventList, maxEvents, maxTasks);
   }
+
+  public List<Event> getEvents() {
+    return events;
+  }
 }

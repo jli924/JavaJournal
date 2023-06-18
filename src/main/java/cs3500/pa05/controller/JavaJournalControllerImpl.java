@@ -1,16 +1,21 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.Day;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
@@ -30,6 +35,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   JavaJournal journal;
 
   @FXML
+  GridPane mainGrid;
+
+  @FXML
   Circle profilePicture;
 
   PopupView popupView = new PopupView();
@@ -39,6 +47,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    */
   public JavaJournalControllerImpl() {
     journal = new JavaJournal();
+  }
+
+  public JavaJournalControllerImpl(JavaJournal journal) {
+    this.journal = journal;
   }
 
   /**
@@ -74,6 +86,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     addTask.setOnAction(event -> {
       taskHandler();
     });
+    initTasksandEvents();
   }
 
   /**
@@ -99,10 +112,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
               startTime.getText(), duration.getText());
           journal.addEvent(userEvent);
           eventStage.close();
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
               "Please ensure you entered a valid name, day, start time, "
-              + "and duration. Descriptions are optional");
+                  + "and duration. Descriptions are optional");
         }
       } else {
         try {
@@ -111,10 +124,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
               startTime.getText(), duration.getText());
           journal.addEvent(userEvent);
           eventStage.close();
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
               "Please ensure you entered a valid name, day, start time, "
-              + "and duration. Descriptions are optional");
+                  + "and duration. Descriptions are optional");
         }
       }
     });
@@ -140,10 +153,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
               Weekday.valueOf(weekday.getText().toUpperCase()), false);
           journal.addTask(userTask);
           taskStage.close();
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
               "Please ensure you entered a valid name, day, start time, "
-              + "and duration. Descriptions are optional");
+                  + "and duration. Descriptions are optional");
         }
       } else {
         try {
@@ -151,10 +164,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
               Weekday.valueOf(weekday.getText().toUpperCase()), false);
           journal.addTask(userTask);
           taskStage.close();
-        } catch (Exception ignored){
+        } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
               "Please ensure you entered a valid name and day. "
-              + "Descriptions are optional");
+                  + "Descriptions are optional");
         }
       }
     });
@@ -174,7 +187,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       image1.setPreserveRatio(true);
       image1.setImage(img);
       profilePicture.setFill(pattern(img, profilePicture.getRadius()));
-    } catch (Exception ignored){}
+    } catch (Exception ignored) {
+    }
   }
 
   private ImagePattern pattern(Image img, double radius) {
@@ -191,6 +205,25 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       }
     }
     return new ImagePattern(img, -hRad, -vRad, 2 * hRad, 2 * vRad, false);
+  }
+
+  public void initTasksandEvents() {
+    List<List<String>> titles = new ArrayList<>();
+    for (Day day : journal.getDays()) {
+      List<String> eventsAndTasks = new ArrayList<>();
+      day.getTasks().forEach((task) -> eventsAndTasks.add(task.getName()));
+      day.getEvents().forEach((event) -> eventsAndTasks.add(event.getName()));
+      titles.add(eventsAndTasks);
+    }
+    int colIdx = 0;
+    int rowIdx = 1;
+    for (List<String> list : titles) {
+      for (String entry : list) {
+        mainGrid.add(new Label(entry), colIdx, rowIdx);
+        rowIdx +=1;
+      }
+      colIdx +=1;
+    }
   }
 }
 

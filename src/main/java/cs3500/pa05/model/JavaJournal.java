@@ -15,6 +15,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 public class JavaJournal {
@@ -23,7 +24,7 @@ public class JavaJournal {
 
   public JavaJournal(Day[] days, File file) {
     this.days = days;
-    bujoFile = file;
+    bujoFile = new File("testFile.bujo");
   }
 
   public JavaJournal() {
@@ -132,6 +133,10 @@ public class JavaJournal {
     } catch (Exception e) {
       System.err.println("Cannot write to .bujoFile");
     }
+  }
+
+  public Day[] getDays() {
+    return days;
   }
 
 }

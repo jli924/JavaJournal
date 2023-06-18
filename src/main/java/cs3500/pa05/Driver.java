@@ -30,7 +30,19 @@ public class Driver extends Application {
   @Override
   public void start(Stage stage) {
     // instantiate a simple JavaJournal cs3500.view
-    JavaJournalController journalController = new JavaJournalControllerImpl();
+    Task task1 = new Task("task 1", "sampleDescription1",
+        Weekday.SUNDAY, false);
+    Task task2 = new Task("task 2", "sampleDescription2",
+        Weekday.SUNDAY, false);
+    Event event1 = new Event("event1", "sampleEvent1",
+        Weekday.SUNDAY, "11:00am", "2hrs");
+    Event event2 = new Event("event2", "sampleEvent2",
+        Weekday.SUNDAY, "12:00am", "3hrs");
+    List<Task> taskList = Arrays.asList(task1, task2);
+    List<Event> eventList = Arrays.asList(event1, event2);
+    JavaJournal journal = new JavaJournal();
+    journal.days[0] = new Day(Weekday.SUNDAY, taskList, eventList, 2, 2);
+    JavaJournalController journalController = new JavaJournalControllerImpl(journal);
     JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
     try {
       // load and place the cs3500.view's scene onto the stage
