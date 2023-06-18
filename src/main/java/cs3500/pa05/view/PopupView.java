@@ -162,7 +162,7 @@ public class PopupView {
    * @return the stage
    */
   public Stage newTimeScene(String header, String description, String stageTitle,
-      TextField field, Button save, String iconUrl, int fontSize) {
+                            TextField field, Button save, String iconUrl, int fontSize) {
     GridPane pane = new GridPane();
     Scene weekScene = new Scene(pane, 400, 300);
     ImageView icon = addIcon(iconUrl, 64, 64);
@@ -189,5 +189,4 @@ public class PopupView {
     weekStage.setTitle(stageTitle);
     return weekStage;
   }
-
 }
