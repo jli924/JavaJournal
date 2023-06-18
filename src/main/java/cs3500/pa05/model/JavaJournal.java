@@ -43,21 +43,20 @@ public class JavaJournal {
    * @return the percentage of tasks completed for a given week
    */
   public double percentComplete() {
-    int totalTasks = 0;
-    int taskCompleted = 0;
+    double totalTasks = getTasks().size();
+    double tasksCompleted = 0;
     for (Day day : days) {
       List<Task> tasks = day.getTasks();
-      totalTasks += tasks.size();
       for (Task task : tasks) {
         if (task.isComplete()) {
-          taskCompleted += 1;
+          tasksCompleted += 1;
         }
       }
     }
     if (totalTasks == 0) {
       return 0;
     } else {
-      return (double) (taskCompleted / totalTasks) * 100;
+      return tasksCompleted / totalTasks * 100;
     }
   }
 

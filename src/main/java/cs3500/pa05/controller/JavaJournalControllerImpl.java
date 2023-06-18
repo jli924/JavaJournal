@@ -3,6 +3,7 @@ package cs3500.pa05.controller;
 import cs3500.pa05.model.Day;
 import cs3500.pa05.model.Event;
 import cs3500.pa05.model.JavaJournal;
+import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
 import cs3500.pa05.view.PopupView;
@@ -20,6 +21,7 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -84,6 +86,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   PopupView popupView = new PopupView();
 
+  @FXML
+  Label newLabelTask;
+
   /**
    * Constructor
    */
@@ -99,11 +104,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     int numRows = gridPane.getRowCount();
     for (int row = 0; row < numRows; row++) {
       Node node = getNodeFromGridPane(gridPane, columnIndex, row);
-      if (node == null) {
+      if (node == null || (node instanceof Label && ((Label) node).getText().isEmpty())) {
         return row;
       }
     }
-    return -1; // Indicates no empty row found
+    return -1; // no empty row found
   }
 
   private static Node getNodeFromGridPane(GridPane gridPane, int colIndex, int rowIndex) {
@@ -148,24 +153,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     addTask.setOnAction(event -> {
       taskHandler();
     });
-    mainGrid.setOnMouseClicked(event -> {
-      Node clickedNode = event.getPickResult().getIntersectedNode();
-      Integer columnIndex = null;
-      for (Node node : mainGrid.getChildren()) {
-        columnIndex = GridPane.getColumnIndex(node);
-        if (columnIndex != null && node.equals(clickedNode)) {
-          break;
-        }
-      }
-      try {
-        String text = clickedNode.toString().substring(
-            clickedNode.toString().indexOf("text=") + 5, clickedNode.toString().indexOf(","));
-        String entry = (text.substring(1, text.length() - 1));
-        miniViewer(journal.getDays()[columnIndex], entry);
-      } catch (Exception ignored){
-        //user clicked invalid text, do nothing
-      }
-    });
     addMenuEvent.setOnAction(event -> eventHandler());
     addMenuTask.setOnAction(event -> taskHandler());
     newWeek.setOnAction(event -> newWeekHandler());
@@ -200,11 +187,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           journal.addEvent(userEvent);
           Label newEvent = new Label(userEvent.getName());
           newEvent.setPadding(new Insets(5));
-          mainGrid.add(newEvent,
-              userEvent.getWeekday().ordinal(),
-              findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal()));
-          update();
+          int row = findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal());
+          int col = userEvent.getWeekday().ordinal();
+          mainGrid.add(newEvent, col, row);
+          newEvent.setOnMouseClicked(event1 -> {
+            miniViewer(userEvent);
+          });
           eventStage.close();
+          update();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
               "Please ensure you entered a valid name, day, start time, "
@@ -218,11 +208,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           journal.addEvent(userEvent);
           Label newEvent = new Label(userEvent.getName());
           newEvent.setPadding(new Insets(5));
-          mainGrid.add(newEvent,
-              userEvent.getWeekday().ordinal(),
-              findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal()));
-          update();
+          int row = findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal());
+          int col = userEvent.getWeekday().ordinal();
+          mainGrid.add(newEvent, col, row);
+          newEvent.setOnMouseClicked(event1 -> {
+            miniViewer(userEvent);
+          });
           eventStage.close();
+          update();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid event",
               "Please ensure you entered a valid name, day, start time, "
@@ -253,11 +246,15 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           journal.addTask(userTask);
           Label newTask = new Label(userTask.getName());
           newTask.setPadding(new Insets(5));
-          mainGrid.add(newTask,
-              userTask.getWeekday().ordinal(),
-              findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal()));
-          update();
+          int row = findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal());
+          int col = userTask.getWeekday().ordinal();
+          mainGrid.add(newTask, col, row);
+          GridPane.setColumnIndex(newTask, col);
+          newTask.setOnMouseClicked(event1 -> {
+            miniViewer(userTask);
+          });
           taskStage.close();
+          update();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
               "Please ensure you entered a valid name, day, start time, "
@@ -270,11 +267,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           journal.addTask(userTask);
           Label newTask = new Label(userTask.getName());
           newTask.setPadding(new Insets(5));
-          update();
-          mainGrid.add(newTask,
-              userTask.getWeekday().ordinal(),
-              findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal()));
+          int row = findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal());
+          int col = userTask.getWeekday().ordinal();
+          mainGrid.add(newTask, col, row);
+          newTask.setOnMouseClicked(event1 -> {
+            miniViewer(userTask);
+          });
           taskStage.close();
+          update();
         } catch (Exception ignored) {
           popupView.invalidInputAlert("Invalid task",
               "Please ensure you entered a valid name and day. "
@@ -318,18 +318,23 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   public void initTasksandEvents() {
-    List<List<String>> titles = new ArrayList<>();
-    for (Day day : journal.getDays()) {
-      List<String> eventsAndTasks = new ArrayList<>();
-      day.getTasks().forEach((task) -> eventsAndTasks.add(task.getName()));
-      day.getEvents().forEach((event) -> eventsAndTasks.add(event.getName()));
-      titles.add(eventsAndTasks);
-    }
     int colIdx = 0;
     int rowIdx = 1;
-    for (List<String> list : titles) {
-      for (String entry : list) {
-        mainGrid.add(new Label(entry), colIdx, rowIdx);
+    for (Day day : journal.getDays()) {
+      for (Task t : day.getTasks()) {
+        Label initEntry = new Label(t.getName());
+        initEntry.setOnMouseClicked(event -> {
+          miniViewer(t);
+        });
+        mainGrid.add(initEntry, colIdx, rowIdx);
+        rowIdx += 1;
+      }
+      for (Event e : day.getEvents()) {
+        Label initEntry = new Label(e.getName());
+        initEntry.setOnMouseClicked(event -> {
+          miniViewer(e);
+        });
+        mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
       }
       colIdx += 1;
@@ -353,67 +358,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         dayLabel.setStyle("-fx-background-color: pink");
       }
       mainGrid.add(dayLabel, i, 0);
-    }
-  }
-
-  private void miniViewer(Day day, String entry) {
-    try {
-      Event e = day.findEvent(entry);
-      GridPane pane = new GridPane();
-      Scene s = new Scene(pane, 250, 500);
-      Label title = new Label("Mini Viewer");
-      title.setStyle("-fx-font-size: 16");
-      pane.add(title, 0, 0);
-      pane.add(new Label("Event Name: " + e.getName()), 0, 1);
-      pane.add(new Label("Description: " + e.getDescription()), 0, 2);
-      pane.add(new Label("Weekday: " + e.getWeekday()), 0, 3);
-      pane.add(new Label("Start Time: " + e.getStartTime()), 0, 4);
-      pane.add(new Label("Duration: " + e.getDuration()), 0, 5);
-      pane.setPadding(new Insets(50));
-      pane.setHgap(50);
-      pane.setVgap(50);
-      Stage stage = new Stage();
-      stage.setScene(s);
-      stage.setTitle("Mini Viewer");
-      stage.show();
-    } catch (Exception e) {
-      try {
-        Task t = day.findTask(entry);
-        GridPane pane = new GridPane();
-        Scene s = new Scene(pane, 300, 500);
-        ImageView imageView = popupView.addIcon
-            ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
-                48, 48);
-        Label title = new Label("Mini Viewer");
-        title.setStyle("-fx-font-size: 16");
-        boolean complete = t.isComplete();
-        String result = complete ? "Yes" : "No";
-        pane.add(title, 0, 0);
-        pane.add(new Label("Task Name: " + t.getName()), 0, 1);
-        pane.add(new Label("Description: " + t.getDescription()), 0, 2);
-        pane.add(new Label("Weekday: " + t.getWeekday()), 0, 3);
-        pane.add(new Label("Complete?: " + result), 0, 4);
-        //pane.add(imageView, 0, 0);
-        GridPane.setHalignment(imageView, HPos.RIGHT);
-        Button completeTask =
-            popupView.addPrettyButton("Complete", 80, 30, "pink");
-        pane.add(completeTask, 0, 5);
-        GridPane.setHalignment(completeTask, HPos.RIGHT);
-        pane.setPadding(new Insets(50));
-        pane.setHgap(50);
-        pane.setVgap(50);
-        Stage stage = new Stage();
-        completeTask.setOnAction(event -> {
-          t.completeTask();
-          update();
-          stage.close();
-        });
-        stage.setScene(s);
-        stage.setTitle("Mini Viewer");
-        stage.show();
-      } catch (Exception ignored) {
-        // the user clicked an invalid coordinate, we don't do anything
-      }
     }
   }
 
@@ -488,6 +432,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     yearStage.show();
   }
 
+
   private void update() {
     weeklyOverview.setEditable(false);
     weeklyOverview.setText("Total tasks: " + journal.getTasks().size()
@@ -498,6 +443,93 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         + System.lineSeparator()
         + "Tasks completed: "
         + journal.percentComplete() + "%");
+  }
+
+  public void miniViewer(JournalEntry entry) {
+    try {
+      Event e = (Event) entry;
+      GridPane pane = new GridPane();
+      Scene s = new Scene(pane, 250, 500);
+      Label title = new Label("Mini Viewer");
+      title.setStyle("-fx-font-size: 16");
+      pane.add(title, 0, 0);
+      TextField name = new TextField(e.getName());
+      name.setEditable(false);
+      TextField description = new TextField(e.getDescription());
+      description.setEditable(false);
+      TextField weekday = new TextField(e.getWeekday().toString());
+      weekday.setEditable(false);
+      TextField startTime = new TextField(e.getStartTime());
+      startTime.setEditable(false);
+      TextField duration = new TextField(e.getDuration());
+      duration.setEditable(false);
+      pane.add(name, 1, 1);
+      pane.add(description, 0, 2);
+      pane.add(weekday, 0, 3);
+      pane.add(startTime, 0, 4);
+      pane.add(duration, 0, 5);
+      pane.add(new Label("Event Name: "), 0, 1);
+      pane.add(new Label("Description: "), 0, 2);
+      pane.add(new Label("Weekday: "), 0, 3);
+      pane.add(new Label("Start Time: "), 0, 4);
+      pane.add(new Label("Duration: "), 0, 5);
+      pane.setPadding(new Insets(50));
+      pane.setHgap(50);
+      pane.setVgap(50);
+      Stage stage = new Stage();
+      stage.setScene(s);
+      stage.setTitle("Mini Viewer");
+      stage.show();
+    } catch (Exception e) {
+      try {
+        Task t = (Task) entry;
+        GridPane pane = new GridPane();
+        Scene s = new Scene(pane, 400, 500);
+        ImageView imageView = popupView.addIcon
+            ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
+                48, 48);
+        Label title = new Label("Mini View");
+        title.setStyle("-fx-font-size: 16");
+        title.setWrapText(true);
+        boolean complete = t.isComplete();
+        String result = complete ? "Yes" : "No";
+        pane.add(title, 0, 0);
+        TextField name = new TextField(t.getName());
+        name.setEditable(false);
+        TextField description = new TextField(t.getDescription());
+        description.setEditable(false);
+        TextField weekday = new TextField(t.getWeekday().toString());
+        weekday.setEditable(false);
+        pane.add(new Label("Task Name: "), 0, 1);
+        pane.add(name, 1, 1);
+        pane.add(new Label("Description: " + t.getDescription()), 0, 2);
+        pane.add(description, 1, 2);
+        pane.add(new Label("Weekday: "), 0, 3);
+        pane.add(weekday, 1, 3);
+        pane.add(new Label("Complete?: "), 0, 4);
+        pane.add(new Label(result), 1, 4);
+        pane.add(imageView, 1, 0);
+        GridPane.setHalignment(imageView, HPos.RIGHT);
+        Button completeTask =
+            popupView.addPrettyButton("Complete", 80, 30, "pink");
+        pane.add(completeTask, 1, 5);
+        GridPane.setHalignment(completeTask, HPos.RIGHT);
+        pane.setPadding(new Insets(50));
+        pane.setHgap(50);
+        pane.setVgap(50);
+        Stage stage = new Stage();
+        completeTask.setOnAction(event -> {
+          t.completeTask();
+          stage.close();
+          update();
+        });
+        stage.setScene(s);
+        stage.setTitle("Mini Viewer");
+        stage.show();
+      } catch (Exception ignored) {
+        // the user clicked an invalid coordinate, we don't need to log this exception
+      }
+    }
   }
 }
 
