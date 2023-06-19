@@ -246,9 +246,8 @@ public class PopupView {
     pane.add(new Label("Start Time: "), 0, 4);
     pane.add(new Label("Duration: "), 0, 5);
     Button edit = addPrettyButton("Edit", 80, 30, "pink");
-    edit.setOnAction(event -> {
-      editScene(new TextField[] {name, description, weekday, startTime, duration});
-    });
+    edit.setOnAction(event -> editScene(
+        new TextField[] {name, description, weekday, startTime, duration}));
     Button save = addPrettyButton("Save", 80, 30, "pink");
     pane.add(edit, 0, 6);
     pane.add(save, 1, 6);
