@@ -6,7 +6,6 @@ import cs3500.pa05.model.json.TaskJson;
 import java.util.ArrayList;
 import java.util.List;
 import com.fasterxml.jackson.annotation.JsonCreator;
-import com.fasterxml.jackson.annotation.JsonProperty;
 
 /**
  * To represent a day
@@ -14,7 +13,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 public class Day {
   private Weekday day;
   private List<Task> tasks;
-  private List<Event> events;
+  private List<JEvent> JEvents;
   private int maxEvents;
   private int maxTasks;
 
@@ -23,16 +22,16 @@ public class Day {
    *
    * @param day       the day of the week
    * @param tasks     the tasks for that day
-   * @param events    the events for that day
+   * @param JEvents    the events for that day
    * @param maxEvents the max events for the day
    * @param maxTasks  the max tasks for the day
    */
   @JsonCreator
-  public Day(Weekday day, List<Task> tasks, List<Event> events,
+  public Day(Weekday day, List<Task> tasks, List<JEvent> JEvents,
              int maxEvents, int maxTasks) {
     this.day = day;
     this.tasks = tasks;
-    this.events = events;
+    this.JEvents = JEvents;
     this.maxEvents = maxEvents;
     this.maxTasks = maxTasks;
   }
@@ -49,10 +48,10 @@ public class Day {
   /**
    * Adds an event to the day
    *
-   * @param event the event
+   * @param JEvent the event
    */
-  public void addEvent(Event event) {
-    events.add(event);
+  public void addEvent(JEvent JEvent) {
+    JEvents.add(JEvent);
   }
 
   /**
@@ -73,16 +72,16 @@ public class Day {
     List<TaskJson> taskList = new ArrayList<>();
     List<EventJson> eventList = new ArrayList<>();
     tasks.forEach((task) -> taskList.add(task.toTaskJson()));
-    events.forEach((event) -> eventList.add(event.toEventJson()));
+    JEvents.forEach((event) -> eventList.add(event.toEventJson()));
     return new DayJson(day, taskList, eventList, maxEvents, maxTasks);
   }
 
-  public List<Event> getEvents() {
-    return events;
+  public List<JEvent> getEvents() {
+    return JEvents;
   }
 
-  public Event findEvent(String event) {
-    for (Event e : events) {
+  public JEvent findEvent(String event) {
+    for (JEvent e : JEvents) {
       if (e.getName().equals(event)) {
         return e;
       }

@@ -1,16 +1,11 @@
 package cs3500.pa05.view;
 
-import cs3500.pa05.model.Day;
-import cs3500.pa05.model.Event;
-import cs3500.pa05.model.JournalEntry;
-import cs3500.pa05.model.Task;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -195,5 +190,9 @@ public class PopupView {
     return weekStage;
   }
 
-
+  public void editScene(TextField[] fields) {
+    for (TextField f: fields) {
+      f.setEditable(true);
+    }
+  }
 }

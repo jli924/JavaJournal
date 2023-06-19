@@ -1,5 +1,7 @@
 package cs3500.pa05.model;
 
+import java.util.Objects;
+
 /**
  * Represents a journal entry
  */
@@ -7,6 +9,18 @@ public abstract class JournalEntry implements IJournalEntry {
   String name;
   String description;
   Weekday weekday;
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setWeekday(Weekday weekday) {
+    this.weekday = weekday;
+  }
 
   /**
    * Constructor
@@ -16,8 +30,13 @@ public abstract class JournalEntry implements IJournalEntry {
    * @param weekday weekday of the entry
    */
   JournalEntry(String name, String description, Weekday weekday) {
-    this.name = name;
-    this.description = description;
+    Objects.requireNonNull(weekday);
+    if (!name.isEmpty()) {
+      this.name = name;
+      this.description = description;
+    } else {
+      throw new IllegalArgumentException("a journal entry must have a name");
+    }
     this.weekday = weekday;
   }
 
@@ -28,7 +47,12 @@ public abstract class JournalEntry implements IJournalEntry {
    * @param weekday weekday of the entry
    */
   JournalEntry(String name, Weekday weekday) {
-    this.name = name;
+    Objects.requireNonNull(weekday);
+    if (!name.isEmpty()) {
+      this.name = name;
+    } else {
+      throw new IllegalArgumentException("a journal entry must have a name");
+    }
     this.weekday = weekday;
   }
 

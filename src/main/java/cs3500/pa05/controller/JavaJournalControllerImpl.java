@@ -1,7 +1,7 @@
 package cs3500.pa05.controller;
 
 import cs3500.pa05.model.Day;
-import cs3500.pa05.model.Event;
+import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
@@ -10,18 +10,14 @@ import cs3500.pa05.view.PopupView;
 import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -32,7 +28,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.control.ToggleButton;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
@@ -86,9 +81,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   PopupView popupView = new PopupView();
 
-  @FXML
-  Label newLabelTask;
-
   /**
    * Constructor
    */
@@ -100,7 +92,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     this.journal = journal;
   }
 
-  private static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
+  public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
     int numRows = gridPane.getRowCount();
     for (int row = 0; row < numRows; row++) {
       Node node = getNodeFromGridPane(gridPane, columnIndex, row);
@@ -124,10 +116,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     return null;
   }
 
-  private static int toIndex(Integer value) {
-    return value == null ? 0 : value;
-  }
-
   /**
    * To run the application
    */
@@ -139,7 +127,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     profilePicture.setOnMouseClicked(event -> {
       selectProfilePicture();
     });
-
   }
 
 
@@ -181,17 +168,17 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     save.setOnAction(event -> {
       if (description.getText().isEmpty()) {
         try {
-          Event userEvent = new Event(name.getText(),
+          JEvent userJEvent = new JEvent(name.getText(),
               Weekday.valueOf(weekday.getText().toUpperCase()),
               startTime.getText(), duration.getText());
-          journal.addEvent(userEvent);
-          Label newEvent = new Label(userEvent.getName());
+          journal.addEvent(userJEvent);
+          Label newEvent = new Label(userJEvent.getName());
           newEvent.setPadding(new Insets(5));
-          int row = findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal());
-          int col = userEvent.getWeekday().ordinal();
+          int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
+          int col = userJEvent.getWeekday().ordinal();
           mainGrid.add(newEvent, col, row);
           newEvent.setOnMouseClicked(event1 -> {
-            miniViewer(userEvent);
+            miniViewer(newEvent, userJEvent);
           });
           eventStage.close();
           update();
@@ -202,17 +189,17 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         }
       } else {
         try {
-          Event userEvent = new Event(name.getText(), description.getText(),
+          JEvent userJEvent = new JEvent(name.getText(), description.getText(),
               Weekday.valueOf(weekday.getText().toUpperCase()),
               startTime.getText(), duration.getText());
-          journal.addEvent(userEvent);
-          Label newEvent = new Label(userEvent.getName());
+          journal.addEvent(userJEvent);
+          Label newEvent = new Label(userJEvent.getName());
           newEvent.setPadding(new Insets(5));
-          int row = findFirstEmptyRow(mainGrid, userEvent.getWeekday().ordinal());
-          int col = userEvent.getWeekday().ordinal();
+          int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
+          int col = userJEvent.getWeekday().ordinal();
           mainGrid.add(newEvent, col, row);
           newEvent.setOnMouseClicked(event1 -> {
-            miniViewer(userEvent);
+            miniViewer(newEvent, userJEvent);
           });
           eventStage.close();
           update();
@@ -251,7 +238,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           mainGrid.add(newTask, col, row);
           GridPane.setColumnIndex(newTask, col);
           newTask.setOnMouseClicked(event1 -> {
-            miniViewer(userTask);
+            miniViewer(newTask, userTask);
           });
           taskStage.close();
           update();
@@ -271,7 +258,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           int col = userTask.getWeekday().ordinal();
           mainGrid.add(newTask, col, row);
           newTask.setOnMouseClicked(event1 -> {
-            miniViewer(userTask);
+            miniViewer(newTask, userTask);
           });
           taskStage.close();
           update();
@@ -324,15 +311,15 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       for (Task t : day.getTasks()) {
         Label initEntry = new Label(t.getName());
         initEntry.setOnMouseClicked(event -> {
-          miniViewer(t);
+          miniViewer(initEntry, t);
         });
         mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
       }
-      for (Event e : day.getEvents()) {
+      for (JEvent e : day.getEvents()) {
         Label initEntry = new Label(e.getName());
         initEntry.setOnMouseClicked(event -> {
-          miniViewer(e);
+          miniViewer(initEntry, e);
         });
         mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
@@ -445,11 +432,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         + journal.percentComplete() + "%");
   }
 
-  public void miniViewer(JournalEntry entry) {
+  public void miniViewer(Label label, JournalEntry entry) {
     try {
-      Event e = (Event) entry;
+      JEvent e = (JEvent) entry;
       GridPane pane = new GridPane();
-      Scene s = new Scene(pane, 250, 500);
+      Scene s = new Scene(pane, 400, 600);
       Label title = new Label("Mini Viewer");
       title.setStyle("-fx-font-size: 16");
       pane.add(title, 0, 0);
@@ -464,19 +451,29 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       TextField duration = new TextField(e.getDuration());
       duration.setEditable(false);
       pane.add(name, 1, 1);
-      pane.add(description, 0, 2);
-      pane.add(weekday, 0, 3);
-      pane.add(startTime, 0, 4);
-      pane.add(duration, 0, 5);
+      pane.add(description, 1, 2);
+      pane.add(weekday, 1, 3);
+      pane.add(startTime, 1, 4);
+      pane.add(duration, 1, 5);
       pane.add(new Label("Event Name: "), 0, 1);
       pane.add(new Label("Description: "), 0, 2);
       pane.add(new Label("Weekday: "), 0, 3);
       pane.add(new Label("Start Time: "), 0, 4);
       pane.add(new Label("Duration: "), 0, 5);
+      Button edit = popupView.addPrettyButton("Edit", 80, 30, "pink");
+      edit.setOnAction(event -> {
+        popupView.editScene(new TextField[] {name, description, weekday, startTime, duration});
+      });
+      Button save = popupView.addPrettyButton("Save", 80, 30, "pink");
+      pane.add(edit, 0, 6);
+      pane.add(save, 1, 6);
       pane.setPadding(new Insets(50));
       pane.setHgap(50);
       pane.setVgap(50);
       Stage stage = new Stage();
+      save.setOnAction(new saveProcessor(e,
+          new TextField[] {name, description, weekday,
+              startTime, duration}, popupView, stage, label, this, mainGrid));
       stage.setScene(s);
       stage.setTitle("Mini Viewer");
       stage.show();

@@ -1,21 +1,9 @@
 package cs3500.pa05.model;
 
-import com.fasterxml.jackson.core.JsonParser;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonMappingException;
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import cs3500.pa05.controller.JavaJournalController;
-import cs3500.pa05.model.json.DayJson;
 import cs3500.pa05.model.json.JsonUtils;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.io.FileWriter;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 public class JavaJournal {
@@ -94,18 +82,18 @@ public class JavaJournal {
    *
    * @return total events of this journal
    */
-  public List<Event> totalEvents() {
-    List<Event> events = new ArrayList<>();
+  public List<JEvent> totalEvents() {
+    List<JEvent> JEvents = new ArrayList<>();
     for (Day day : days) {
-      events.addAll(day.getEvents());
+      JEvents.addAll(day.getEvents());
     }
-    return events;
+    return JEvents;
   }
 
   /**
    * @param e
    */
-  public void addEvent(Event e) {
+  public void addEvent(JEvent e) {
     for (Day day : days) {
       if (day.getDay().equals(e.getWeekday())) {
         day.addEvent(e);

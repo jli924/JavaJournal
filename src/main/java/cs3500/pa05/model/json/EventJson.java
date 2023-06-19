@@ -1,7 +1,7 @@
 package cs3500.pa05.model.json;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import cs3500.pa05.model.Event;
+import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.Weekday;
 
 public record EventJson(@JsonProperty("name") String name,
@@ -9,11 +9,11 @@ public record EventJson(@JsonProperty("name") String name,
                         @JsonProperty("day") Weekday day, @JsonProperty("start-time")
                         String startTIme, @JsonProperty("duration") String duration) {
 
-  public Event toEvent() {
+  public JEvent toEvent() {
     if (description.isEmpty()) {
-      return new Event(name, day, startTIme, duration);
+      return new JEvent(name, day, startTIme, duration);
     } else {
-      return new Event(name, description, day, startTIme, duration);
+      return new JEvent(name, description, day, startTIme, duration);
     }
   }
 }

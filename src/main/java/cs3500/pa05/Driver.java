@@ -2,16 +2,7 @@ package cs3500.pa05;
 
 import cs3500.pa05.controller.JavaJournalController;
 import cs3500.pa05.controller.JavaJournalControllerImpl;
-import cs3500.pa05.model.Day;
-import cs3500.pa05.model.Event;
-import cs3500.pa05.model.JavaJournal;
-import cs3500.pa05.model.Task;
-import cs3500.pa05.model.Weekday;
-import cs3500.pa05.model.json.JsonUtils;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.Objects;
 import javafx.application.Application;
 import javafx.stage.Stage;

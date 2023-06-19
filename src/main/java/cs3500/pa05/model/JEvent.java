@@ -5,7 +5,7 @@ import cs3500.pa05.model.json.EventJson;
 /**
  * To represent an event
  */
-public class Event extends JournalEntry {
+public class JEvent extends JournalEntry {
   String startTime;
   String duration;
 
@@ -18,8 +18,8 @@ public class Event extends JournalEntry {
    * @param startTime
    * @param duration
    */
-  public Event(String name, String description, Weekday weekday,
-               String startTime, String duration) {
+  public JEvent(String name, String description, Weekday weekday,
+                String startTime, String duration) {
     super(name, description, weekday);
     this.startTime = startTime;
     this.duration = duration;
@@ -33,8 +33,8 @@ public class Event extends JournalEntry {
    * @param startTime
    * @param duration
    */
-  public Event(String name, Weekday weekday,
-               String startTime, String duration) {
+  public JEvent(String name, Weekday weekday,
+                String startTime, String duration) {
     super(name, weekday);
     this.startTime = startTime;
     this.duration = duration;
@@ -58,4 +58,11 @@ public class Event extends JournalEntry {
 
   public String getDuration() { return duration;}
 
+  public void setStartTime(String startTime) {
+    this.startTime = startTime;
+  }
+
+  public void setDuration(String duration) {
+    this.duration = duration;
+  }
 }
