@@ -307,4 +307,48 @@ public class PopupView {
     stage.setTitle("Mini Viewer");
     stage.show();
   }
+
+  //AA
+  /**
+   * Represents a saveToFile or OpenFile screen where user must input filename field
+   *
+   * new Scene to Save to File
+   * @param header The main description
+   * @param description the wanted text input
+   * @param stageTitle the title of the stage
+   * @param field the test field for user input
+   * @param save the save button
+   * @param iconUrl the iconURL for the image
+   * @param fontSize the desired fontsize
+   * @return the Stage to be shown to the user
+   */
+  public Stage newSaveOrOpenScene(String header, String description, String stageTitle,
+                                  TextField field, Button save, String iconUrl, int fontSize) {
+    GridPane pane = new GridPane();
+    Scene popupScene = new Scene(pane, 400, 300);
+    ImageView icon = addIcon(iconUrl, 64, 64);
+    Stage SaveOrOpenScene = new Stage();
+    Label miniLabel = new Label(description);
+    Label mainLabel = new Label(header);
+    mainLabel.setStyle("-fx-font-size: " + fontSize + ";");
+
+    pane.add(mainLabel, 0, 0);
+    pane.add(miniLabel, 0, 1);
+    pane.add(icon, 1, 0);
+    pane.add(field, 1, 1);
+    pane.add(save, 1, 2);
+
+    GridPane.setHalignment(save, HPos.RIGHT);
+    GridPane.setHalignment(icon, HPos.RIGHT);
+
+    pane.setPadding(new Insets(50));
+    pane.setHgap(50);
+    pane.setVgap(50);
+    SaveOrOpenScene.setResizable(false);
+
+    SaveOrOpenScene.setScene(popupScene);
+    SaveOrOpenScene.setTitle(stageTitle);
+    return SaveOrOpenScene;
+  }
+
 }

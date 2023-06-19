@@ -8,6 +8,7 @@ import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
@@ -205,6 +206,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     newMonth.setOnAction(event -> newMonthHandler());
     newYear.setOnAction(event -> newYearHandler());
     password.setOnAction(event -> passwordHandler());
+    //AA
+    openFile.setOnAction(event -> openFileHandler());
+    saveToFile.setOnAction(event -> saveToFileHandler());
+
     initTasksandEvents();
     setDays();
     update();
@@ -410,7 +415,19 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   @Override
   public void saveToFile(File file) {
-
+    String converted = this.journal.convertToJSON();
+    try {
+      if (file.createNewFile()) {
+        System.out.println("File created: " + file.getName());
+      } else {
+        System.out.println("File already exists: Overwriting this file...");
+      }
+      FileWriter fw = new FileWriter(file);
+      fw.write(converted);
+      System.out.println("File has been saved.");
+    } catch (IOException e) {
+      throw new RuntimeException("File could not be saved.", e);
+    }
   }
 
   @Override
@@ -429,6 +446,55 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_ANY), () -> newMonth.fire());
     newYear.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_ANY), () -> newYear.fire());
+    password.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
+    //AA
+    saveToFile.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY), () -> saveToFile.fire());
+    openFile.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_ANY), () -> openFile.fire());
+  }
+
+
+//AA
+  /**
+   * Handles the new save to file event
+   */
+  private void saveToFileHandler() {
+    TextField field = new TextField();
+    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+    Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
+        "New Save", field, save,
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
+    //TODO: GET NEW ICON
+    save.setOnAction(event -> {
+      String filename = field.getText();
+      File file = new File("src" + "main" + "resources" + filename + ".bujo");
+      saveToFile(file);
+      saveStage.close();
+    });
+    saveStage.show();
+  }
+
+  //AA
+  /**
+   * Handles the new save to file event
+   */
+  private void openFileHandler() {
+    TextField field = new TextField();
+    Button open = popupView.addPrettyButton("Open", 50, 30, "pink");
+    Stage openStage = popupView.newSaveOrOpenScene("Open File:",
+        "Filename (w/out '.bujo'): ",
+        "Open File", field, open,
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
+    //TODO: GET NEW ICON
+    open.setOnAction(event -> {
+      String filename = field.getText();
+      File file = new File("src" + "main" + "resources" + filename + ".bujo");
+      openFile(file);
+      openStage.close();
+    });
+    openStage.show();
     password.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
   }

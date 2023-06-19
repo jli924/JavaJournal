@@ -25,7 +25,6 @@ public interface JavaJournalController {
    * @param file the file to open from
    */
   void openFile(File file);
-
   /**
    * To a splash screen
    * @return the scene of the screen

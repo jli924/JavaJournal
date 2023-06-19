@@ -140,4 +140,9 @@ public class JavaJournal {
   public void setPassword(String password) {
     this.password = password;
   }
+
+  public String convertToJSON() {
+    String output = new StringBuilder().toString();
+    return output;
+  }
 }
