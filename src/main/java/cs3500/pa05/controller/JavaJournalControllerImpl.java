@@ -465,8 +465,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
     Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
         "New Save", field, save,
-        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
-    //TODO: GET NEW ICON
+        "https://www.iconsdb.com/icons/preview/pink/save-xxl.png", 19);
     save.setOnAction(event -> {
       String filename = field.getText();
       File file = new File("src" + "main" + "resources" + filename + ".bujo");
@@ -486,8 +485,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Stage openStage = popupView.newSaveOrOpenScene("Open File:",
         "Filename (w/out '.bujo'): ",
         "Open File", field, open,
-        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
-    //TODO: GET NEW ICON
+        "https://www.iconsdb.com/icons/preview/pink/folder-3-xxl.png", 19);
     open.setOnAction(event -> {
       String filename = field.getText();
       File file = new File("src" + "main" + "resources" + filename + ".bujo");
@@ -555,7 +553,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
     Stage passwordStage = popupView.newTimeScene("Set Password", "Password: ",
         "Set Password", field, save,
-        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 15);
+        "https://www.iconsdb.com/icons/preview/pink/key-xxl.png", 15);
     save.setOnAction(event -> {
       journal.setPassword(field.getText());
       passwordStage.close();
@@ -584,51 +582,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   public void miniViewer(Label label, JournalEntry entry) {
     try {
-      //eventMiniView(label, entry);
       popupView.eventMiniView(label, entry, this, mainGrid);
-//      Label title = new Label("Mini Viewer");
-//      title.setStyle("-fx-font-size: 16");
-//      pane.add(title, 0, 0);
-//      TextField name = new TextField(e.getName());
-//      name.setEditable(false);
-//      TextField description = new TextField(e.getDescription());
-//      description.setEditable(false);
-//      TextField weekday = new TextField(e.getWeekday().toString());
-//      weekday.setEditable(false);
-//      TextField startTime = new TextField(e.getStartTime());
-//      startTime.setEditable(false);
-//      TextField duration = new TextField(e.getDuration());
-//      duration.setEditable(false);
-//      pane.add(name, 1, 1);
-//      pane.add(description, 1, 2);
-//      pane.add(weekday, 1, 3);
-//      pane.add(startTime, 1, 4);
-//      pane.add(duration, 1, 5);
-//      pane.add(new Label("Event Name: "), 0, 1);
-//      pane.add(new Label("Description: "), 0, 2);
-//      pane.add(new Label("Weekday: "), 0, 3);
-//      pane.add(new Label("Start Time: "), 0, 4);
-//      pane.add(new Label("Duration: "), 0, 5);
-//      Button edit = popupView.addPrettyButton("Edit", 80, 30, "pink");
-//      edit.setOnAction(event -> {
-//        popupView.editScene(new TextField[] {name, description, weekday, startTime, duration});
-//      });
-//      Button save = popupView.addPrettyButton("Save", 80, 30, "pink");
-//      pane.add(edit, 0, 6);
-//      pane.add(save, 1, 6);
-//      pane.setPadding(new Insets(50));
-//      pane.setHgap(50);
-//      pane.setVgap(50);
-//      Stage stage = new Stage();
-//      save.setOnAction(new saveProcessor(e,
-//          new TextField[] {name, description, weekday,
-//              startTime, duration}, popupView, stage, label, this, mainGrid));
-//      stage.setScene(s);
-//      stage.setTitle("Mini Viewer");
-//      stage.show();
     } catch (Exception e) {
       try {
-        //taskMiniView(label, entry);
         Button completeTask = popupView.addPrettyButton("Complete",
             80, 30, "pink");
         Task t = (Task) entry;
@@ -639,147 +595,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           update();
         });
         popupView.taskMiniView(label, t, stage, completeTask);
-//        Task t = (Task) entry;
-//        GridPane pane = new GridPane();
-//        Scene s = new Scene(pane, 400, 500);
-//        ImageView imageView = popupView.addIcon
-//            ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
-//                48, 48);
-//        Label title = new Label("Mini Viewer");
-//        title.setStyle("-fx-font-size: 16");
-//        title.setWrapText(true);
-//        boolean complete = t.isComplete();
-//        String result = complete ? "Yes" : "No";
-//        pane.add(title, 0, 0);
-//        TextField name = new TextField(t.getName());
-//        name.setEditable(false);
-//        TextField description = new TextField(t.getDescription());
-//        description.setEditable(false);
-//        TextField weekday = new TextField(t.getWeekday().toString());
-//        weekday.setEditable(false);
-//        pane.add(new Label("Task Name: "), 0, 1);
-//        pane.add(name, 1, 1);
-//        pane.add(new Label("Description: " + t.getDescription()), 0, 2);
-//        pane.add(description, 1, 2);
-//        pane.add(new Label("Weekday: "), 0, 3);
-//        pane.add(weekday, 1, 3);
-//        pane.add(new Label("Complete?: "), 0, 4);
-//        pane.add(new Label(result), 1, 4);
-//        pane.add(imageView, 1, 0);
-//        GridPane.setHalignment(imageView, HPos.RIGHT);
-//        Button completeTask =
-//            popupView.addPrettyButton("Complete", 80, 30, "pink");
-//        pane.add(completeTask, 1, 5);
-//        GridPane.setHalignment(completeTask, HPos.RIGHT);
-//        pane.setPadding(new Insets(50));
-//        pane.setHgap(50);
-//        pane.setVgap(50);
-//        Stage stage = new Stage();
-//        completeTask.setOnAction(event -> {
-//          t.completeTask();
-//          stage.close();
-//          update();
-//        });
-//        stage.setScene(s);
-//        stage.setTitle("Mini Viewer");
-//        stage.show();
       } catch (Exception ignored) {
         // the user clicked an invalid coordinate, we don't need to log this exception
       }
     }
-  }
-
-  public void eventMiniView(Label label, JournalEntry entry) {
-    JEvent e = (JEvent) entry;
-    GridPane pane = new GridPane();
-    Scene s = new Scene(pane, 400, 600);
-      Label title = new Label("Mini Viewer");
-      title.setStyle("-fx-font-size: 16");
-      pane.add(title, 0, 0);
-      TextField name = new TextField(e.getName());
-      name.setEditable(false);
-      TextField description = new TextField(e.getDescription());
-      description.setEditable(false);
-      TextField weekday = new TextField(e.getWeekday().toString());
-      weekday.setEditable(false);
-      TextField startTime = new TextField(e.getStartTime());
-      startTime.setEditable(false);
-      TextField duration = new TextField(e.getDuration());
-      duration.setEditable(false);
-      pane.add(name, 1, 1);
-      pane.add(description, 1, 2);
-      pane.add(weekday, 1, 3);
-      pane.add(startTime, 1, 4);
-      pane.add(duration, 1, 5);
-      pane.add(new Label("Event Name: "), 0, 1);
-      pane.add(new Label("Description: "), 0, 2);
-      pane.add(new Label("Weekday: "), 0, 3);
-      pane.add(new Label("Start Time: "), 0, 4);
-      pane.add(new Label("Duration: "), 0, 5);
-      Button edit = popupView.addPrettyButton("Edit", 80, 30, "pink");
-      edit.setOnAction(event -> {
-        popupView.editScene(new TextField[] {name, description, weekday, startTime, duration});
-      });
-      Button save = popupView.addPrettyButton("Save", 80, 30, "pink");
-      pane.add(edit, 0, 6);
-      pane.add(save, 1, 6);
-      pane.setPadding(new Insets(50));
-      pane.setHgap(50);
-      pane.setVgap(50);
-      Stage stage = new Stage();
-      save.setOnAction(new saveProcessor(e,
-          new TextField[] {name, description, weekday,
-              startTime, duration}, popupView, stage, label, this, mainGrid));
-      stage.setScene(s);
-      stage.setTitle("Mini Viewer");
-      stage.show();
-  }
-
-  private void taskMiniView(Label label, JournalEntry entry) {
-    Task t = (Task) entry;
-    GridPane pane = new GridPane();
-    Scene s = new Scene(pane, 400, 500);
-    ImageView imageView = popupView.addIcon
-        ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
-            48, 48);
-    Label title = new Label("Mini Viewer");
-    title.setStyle("-fx-font-size: 16");
-    title.setWrapText(true);
-    boolean complete = t.isComplete();
-    String result = complete ? "Yes" : "No";
-    pane.add(title, 0, 0);
-    TextField name = new TextField(t.getName());
-    name.setEditable(false);
-    TextField description = new TextField(t.getDescription());
-    description.setEditable(false);
-    TextField weekday = new TextField(t.getWeekday().toString());
-    weekday.setEditable(false);
-    pane.add(new Label("Task Name: "), 0, 1);
-    pane.add(name, 1, 1);
-    pane.add(new Label("Description: " + t.getDescription()), 0, 2);
-    pane.add(description, 1, 2);
-    pane.add(new Label("Weekday: "), 0, 3);
-    pane.add(weekday, 1, 3);
-    pane.add(new Label("Complete?: "), 0, 4);
-    pane.add(new Label(result), 1, 4);
-    pane.add(imageView, 1, 0);
-    GridPane.setHalignment(imageView, HPos.RIGHT);
-    Button completeTask =
-        popupView.addPrettyButton("Complete", 80, 30, "pink");
-    pane.add(completeTask, 1, 5);
-    GridPane.setHalignment(completeTask, HPos.RIGHT);
-    pane.setPadding(new Insets(50));
-    pane.setHgap(50);
-    pane.setVgap(50);
-    Stage stage = new Stage();
-    completeTask.setOnAction(event -> {
-      t.completeTask();
-      stage.close();
-      update();
-    });
-    stage.setScene(s);
-    stage.setTitle("Mini Viewer");
-    stage.show();
   }
 }
 
