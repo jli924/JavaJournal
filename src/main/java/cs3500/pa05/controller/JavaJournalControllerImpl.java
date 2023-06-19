@@ -8,11 +8,14 @@ import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
+import java.io.IOException;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -34,6 +37,7 @@ import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 /**
  * The implementation of the JavaJournalController interface
@@ -103,9 +107,32 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   public Scene showSplashScreen() {
-    // need to figure out how to get a scene to display for only 2 seconds
     Stage splash = popupView.splashScreen();
     return splash.getScene();
+  }
+
+  public void closeSplashScreen(Stage splash, Stage journal, Scene scene) {
+    initJournal(journal, scene);
+    PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
+    pauseTransition.setOnFinished(event -> splash.close());
+    pauseTransition.play();
+    PauseTransition pauseTransition1 = new PauseTransition(Duration.seconds(1));
+    pauseTransition1.setOnFinished(event -> journal.show());
+    pauseTransition1.play();
+  }
+
+  public void initJournal(Stage journal, Scene scene) {
+    try {
+      // load and place the cs3500.view's scene onto the stage
+      journal.getIcons().add(new Image(
+          Objects.requireNonNull(getClass()
+              .getClassLoader().getResource("appIcon.png")).openStream()));
+      journal.setTitle("Java Journal");
+      journal.setScene(scene);
+      run();
+    } catch (IllegalStateException | IOException exc) {
+      System.err.println("Unable to load GUI.");
+    }
   }
 
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {

@@ -2,6 +2,7 @@ package cs3500.pa05.view;
 
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -201,9 +202,9 @@ public class PopupView {
     HBox hBox = new HBox();
     Scene splash = new Scene(hBox, 1074, 714);
     Stage splashScreen = new Stage();
-    ImageView icon = addIcon(
-        "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 100, 100);
+    ImageView icon = addIcon("appIcon.png", 100, 100);
     hBox.getChildren().add(icon);
+    hBox.setAlignment(Pos.CENTER);
     splashScreen.setScene(splash);
     splashScreen.setTitle("Java Journal");
     return splashScreen;

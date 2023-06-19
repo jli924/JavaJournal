@@ -7,6 +7,8 @@ import java.util.Objects;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import javafx.animation.PauseTransition;
+import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,6 +17,7 @@ import javafx.stage.Stage;
 import cs3500.pa05.view.JavaJournalView;
 import cs3500.pa05.view.JavaJournalViewImpl;
 import javafx.scene.image.Image;
+import javafx.util.Duration;
 
 
 public class Driver extends Application {
@@ -29,19 +32,10 @@ public class Driver extends Application {
     // instantiate a simple JavaJournal cs3500.view
     JavaJournalController journalController = new JavaJournalControllerImpl();
     JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
-    try {
-      // load and place the cs3500.view's scene onto the stage
-      stage.getIcons().add(new Image(
-          Objects.requireNonNull(getClass()
-              .getClassLoader().getResource("appIcon.png")).openStream()));
-      System.out.println("next stage");
-      stage.setScene(javaJournalView.load());
-      stage.setTitle("Java Journal");
-      stage.show();
-      journalController.run();
-    } catch (IllegalStateException | IOException exc) {
-      System.err.println("Unable to load GUI.");
-    }
+    stage.setScene(journalController.showSplashScreen());
+    stage.show();
+    Stage journal = new Stage();
+    journalController.closeSplashScreen(stage, journal, javaJournalView.load());
   }
 
   public static void main(String[] args) {
