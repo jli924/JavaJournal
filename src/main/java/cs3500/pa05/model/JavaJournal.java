@@ -11,6 +11,7 @@ public class JavaJournal {
   private File bujoFile;
   private String notesAndQuotes;
   private String weekTitle;
+  private String password;
 
   public JavaJournal(Day[] days, File file) {
     this.days = days;
@@ -136,4 +137,7 @@ public class JavaJournal {
     return days;
   }
 
+  public void setPassword(String password) {
+    this.password = password;
+  }
 }

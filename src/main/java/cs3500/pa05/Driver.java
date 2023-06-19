@@ -4,7 +4,13 @@ import cs3500.pa05.controller.JavaJournalController;
 import cs3500.pa05.controller.JavaJournalControllerImpl;
 import java.io.IOException;
 import java.util.Objects;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
 import javafx.application.Application;
+import javafx.application.Platform;
+import javafx.scene.Scene;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import cs3500.pa05.view.JavaJournalView;
 import cs3500.pa05.view.JavaJournalViewImpl;
@@ -14,7 +20,7 @@ import javafx.scene.image.Image;
 public class Driver extends Application {
 
   /**
-   * Starts the GUI for a game of Whack-A-Mole.
+   * Starts the GUI for the Java Journal
    *
    * @param stage the JavaFX stage to add elements to
    */
@@ -28,6 +34,7 @@ public class Driver extends Application {
       stage.getIcons().add(new Image(
           Objects.requireNonNull(getClass()
               .getClassLoader().getResource("appIcon.png")).openStream()));
+      System.out.println("next stage");
       stage.setScene(javaJournalView.load());
       stage.setTitle("Java Journal");
       stage.show();

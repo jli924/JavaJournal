@@ -10,6 +10,9 @@ import cs3500.pa05.view.PopupView;
 import java.io.File;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 import javafx.fxml.FXML;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
@@ -18,6 +21,7 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -52,6 +56,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   Button addTask;
   @FXML
   Button addMenuTask;
+  @FXML
+  ListView taskQueue;
+  List<Task> alreadyAdded = new ArrayList<>();
 
   @FXML
   Button newWeek;
@@ -67,6 +74,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   Button newYear;
   @FXML
   Label year;
+
+  @FXML
+  Button password;
 
   @FXML
   TextArea weeklyOverview;
@@ -90,6 +100,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   public JavaJournalControllerImpl(JavaJournal journal) {
     this.journal = journal;
+  }
+
+  public Scene showSplashScreen() {
+    // need to figure out how to get a scene to display for only 2 seconds
+    Stage splash = popupView.splashScreen();
+    return splash.getScene();
   }
 
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
@@ -120,6 +136,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * To run the application
    */
   public void run() {
+    showSplashScreen();
     initCommands();
     initButtons();
     profilePicture.setFill(new ImagePattern
@@ -134,17 +151,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Set functionality for add task and add event button
    */
   public void initButtons() {
-    addEvent.setOnAction(event -> {
-      eventHandler();
-    });
-    addTask.setOnAction(event -> {
-      taskHandler();
-    });
+    addEvent.setOnAction(event -> eventHandler());
+    addTask.setOnAction(event -> taskHandler());
     addMenuEvent.setOnAction(event -> eventHandler());
     addMenuTask.setOnAction(event -> taskHandler());
     newWeek.setOnAction(event -> newWeekHandler());
     newMonth.setOnAction(event -> newMonthHandler());
     newYear.setOnAction(event -> newYearHandler());
+    password.setOnAction(event -> passwordHandler());
     initTasksandEvents();
     setDays();
     update();
@@ -369,6 +383,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         new KeyCodeCombination(KeyCode.M, KeyCombination.CONTROL_ANY), () -> newMonth.fire());
     newYear.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_ANY), () -> newYear.fire());
+    password.getScene().getAccelerators().put(
+        new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
   }
 
   /**
@@ -419,6 +435,22 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     yearStage.show();
   }
 
+  /**
+   * Handles the set password popup
+   */
+  private void passwordHandler() {
+    TextField field = new TextField();
+    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+    Stage passwordStage = popupView.newTimeScene("Set Password", "Password: ",
+        "Set Password", field, save,
+        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 15);
+    save.setOnAction(event -> {
+      journal.setPassword(field.getText());
+      passwordStage.close();
+    });
+    passwordStage.show();
+  }
+
 
   private void update() {
     weeklyOverview.setEditable(false);
@@ -430,6 +462,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         + System.lineSeparator()
         + "Tasks completed: "
         + journal.percentComplete() + "%");
+    for (Task task : journal.getTasks()) {
+      if (!alreadyAdded.contains(task)) {
+        alreadyAdded.add(task);
+        taskQueue.getItems().add(task.getName());
+      }
+    }
   }
 
   public void miniViewer(Label label, JournalEntry entry) {

@@ -10,6 +10,7 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 /**
@@ -194,5 +195,17 @@ public class PopupView {
     for (TextField f: fields) {
       f.setEditable(true);
     }
+  }
+
+  public Stage splashScreen() {
+    HBox hBox = new HBox();
+    Scene splash = new Scene(hBox, 1074, 714);
+    Stage splashScreen = new Stage();
+    ImageView icon = addIcon(
+        "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 100, 100);
+    hBox.getChildren().add(icon);
+    splashScreen.setScene(splash);
+    splashScreen.setTitle("Java Journal");
+    return splashScreen;
   }
 }
