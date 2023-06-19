@@ -86,8 +86,8 @@
             </font>
          </TextField>
          <Circle fx:id="profilePicture" fill="#fff7f5" layoutX="91.0" layoutY="88.0" radius="49.0" stroke="#c46a5e" strokeType="INSIDE" />
-         <Button fx:id="addEvent" layoutX="26.0" layoutY="148.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@../../../../../Downloads/scene.css" text="Add JEvent" />
-         <Button fx:id="addTask" layoutX="26.0" layoutY="190.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@../../../../../Downloads/scene.css" text="Add task" />
+         <Button fx:id="addEvent" layoutX="26.0" layoutY="148.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@scene.css" text="Add JEvent" />
+         <Button fx:id="addTask" layoutX="26.0" layoutY="190.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@scene.css" text="Add task" />
          <Label fx:id="totalEvents" layoutX="994.0" layoutY="128.0" prefHeight="17.0" prefWidth="48.0" />
          <Label fx:id="totalTasks" layoutX="993.0" layoutY="148.0" prefHeight="17.0" prefWidth="49.0" />
          <Label fx:id="tasksCompleted" layoutX="993.0" layoutY="169.0" prefHeight="17.0" prefWidth="49.0" />
