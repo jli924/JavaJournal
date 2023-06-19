@@ -1,5 +1,12 @@
 package cs3500.pa05.view;
 
+import cs3500.pa05.controller.JavaJournalController;
+import cs3500.pa05.controller.JavaJournalControllerImpl;
+import cs3500.pa05.controller.saveProcessor;
+import cs3500.pa05.model.JEvent;
+import cs3500.pa05.model.JournalEntry;
+import cs3500.pa05.model.Task;
+import java.lang.reflect.Method;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -208,5 +215,97 @@ public class PopupView {
     splashScreen.setScene(splash);
     splashScreen.setTitle("Java Journal");
     return splashScreen;
+  }
+
+  public void eventMiniView(Label label, JournalEntry entry,
+                            JavaJournalControllerImpl controller, GridPane mainGrid) {
+    JEvent e = (JEvent) entry;
+    GridPane pane = new GridPane();
+    Scene s = new Scene(pane, 400, 600);
+    Label title = new Label("Mini Viewer");
+    title.setStyle("-fx-font-size: 16");
+    pane.add(title, 0, 0);
+    TextField name = new TextField(e.getName());
+    name.setEditable(false);
+    TextField description = new TextField(e.getDescription());
+    description.setEditable(false);
+    TextField weekday = new TextField(e.getWeekday().toString());
+    weekday.setEditable(false);
+    TextField startTime = new TextField(e.getStartTime());
+    startTime.setEditable(false);
+    TextField duration = new TextField(e.getDuration());
+    duration.setEditable(false);
+    pane.add(name, 1, 1);
+    pane.add(description, 1, 2);
+    pane.add(weekday, 1, 3);
+    pane.add(startTime, 1, 4);
+    pane.add(duration, 1, 5);
+    pane.add(new Label("Event Name: "), 0, 1);
+    pane.add(new Label("Description: "), 0, 2);
+    pane.add(new Label("Weekday: "), 0, 3);
+    pane.add(new Label("Start Time: "), 0, 4);
+    pane.add(new Label("Duration: "), 0, 5);
+    Button edit = addPrettyButton("Edit", 80, 30, "pink");
+    edit.setOnAction(event -> {
+      editScene(new TextField[] {name, description, weekday, startTime, duration});
+    });
+    Button save = addPrettyButton("Save", 80, 30, "pink");
+    pane.add(edit, 0, 6);
+    pane.add(save, 1, 6);
+    pane.setPadding(new Insets(50));
+    pane.setHgap(50);
+    pane.setVgap(50);
+    Stage stage = new Stage();
+    save.setOnAction(new saveProcessor(e,
+        new TextField[] {name, description, weekday,
+            startTime, duration}, this, stage, label, controller, mainGrid));
+    stage.setScene(s);
+    stage.setTitle("Mini Viewer");
+    stage.show();
+  }
+
+  public void taskMiniView(Label label, Task t, Stage stage, Button completeTask) {
+    GridPane pane = new GridPane();
+    Scene s = new Scene(pane, 400, 500);
+    ImageView imageView = addIcon
+        ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
+            48, 48);
+    Label title = new Label("Mini Viewer");
+    title.setStyle("-fx-font-size: 16");
+    title.setWrapText(true);
+    boolean complete = t.isComplete();
+    String result = complete ? "Yes" : "No";
+    pane.add(title, 0, 0);
+    TextField name = new TextField(t.getName());
+    name.setEditable(false);
+    TextField description = new TextField(t.getDescription());
+    description.setEditable(false);
+    TextField weekday = new TextField(t.getWeekday().toString());
+    weekday.setEditable(false);
+    pane.add(new Label("Task Name: "), 0, 1);
+    pane.add(name, 1, 1);
+    pane.add(new Label("Description: " + t.getDescription()), 0, 2);
+    pane.add(description, 1, 2);
+    pane.add(new Label("Weekday: "), 0, 3);
+    pane.add(weekday, 1, 3);
+    pane.add(new Label("Complete?: "), 0, 4);
+    pane.add(new Label(result), 1, 4);
+    pane.add(imageView, 1, 0);
+    GridPane.setHalignment(imageView, HPos.RIGHT);
+//    Button completeTask = addPrettyButton("Complete", 80, 30, "pink");
+    pane.add(completeTask, 1, 5);
+    GridPane.setHalignment(completeTask, HPos.RIGHT);
+    pane.setPadding(new Insets(50));
+    pane.setHgap(50);
+    pane.setVgap(50);
+//    Stage stage = new Stage();
+//    completeTask.setOnAction(event -> {
+//      t.completeTask();
+//      stage.close();
+//      update();
+//    });
+    stage.setScene(s);
+    stage.setTitle("Mini Viewer");
+    stage.show();
   }
 }
