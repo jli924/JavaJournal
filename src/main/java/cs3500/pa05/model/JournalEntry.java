@@ -10,18 +10,6 @@ public abstract class JournalEntry {
   String description;
   Weekday weekday;
 
-  public void setName(String name) {
-    this.name = name;
-  }
-
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public void setWeekday(Weekday weekday) {
-    this.weekday = weekday;
-  }
-
   /**
    * Constructor
    *
@@ -67,4 +55,19 @@ public abstract class JournalEntry {
   public Weekday getWeekday() {
     return weekday;
   }
+
+  public abstract void mutate(String[] newValues);
+
+  public void setName(String name) {
+    this.name = name;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public void setWeekday(Weekday weekday) {
+    this.weekday = weekday;
+  }
+
 }

@@ -36,35 +36,23 @@ public class SaveProcessor implements EventHandler {
   public void handle(Event event) {
     System.out.println("entry before mods: " + entry.getName());
     // we have to move the entry back to the right list
-      try {
-        System.out.println("reached modification");
-        if (newValues.length == 5) {
-          System.out.println("new name is: " + newValues[0]);
-          entry.setName(newValues[0].getText());
-          entry.setDescription(newValues[1].getText());
-          entry.setWeekday(Weekday.valueOf(newValues[2].getText().toUpperCase()));
-          entry.setStartTime(newValues[3].getText());
-          entry.setDuration(newValues[4].getText());
-        } else {
-          System.out.println("did not reach modification");
-          entry.setName(newValues[0].getText());
-          entry.setWeekday(Weekday.valueOf(newValues[1].getText().toUpperCase()));
-          entry.setStartTime(newValues[2].getText());
-          entry.setDuration(newValues[3].getText());
-        }
-        label.setText(entry.getName());
-        label.setOnMouseClicked(event2 -> {
-          controller.miniViewer(label, entry);
-        });
-        pane.add(pane.getChildren().remove(pane.getChildren().indexOf(label)),
-            entry.getWeekday().ordinal(),
-            JavaJournalControllerImpl.findFirstEmptyRow(pane, entry.getWeekday().ordinal()));
-
-      } catch (Exception e2) {
-        popupView.invalidInputAlert("Invalid input",
-            "Please ensure all inputs are valid, descriptions are optional");
-      }
-   // } else {
+    try {
+      System.out.println("reached modification");
+      System.out.println("new name is: " + newValues[0]);
+      entry.mutate(new String[] {newValues[0].getText(), newValues[1].getText(),
+          newValues[2].getText().toUpperCase(), newValues[3].getText(), newValues[4].getText()});
+      label.setText(entry.getName());
+      label.setOnMouseClicked(event2 -> {
+        controller.miniViewer(label, entry);
+      });
+      pane.add(pane.getChildren().remove(pane.getChildren().indexOf(label)),
+          entry.getWeekday().ordinal(),
+          JavaJournalControllerImpl.findFirstEmptyRow(pane, entry.getWeekday().ordinal()));
+    } catch (Exception e2) {
+      popupView.invalidInputAlert("Invalid input",
+          "Please ensure all inputs are valid, descriptions are optional");
+    }
+    // } else {
 //      try {
 //        if (newValues.length == 3) {
 //          entry = new Task(newValues[0].getText(),

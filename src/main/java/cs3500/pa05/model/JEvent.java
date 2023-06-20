@@ -21,8 +21,12 @@ public class JEvent extends JournalEntry {
   public JEvent(String name, String description, Weekday weekday,
                 String startTime, String duration) {
     super(name, description, weekday);
-    this.startTime = startTime;
-    this.duration = duration;
+    if (startTime.isEmpty() || duration.isEmpty()) {
+      throw new IllegalArgumentException("an event must have a start time and duration");
+    } else {
+      this.startTime = startTime;
+      this.duration = duration;
+    }
   }
 
   /**
@@ -36,8 +40,12 @@ public class JEvent extends JournalEntry {
   public JEvent(String name, Weekday weekday,
                 String startTime, String duration) {
     super(name, weekday);
-    this.startTime = startTime;
-    this.duration = duration;
+    if (startTime.isEmpty() || duration.isEmpty()) {
+      throw new IllegalArgumentException("an event must have a start time and duration");
+    } else {
+      this.startTime = startTime;
+      this.duration = duration;
+    }
     description = "";
   }
 
@@ -64,5 +72,13 @@ public class JEvent extends JournalEntry {
 
   public void setDuration(String duration) {
     this.duration = duration;
+  }
+
+  public void mutate(String[] newValues) {
+    this.name = newValues[0];
+    this.description = newValues[1];
+    this.weekday = Weekday.valueOf(newValues[2]);
+    this.startTime = newValues[3];
+    this.duration = newValues[4];
   }
 }

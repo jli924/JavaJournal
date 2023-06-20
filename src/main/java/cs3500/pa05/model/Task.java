@@ -68,4 +68,12 @@ public class Task extends JournalEntry {
   public TaskJson toTaskJson() {
     return new TaskJson(name, description, weekday, complete);
   }
+
+  public void mutate(String[] newValues) {
+    if (newValues[0].isEmpty())
+    this.name = newValues[0];
+    this.description = newValues[1];
+    this.weekday = Weekday.valueOf(newValues[2]);
+    this.complete = false;
+  }
 }
