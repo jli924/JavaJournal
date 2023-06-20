@@ -32,7 +32,7 @@ public class Driver extends Application {
   public void start(Stage stage) {
     // instantiate a simple JavaJournal cs3500.view
     JavaJournal javaJournal = new JavaJournal();
-    JavaJournalController journalController = new JavaJournalControllerImpl(javaJournal);
+    JavaJournalController journalController = new JavaJournalControllerImpl(javaJournal, stage);
     JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
     stage.setScene(journalController.showSplashScreen());
     stage.show();

@@ -1,5 +1,6 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.JavaJournal;
 import java.io.File;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -24,7 +25,7 @@ public interface JavaJournalController {
    * To open the journal from a file
    * @param file the file to open from
    */
-  void openFile(File file);
+  JavaJournal openFile(File file);
   /**
    * To a splash screen
    * @return the scene of the screen

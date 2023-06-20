@@ -3,6 +3,7 @@ package cs3500.pa05.controller;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectReader;
+import cs3500.pa05.Driver;
 import cs3500.pa05.model.Day;
 import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
@@ -12,6 +13,8 @@ import cs3500.pa05.model.Weekday;
 import cs3500.pa05.model.json.DayJson;
 import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.JsonUtils;
+import cs3500.pa05.view.JavaJournalView;
+import cs3500.pa05.view.JavaJournalViewImpl;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
 import java.io.FileReader;
@@ -105,6 +108,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   PopupView popupView = new PopupView();
 
+  Stage stage;
+
   /**
    * Constructor
    */
@@ -116,9 +121,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Constructor for loading a journal
    *
    * @param journal the journal to load
+   * @param stage the stage to load
    */
-  public JavaJournalControllerImpl(JavaJournal journal) {
+  public JavaJournalControllerImpl(JavaJournal journal, Stage stage) {
     this.journal = journal;
+    this.stage = stage;
   }
 
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
@@ -402,8 +409,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
 
   @Override
-  public void openFile(File file) {
+  public JavaJournal openFile(File file) {
     this.journal = new JavaJournal(file);
+    return this.journal;
   }
 
   public void initCommands() {
@@ -458,8 +466,17 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     open.setOnAction(event -> {
       String filename = field.getText();
       File file = new File(filename + ".bujo");
-      openFile(file);
+      JavaJournal newJournal = openFile(file);
       openStage.close();
+      //AA starting a new file
+      Stage newStage = new Stage();
+      JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
+      JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
+      newStage.setScene(journalController.showSplashScreen());
+      newStage.show();
+      Stage journal = new Stage();
+      journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
+      stage.close();
     });
     openStage.show();
     password.getScene().getAccelerators().put(
