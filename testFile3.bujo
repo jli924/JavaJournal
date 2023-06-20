@@ -1,7 +1,0 @@
-DayJson[day=SUNDAY, tasks=[TaskJson[name=2, description=comments, day=SUNDAY, complete=false]], events=[EventJson[name=1, description=1, day=SUNDAY, startTIme=2:00, duration=1:30]], maxEvents=10, maxTasks=10]
-DayJson[day=MONDAY, tasks=[], events=[], maxEvents=10, maxTasks=10]
-DayJson[day=TUESDAY, tasks=[], events=[], maxEvents=10, maxTasks=10]
-DayJson[day=WEDNESDAY, tasks=[], events=[], maxEvents=10, maxTasks=10]
-DayJson[day=THURSDAY, tasks=[], events=[], maxEvents=10, maxTasks=10]
-DayJson[day=FRIDAY, tasks=[], events=[], maxEvents=10, maxTasks=10]
-DayJson[day=SATURDAY, tasks=[], events=[], maxEvents=10, maxTasks=10]

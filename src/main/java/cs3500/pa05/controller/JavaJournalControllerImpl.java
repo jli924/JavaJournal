@@ -20,6 +20,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -438,11 +439,22 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Handles the new save to file event
    */
   private void saveToFileHandler() {
+    /*
+    Stage stage = new Stage();
+    FileChooser chooser = new FileChooser();
+
+    File tmp = chooser.showOpenDialog(stage);
+    String path = tmp.getAbsolutePath();
+    File file = new File(path);
+    saveToFile(file);
+     */
     TextField field = new TextField();
     Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
     Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
         "New Save", field, save,
         "https://www.iconsdb.com/icons/preview/pink/save-as-xxl.png", 19);
+
+
     save.setOnAction(event -> {
       String filename = field.getText();
       File file = new File(filename + ".bujo");
@@ -456,6 +468,25 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Handles the new save to file event
    */
   private void openFileHandler() {
+   /*
+    Stage stage = new Stage();
+    FileChooser chooser = new FileChooser();
+
+    File tmp = chooser.showOpenDialog(stage);
+    String path = tmp.getAbsolutePath();
+    File file = new File(path);
+    saveToFile(file);
+    //AA starting a new file
+    this.stage.close();
+    JavaJournal newJournal = openFile(file);
+    Stage newStage = new Stage();
+    JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
+    JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
+    newStage.setScene(journalController.showSplashScreen());
+    newStage.show();
+    Stage journal = new Stage();
+    journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
+    */
     TextField field = new TextField();
     Button open = popupView.addPrettyButton("Open", 50, 30, "pink");
     Stage openStage = popupView.newSaveOrOpenScene("Open File:",
@@ -481,6 +512,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     openStage.show();
     password.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
+
   }
 
   /**
