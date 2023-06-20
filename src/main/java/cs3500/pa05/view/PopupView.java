@@ -3,6 +3,7 @@ package cs3500.pa05.view;
 import cs3500.pa05.controller.JavaJournalControllerImpl;
 import cs3500.pa05.controller.SaveProcessor;
 import cs3500.pa05.model.JEvent;
+import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import javafx.geometry.HPos;
@@ -261,9 +262,11 @@ public class PopupView {
     stage.show();
   }
 
-  public void taskMiniView(Label label, Task t, Stage stage, Button completeTask) {
+  // need to find better placement for buttons
+  public void taskMiniView(Label label, Task t, Stage stage, Button completeTask,
+                           JavaJournalControllerImpl controller, GridPane mainGrid) {
     GridPane pane = new GridPane();
-    Scene s = new Scene(pane, 400, 500);
+    Scene s = new Scene(pane, 400, 600);
     ImageView imageView = addIcon
         ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
             48, 48);
@@ -289,18 +292,20 @@ public class PopupView {
     pane.add(new Label(result), 1, 4);
     pane.add(imageView, 1, 0);
     GridPane.setHalignment(imageView, HPos.RIGHT);
-//    Button completeTask = addPrettyButton("Complete", 80, 30, "pink");
     pane.add(completeTask, 1, 5);
     GridPane.setHalignment(completeTask, HPos.RIGHT);
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
-//    Stage stage = new Stage();
-//    completeTask.setOnAction(event -> {
-//      t.completeTask();
-//      stage.close();
-//      update();
-//    });
+    Button edit = addPrettyButton("Edit", 80, 30, "pink");
+    edit.setOnAction(event -> editScene(
+        new TextField[] {name, description, weekday}));
+    Button save = addPrettyButton("Save", 80, 30, "pink");
+    pane.add(edit, 0, 6);
+    pane.add(save, 1, 6);
+    save.setOnAction(new SaveProcessor(t,
+        new TextField[] {name, description, weekday,},
+        this, stage, label, controller, mainGrid));
     stage.setScene(s);
     stage.setTitle("Mini Viewer");
     stage.show();

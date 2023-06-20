@@ -636,7 +636,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           stage.close();
           update();
         });
-        popupView.taskMiniView(label, t, stage, completeTask);
+        popupView.taskMiniView(label, t, stage, completeTask, this, mainGrid);
       } catch (Exception ignored) {
         // the user clicked an invalid coordinate, we don't need to log this exception
       }

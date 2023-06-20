@@ -47,33 +47,14 @@ public class Task extends JournalEntry {
     this.complete = true;
   }
 
-  /**
-   * Sets the status of a given task
-   *
-   * @param status the boolean to set the complete status to
-   */
-  public void setStatus(boolean status) {
-    this.complete = status;
-  }
-
-  /**
-   * Builds the string equivalent of the Task
-   *
-   * @return the string equivalent of this journalEntry
-   */
-  public String journalToString() {
-    return null;
-  }
-
   public TaskJson toTaskJson() {
     return new TaskJson(name, description, weekday, complete);
   }
 
   public void mutate(String[] newValues) {
-    if (newValues[0].isEmpty())
     this.name = newValues[0];
     this.description = newValues[1];
-    this.weekday = Weekday.valueOf(newValues[2]);
+    this.weekday = Weekday.valueOf(newValues[2].toUpperCase());
     this.complete = false;
   }
 }
