@@ -99,4 +99,12 @@ public class Day {
   }
 
   public Weekday getDay() {return day;}
+
+  public int getMaxEvents() {
+    return this.maxEvents;
+  }
+
+  public int getMaxTasks() {
+    return this.maxTasks;
+  }
 }
