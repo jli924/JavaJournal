@@ -151,4 +151,12 @@ public class JavaJournal {
     }
     return output;
   }
+
+  public int getMaxTasks() {
+    return this.days[0].getMaxTasks();
+  }
+
+  public int getMaxEvents() {
+    return this.days[0].getMaxEvents();
+  }
 }

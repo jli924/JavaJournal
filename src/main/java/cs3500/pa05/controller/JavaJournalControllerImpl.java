@@ -9,7 +9,9 @@ import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
 import cs3500.pa05.model.json.DayJson;
+import cs3500.pa05.model.json.EventJson;
 import cs3500.pa05.model.json.JsonUtils;
+import cs3500.pa05.model.json.TaskJson;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -426,7 +428,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * @param file the file to save to
    */
   public void saveToFile(File file) {
-    ObjectMapper mapper = new ObjectMapper();
+    //ObjectMapper mapper = new ObjectMapper();
     try {
       FileWriter writer = new FileWriter(file);
       List<DayJson> output = this.journal.serializeJournal();
@@ -446,14 +448,67 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     try {
       FileReader reader = new FileReader(file);
       int i;
-      while((i = reader.read()) != -1) {
+      while ((i = reader.read()) != -1) {
         output.append(i);
       }
-      } catch (IOException e) {
+    } catch (IOException e) {
       System.err.println("Cannot read from .bujo file.");
     }
     String strOutput = output.toString();
-    String[] array = strOutput.strip().split(System.lineSeparator());
+    String[] array = strOutput.split(System.lineSeparator());
+    extractText(array);
+  }
+
+  private Day[] extractText(String[] array) {
+    Day[] days = new Day[7];
+    for (int i = 0; i < days.length; i++) {
+      ArrayList<TaskJson> tasks = convertTasks(array[i]);
+      ArrayList<EventJson> events = convertEvents(array[i]);
+      int maxTasks = this.journal.getMaxTasks();
+      int maxEvents = this.journal.getMaxEvents();
+      Weekday weekday = findWeekday(array[i]);
+      DayJson dayJson = new DayJson(weekday, tasks, events, maxEvents, maxTasks);
+      Day outputDay = dayJson.toDay();
+      days[i] = outputDay;
+    }
+    return days;
+  }
+
+  private ArrayList<EventJson> convertEvents(String s) {
+    ArrayList<EventJson> events = new ArrayList();
+    return events;
+  }
+
+  private ArrayList<TaskJson> convertTasks(String s) {
+    ArrayList<TaskJson> tasks = new ArrayList();
+    return tasks;
+  }
+
+  private Weekday findWeekday(String day) {
+    int startIndex = day.indexOf("[day=");
+    int commaIndex = day.indexOf(",");
+    String weekday = day.substring(startIndex, commaIndex);
+    return toWeekday(weekday);
+  }
+
+  private Weekday toWeekday(String weekday) {
+    if (weekday.equals("SUNDAY")) {
+      return Weekday.SUNDAY;
+    } else if (weekday.equals("MONDAY")) {
+      return Weekday.MONDAY;
+    } else if (weekday.equals("TUESDAY")) {
+      return Weekday.TUESDAY;
+    } else if (weekday.equals("WEDNESDAY")) {
+      return Weekday.WEDNESDAY;
+    } else if (weekday.equals("THURSDAY")) {
+      return Weekday.THURSDAY;
+    } else if (weekday.equals("FRIDAY")) {
+      return Weekday.FRIDAY;
+    } else if (weekday.equals("SATURDAY")) {
+      return Weekday.SATURDAY;
+    } else {
+      throw new RuntimeException("Cannot find day");
+    }
   }
 
   public void initCommands() {
