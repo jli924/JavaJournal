@@ -1,5 +1,8 @@
 package cs3500.pa05.model;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import cs3500.pa05.model.json.DayJson;
 import cs3500.pa05.model.json.JsonUtils;
 import java.io.File;
 import java.io.FileWriter;
@@ -120,18 +123,6 @@ public class JavaJournal {
     // the bujo file in the days field
   }
 
-  public void writeToFile() {
-    try {
-      FileWriter writer = new FileWriter("testFile.bujo");
-      for (Day day : days) {
-        writer.write(JsonUtils.serializeRecord(day.toDayJson()).toPrettyString()
-            + System.lineSeparator() + System.lineSeparator());
-      }
-      writer.close();
-    } catch (Exception e) {
-      System.err.println("Cannot write to .bujoFile");
-    }
-  }
 
   public Day[] getDays() {
     return days;
@@ -141,8 +132,23 @@ public class JavaJournal {
     this.password = password;
   }
 
-  public String convertToJSON() {
-    String output = new StringBuilder().toString();
+  /**
+   *
+   * @return the list of dayJSONNodes
+   */
+  public List<DayJson> serializeJournal() {
+    List<DayJson> output = new ArrayList<>();
+    ObjectMapper mapper = new ObjectMapper();
+    try {
+      for (Day day : days) {
+        JsonNode node = JsonUtils.serializeRecord(day.toDayJson());
+        DayJson dayJson = mapper.convertValue(node, DayJson.class);
+        //.toPrettyString() + System.lineSeparator() + System.lineSeparator();
+        output.add(dayJson);
+      }
+    } catch (Exception e) {
+      System.err.println("Cannot serialize JSON");
+    }
     return output;
   }
 }

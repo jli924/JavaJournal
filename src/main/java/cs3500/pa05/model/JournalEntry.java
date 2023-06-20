@@ -5,7 +5,7 @@ import java.util.Objects;
 /**
  * Represents a journal entry
  */
-public abstract class JournalEntry implements IJournalEntry {
+public abstract class JournalEntry {
   String name;
   String description;
   Weekday weekday;

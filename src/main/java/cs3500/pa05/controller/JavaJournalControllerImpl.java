@@ -1,13 +1,19 @@
 package cs3500.pa05.controller;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import cs3500.pa05.model.Day;
 import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
+import cs3500.pa05.model.json.DayJson;
+import cs3500.pa05.model.json.JsonUtils;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.time.DayOfWeek;
@@ -15,6 +21,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Scanner;
 import java.util.concurrent.TimeUnit;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
@@ -413,26 +420,40 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     }
   }
 
-  @Override
+  /**
+   * Saves the converted journal to string and outputs to the file
+   *
+   * @param file the file to save to
+   */
   public void saveToFile(File file) {
-    String converted = this.journal.convertToJSON();
+    ObjectMapper mapper = new ObjectMapper();
     try {
-      if (file.createNewFile()) {
-        System.out.println("File created: " + file.getName());
-      } else {
-        System.out.println("File already exists: Overwriting this file...");
+      FileWriter writer = new FileWriter(file);
+      List<DayJson> output = this.journal.serializeJournal();
+      for (DayJson day : output) {
+        writer.write(day + System.lineSeparator());
       }
-      FileWriter fw = new FileWriter(file);
-      fw.write(converted);
-      System.out.println("File has been saved.");
-    } catch (IOException e) {
-      throw new RuntimeException("File could not be saved.", e);
+      writer.close();
+    } catch (Exception e) {
+      System.err.println("Cannot write to .bujo file.");
     }
   }
 
+  //AA
   @Override
   public void openFile(File file) {
-
+    StringBuilder output = new StringBuilder();
+    try {
+      FileReader reader = new FileReader(file);
+      int i;
+      while((i = reader.read()) != -1) {
+        output.append(i);
+      }
+      } catch (IOException e) {
+      System.err.println("Cannot read from .bujo file.");
+    }
+    String strOutput = output.toString();
+    String[] array = strOutput.strip().split(System.lineSeparator());
   }
 
   public void initCommands() {
@@ -456,7 +477,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
 
-//AA
+  //AA
   /**
    * Handles the new save to file event
    */
@@ -465,11 +486,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
     Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
         "New Save", field, save,
-        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
-    //TODO: GET NEW ICON
+        "https://www.iconsdb.com/icons/preview/pink/save-as-xxl.png", 19);
     save.setOnAction(event -> {
       String filename = field.getText();
-      File file = new File("src" + "main" + "resources" + filename + ".bujo");
+      File file = new File( filename + ".bujo");
       saveToFile(file);
       saveStage.close();
     });
@@ -486,11 +506,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Stage openStage = popupView.newSaveOrOpenScene("Open File:",
         "Filename (w/out '.bujo'): ",
         "Open File", field, open,
-        "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 19);
-    //TODO: GET NEW ICON
+        "https://www.iconsdb.com/icons/preview/pink/data-transfer-download-xxl.png",
+        19);
     open.setOnAction(event -> {
       String filename = field.getText();
-      File file = new File("src" + "main" + "resources" + filename + ".bujo");
+      File file = new File(filename + ".bujo");
       openFile(file);
       openStage.close();
     });
