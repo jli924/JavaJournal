@@ -2,6 +2,7 @@ package cs3500.pa05.controller;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import cs3500.pa05.model.Day;
 import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
@@ -9,10 +10,10 @@ import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
 import cs3500.pa05.model.json.DayJson;
+import cs3500.pa05.model.json.JournalJson;
 import cs3500.pa05.model.json.JsonUtils;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -22,10 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.Scanner;
-import java.util.concurrent.TimeUnit;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
-import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
@@ -197,7 +196,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * To run the application
    */
   public void run() {
-    journal.initializeDays();
+    if (!journal.isJournalFileEmpty()) {
+      journal.initializeDays();
+    }
     showSplashScreen();
     initCommands();
     initButtons();
@@ -399,20 +400,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     journal.writeToFile(file);
   }
 
+
   @Override
   public void openFile(File file) {
-//    StringBuilder output = new StringBuilder();
-//    try {
-//      FileReader reader = new FileReader(file);
-//      int i;
-//      while((i = reader.read()) != -1) {
-//        output.append(i);
-//      }
-//      } catch (IOException e) {
-//      System.err.println("Cannot read from .bujo file.");
-//    }
-//    String strOutput = output.toString();
-//    String[] array = strOutput.strip().split(System.lineSeparator());
+    this.journal = new JavaJournal(file);
   }
 
   public void initCommands() {
@@ -428,7 +419,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         new KeyCodeCombination(KeyCode.Y, KeyCombination.CONTROL_ANY), () -> newYear.fire());
     password.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
-    //AA
     saveToFile.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.S, KeyCombination.CONTROL_ANY), () -> saveToFile.fire());
     openFile.getScene().getAccelerators().put(
@@ -453,8 +443,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     });
     saveStage.show();
   }
-
-  //AA
 
   /**
    * Handles the new save to file event

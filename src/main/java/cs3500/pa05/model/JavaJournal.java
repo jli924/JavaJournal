@@ -9,6 +9,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class JavaJournal {
   private Day[] days = new Day[7];
@@ -22,13 +23,20 @@ public class JavaJournal {
     bujoFile = new File("testFile.bujo");
   }
 
+  public JavaJournal(File file) {
+    this.bujoFile = file;
+    initializeDays();
+  }
+
   public JavaJournal() {
     for (int i = 0; i < 7; i++) {
       days[i] = new Day(Weekday.values()[i], new ArrayList<>(),
           new ArrayList<>(), 10, 10);
     }
-    bujoFile = new File("testFile2.bujo");
+    //bujoFile = new File("testFile2.bujo");
   }
+
+
 
   /**
    * Finds the percentage of tasks completed for a given week
@@ -130,13 +138,13 @@ public class JavaJournal {
     try {
       JsonNode journalFile = mapper.readTree(bujoFile);
       JournalJson journalJson = mapper.convertValue(journalFile, JournalJson.class);
+
       Day[] daysFromFile = new Day[7];
       for (int i = 0; i < 7; i++) {
         DayJson dayJson = journalJson.days()[i];
         daysFromFile[i] = dayJson.toDay();
       }
       this.days = daysFromFile;
-      this.bujoFile = journalJson.bujoFile();
       this.notesAndQuotes = journalJson.notesAndQuotes();
       this.weekTitle = journalJson.weekTitle();
       this.password = journalJson.password();
@@ -182,10 +190,11 @@ public class JavaJournal {
    *
    */
   public void writeToFile(File file) {
+    this.bujoFile = file;
     JsonNode journalNode = JsonUtils.serializeRecord(this.toJournalJson());
     try {
       FileWriter writer = new FileWriter(bujoFile);
-      writer.write(journalNode.toString());
+      writer.write(journalNode.toPrettyString());
       writer.close();
     } catch (Exception e) {
       throw new RuntimeException(e.getMessage());
@@ -204,7 +213,8 @@ public class JavaJournal {
       DayJson cur = day.toDayJson();
       dayJsons[i] = cur;
     }
-    return new JournalJson(dayJsons, bujoFile, notesAndQuotes, weekTitle, password);
+    return new JournalJson(dayJsons, this.bujoFile, this.notesAndQuotes, this.weekTitle,
+        this.password);
   }
 
   /**
@@ -217,5 +227,9 @@ public class JavaJournal {
 
   public void setWeekTitle(String weekTitle) {
     this.weekTitle = weekTitle;
+  }
+
+  public boolean isJournalFileEmpty() {
+    return this.bujoFile == null;
   }
 }
