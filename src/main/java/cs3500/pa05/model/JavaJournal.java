@@ -125,11 +125,10 @@ public class JavaJournal {
    */
   public void initializeDays() {
     // should read the bujo file data and initialize the data from
-    // the bujo file in the days field
+    // the bujo file in the fields
     ObjectMapper mapper = new ObjectMapper();
     try {
       JsonNode journalFile = mapper.readTree(bujoFile);
-//      System.out.println(journalFile.toPrettyString());
       JournalJson journalJson = mapper.convertValue(journalFile, JournalJson.class);
       Day[] daysFromFile = new Day[7];
       for (int i = 0; i < 7; i++) {

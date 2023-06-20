@@ -248,7 +248,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     save.setOnAction(event -> {
       try {
         JEvent userJEvent = new JEvent(name.getText(), description.getText(),
-            Weekday.valueOf(weekday.getText().toUpperCase()),
+            Weekday.valueOfString(weekday.getText().toUpperCase()),
             startTime.getText(), duration.getText());
         journal.addEvent(userJEvent);
         Label newEvent = new Label(userJEvent.getName());
@@ -284,7 +284,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     save.setOnAction(event -> {
       try {
         Task userTask = new Task(name.getText(), description.getText(),
-            Weekday.valueOf(weekday.getText().toUpperCase()), false);
+            Weekday.valueOfString(weekday.getText().toUpperCase()), false);
         journal.addTask(userTask);
         Label newTask = new Label(userTask.getName());
         newTask.setPadding(new Insets(5));
@@ -394,23 +394,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * @param file the file to save to
    */
   public void saveToFile(File file) {
-//    ObjectMapper mapper = new ObjectMapper();
-//    try {
-//      FileWriter writer = new FileWriter(file);
-//      List<DayJson> output = this.journal.serializeJournal();
-//      for (DayJson day : output) {
-//        writer.write(day + System.lineSeparator());
-//      }
-//      writer.close();
-//    } catch (Exception e) {
-//      System.err.println("Cannot write to .bujo file.");
-//    }
     journal.addNotes(notesAndQuotes.getText());
     journal.setWeekTitle(weekLabel.getText());
     journal.writeToFile(file);
   }
 
-  //AA
   @Override
   public void openFile(File file) {
 //    StringBuilder output = new StringBuilder();
@@ -447,8 +435,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         new KeyCodeCombination(KeyCode.O, KeyCombination.CONTROL_ANY), () -> openFile.fire());
   }
 
-
-  //AA
 
   /**
    * Handles the new save to file event

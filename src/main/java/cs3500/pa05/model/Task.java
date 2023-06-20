@@ -54,7 +54,7 @@ public class Task extends JournalEntry {
   public void mutate(String[] newValues) {
     this.name = newValues[0];
     this.description = newValues[1];
-    this.weekday = Weekday.valueOf(newValues[2].toUpperCase());
+    this.weekday = Weekday.valueOfString(newValues[2].toUpperCase());
     this.complete = false;
   }
 }

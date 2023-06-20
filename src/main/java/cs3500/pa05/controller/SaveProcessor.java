@@ -37,14 +37,11 @@ public class SaveProcessor implements EventHandler {
 
   @Override
   public void handle(Event event) {
-    System.out.println("entry before mods: " + entry.getName());
     List<String> values = new ArrayList<>();
     for (TextField field : newValues) {
       values.add(field.getText());
     }
     try {
-      System.out.println("reached modification");
-      System.out.println("new name is: " + newValues[0]);
       entry.mutate(values.toArray(new String[0]));
       label.setText(entry.getName());
       label.setOnMouseClicked(event2 -> {
@@ -53,11 +50,10 @@ public class SaveProcessor implements EventHandler {
       pane.add(pane.getChildren().remove(pane.getChildren().indexOf(label)),
           entry.getWeekday().ordinal(),
           JavaJournalControllerImpl.findFirstEmptyRow(pane, entry.getWeekday().ordinal()));
+      stage.close();
     } catch (Exception e2) {
       popupView.invalidInputAlert("Invalid input",
           "Please ensure all inputs are valid, descriptions are optional");
     }
-    stage.close();
-    System.out.println("entry after mods: " + entry.getName());
   }
 }
