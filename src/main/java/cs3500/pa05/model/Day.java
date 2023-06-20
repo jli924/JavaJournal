@@ -51,7 +51,11 @@ public class Day {
    * @param JEvent the event
    */
   public void addEvent(JEvent JEvent) {
-    events.add(JEvent);
+    if (events.size() <= maxEvents) {
+      events.add(JEvent);
+    } else {
+      throw new IllegalStateException("Cannot exceed max events");
+    }
   }
 
   /**
@@ -60,7 +64,11 @@ public class Day {
    * @param task the event
    */
   public void addTask(Task task) {
-    tasks.add(task);
+    if (tasks.size() <= maxTasks) {
+      tasks.add(task);
+    } else {
+      throw new IllegalStateException("Cannot exceed max tasks");
+    }
   }
 
   /**
@@ -71,6 +79,7 @@ public class Day {
   public DayJson toDayJson() {
     List<TaskJson> taskList = new ArrayList<>();
     List<EventJson> eventList = new ArrayList<>();
+    tasks.forEach((task) -> taskList.add(task.toTaskJson()));
     tasks.forEach((task) -> taskList.add(task.toTaskJson()));
     events.forEach((event) -> eventList.add(event.toEventJson()));
     return new DayJson(day, taskList, eventList, maxEvents, maxTasks);
