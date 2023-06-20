@@ -58,16 +58,21 @@ public abstract class JournalEntry {
 
   public abstract void mutate(String[] newValues);
 
-  public void setName(String name) {
-    this.name = name;
+  public boolean containsLink() {
+    return (description.contains("www.") || description.contains("http"));
   }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
-
-  public void setWeekday(Weekday weekday) {
-    this.weekday = weekday;
+  public String getLink() {
+    String s;
+    String linkStart;
+    try {
+      linkStart = description.substring(description.indexOf("www."), description.indexOf("www."));
+      s = linkStart.substring(0, linkStart.indexOf(" "));
+    } catch (Exception ignored) {
+      linkStart = description.substring(description.indexOf("www."), description.indexOf("http"));
+      s = linkStart.substring(0, linkStart.indexOf(" "));
+    }
+    return s;
   }
 
 }
