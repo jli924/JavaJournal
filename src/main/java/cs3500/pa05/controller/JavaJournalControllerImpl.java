@@ -246,48 +246,24 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
     // add functionality while the dialog runs
     save.setOnAction(event -> {
-      if (description.getText().isEmpty()) {
-        try {
-          JEvent userJEvent = new JEvent(name.getText(),
-              Weekday.valueOf(weekday.getText().toUpperCase()),
-              startTime.getText(), duration.getText());
-          journal.addEvent(userJEvent);
-          Label newEvent = new Label(userJEvent.getName());
-          newEvent.setPadding(new Insets(5));
-          int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
-          int col = userJEvent.getWeekday().ordinal();
-          mainGrid.add(newEvent, col, row);
-          newEvent.setOnMouseClicked(event1 -> {
-            miniViewer(newEvent, userJEvent);
-          });
-          eventStage.close();
-          update();
-        } catch (Exception ignored) {
-          popupView.invalidInputAlert("Invalid event",
-              "Please ensure you entered a valid name, day, start time, "
-                  + "and duration. Descriptions are optional");
-        }
-      } else {
-        try {
-          JEvent userJEvent = new JEvent(name.getText(), description.getText(),
-              Weekday.valueOf(weekday.getText().toUpperCase()),
-              startTime.getText(), duration.getText());
-          journal.addEvent(userJEvent);
-          Label newEvent = new Label(userJEvent.getName());
-          newEvent.setPadding(new Insets(5));
-          int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
-          int col = userJEvent.getWeekday().ordinal();
-          mainGrid.add(newEvent, col, row);
-          newEvent.setOnMouseClicked(event1 -> {
-            miniViewer(newEvent, userJEvent);
-          });
-          eventStage.close();
-          update();
-        } catch (Exception ignored) {
-          popupView.invalidInputAlert("Invalid event",
-              "Please ensure you entered a valid name, day, start time, "
-                  + "and duration. Descriptions are optional");
-        }
+      try {
+        JEvent userJEvent = new JEvent(name.getText(), description.getText(),
+            Weekday.valueOf(weekday.getText().toUpperCase()),
+            startTime.getText(), duration.getText());
+        journal.addEvent(userJEvent);
+        Label newEvent = new Label(userJEvent.getName());
+        newEvent.setPadding(new Insets(5));
+        int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
+        int col = userJEvent.getWeekday().ordinal();
+        mainGrid.add(newEvent, col, row);
+        newEvent.setOnMouseClicked(event1 -> {
+          miniViewer(newEvent, userJEvent);
+        });
+        eventStage.close();
+        update();
+      } catch (Exception e) {
+        popupView.invalidInputAlert("Invalid event",
+            e.getMessage());
       }
     });
     eventStage.show();
@@ -306,47 +282,24 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
     // add functionality while the dialog runs
     save.setOnAction(event -> {
-      if (description.getText().isEmpty()) {
-        try {
-          Task userTask = new Task(name.getText(),
-              Weekday.valueOf(weekday.getText().toUpperCase()), false);
-          journal.addTask(userTask);
-          Label newTask = new Label(userTask.getName());
-          newTask.setPadding(new Insets(5));
-          int row = findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal());
-          int col = userTask.getWeekday().ordinal();
-          mainGrid.add(newTask, col, row);
-          GridPane.setColumnIndex(newTask, col);
-          newTask.setOnMouseClicked(event1 -> {
-            miniViewer(newTask, userTask);
-          });
-          taskStage.close();
-          update();
-        } catch (Exception ignored) {
-          popupView.invalidInputAlert("Invalid task",
-              "Please ensure you entered a valid name, day, start time, "
-                  + "and duration. Descriptions are optional");
-        }
-      } else {
-        try {
-          Task userTask = new Task(name.getText(), description.getText(),
-              Weekday.valueOf(weekday.getText().toUpperCase()), false);
-          journal.addTask(userTask);
-          Label newTask = new Label(userTask.getName());
-          newTask.setPadding(new Insets(5));
-          int row = findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal());
-          int col = userTask.getWeekday().ordinal();
-          mainGrid.add(newTask, col, row);
-          newTask.setOnMouseClicked(event1 -> {
-            miniViewer(newTask, userTask);
-          });
-          taskStage.close();
-          update();
-        } catch (Exception ignored) {
-          popupView.invalidInputAlert("Invalid task",
-              "Please ensure you entered a valid name and day. "
-                  + "Descriptions are optional");
-        }
+      try {
+        Task userTask = new Task(name.getText(), description.getText(),
+            Weekday.valueOf(weekday.getText().toUpperCase()), false);
+        journal.addTask(userTask);
+        Label newTask = new Label(userTask.getName());
+        newTask.setPadding(new Insets(5));
+        int row = findFirstEmptyRow(mainGrid, userTask.getWeekday().ordinal());
+        int col = userTask.getWeekday().ordinal();
+        mainGrid.add(newTask, col, row);
+        GridPane.setColumnIndex(newTask, col);
+        newTask.setOnMouseClicked(event1 -> {
+          miniViewer(newTask, userTask);
+        });
+        taskStage.close();
+        update();
+      } catch (Exception e) {
+        popupView.invalidInputAlert("Invalid task",
+            e.getMessage());
       }
     });
     // showing the scene

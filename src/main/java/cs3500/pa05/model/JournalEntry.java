@@ -23,7 +23,7 @@ public abstract class JournalEntry {
       this.name = name;
       this.description = description;
     } else {
-      throw new IllegalArgumentException("a journal entry must have a name");
+      throw new IllegalArgumentException("A journal entry must have a name");
     }
     this.weekday = weekday;
   }
@@ -39,7 +39,7 @@ public abstract class JournalEntry {
     if (!name.isEmpty()) {
       this.name = name;
     } else {
-      throw new IllegalArgumentException("a journal entry must have a name");
+      throw new IllegalArgumentException("A journal entry must have a name");
     }
     this.weekday = weekday;
   }
