@@ -6,12 +6,16 @@ import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
+import java.io.IOException;
+import java.net.URISyntaxException;
+import java.net.URL;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
@@ -19,6 +23,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import java.awt.Desktop;
+import java.net.URI;
 
 /**
  * The GUIs for popups
@@ -389,7 +395,7 @@ public class PopupView {
                            JavaJournalControllerImpl controller, GridPane mainGrid,
                            JavaJournal journal) {
     GridPane pane = new GridPane();
-    Scene s = new Scene(pane, 400, 600);
+    Scene s = new Scene(pane, 400, 700);
     ImageView imageView = addIcon
         ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
             48, 48);
@@ -403,19 +409,35 @@ public class PopupView {
     name.setEditable(false);
     TextField description = new TextField(t.getDescription());
     description.setEditable(false);
+    int row = 0;
+    if (t.containsLink()) {
+      Hyperlink link = new Hyperlink(t.getLink());
+      link.setOnAction(event -> {
+        try {
+          openWebpage(t.getLink());
+        } catch (Exception ignored) {
+          System.out.println(ignored);
+          invalidInputAlert("Invalid link.",
+              "The link you entered was invalid.");
+        }
+      });
+      pane.add(new Label("Links:"), 0, 3 + row);
+      pane.add(link, 1, 3 + row);
+      row++;
+    }
     TextField weekday = new TextField(t.getWeekday().toString());
     weekday.setEditable(false);
     pane.add(new Label("Task Name: "), 0, 1);
     pane.add(name, 1, 1);
-    pane.add(new Label("Description: " + t.getDescription()), 0, 2);
+    pane.add(new Label("Description: "), 0, 2);
     pane.add(description, 1, 2);
-    pane.add(new Label("Weekday: "), 0, 3);
-    pane.add(weekday, 1, 3);
-    pane.add(new Label("Complete?: "), 0, 4);
-    pane.add(new Label(result), 1, 4);
+    pane.add(new Label("Weekday: "), 0, 3 + row);
+    pane.add(weekday, 1, 3 + row);
+    pane.add(new Label("Complete? "), 0, 4 + row);
+    pane.add(new Label(result), 1, 4 + row);
     pane.add(imageView, 1, 0);
     GridPane.setHalignment(imageView, HPos.RIGHT);
-    pane.add(completeTask, 1, 5);
+    pane.add(completeTask, 1, 5 + row);
     GridPane.setHalignment(completeTask, HPos.RIGHT);
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
@@ -424,8 +446,8 @@ public class PopupView {
     edit.setOnAction(event -> editScene(
         new TextField[] {name, description, weekday}));
     Button save = addPrettyButton("Save", 80, 30, "pink");
-    pane.add(edit, 0, 6);
-    pane.add(save, 1, 6);
+    pane.add(edit, 0, 6 + row);
+    pane.add(save, 1, 6 + row);
     save.setOnAction(new SaveProcessor(t,
         new TextField[] {name, description, weekday,},
         this, stage, label, controller, mainGrid, journal));
@@ -476,4 +498,11 @@ public class PopupView {
     return SaveOrOpenScene;
   }
 
+  public static void openWebpage(String urlString) {
+    try {
+      Desktop.getDesktop().browse(new URL(urlString).toURI());
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
+  }
 }

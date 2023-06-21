@@ -680,6 +680,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         Task t = (Task) entry;
         Stage stage = new Stage();
         completeTask.setOnAction(event -> {
+          taskQueue.getItems().remove(t.getName());
           t.completeTask();
           stage.close();
           update();
