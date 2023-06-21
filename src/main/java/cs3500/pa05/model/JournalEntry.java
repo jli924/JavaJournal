@@ -93,16 +93,23 @@ public abstract class JournalEntry {
    * @return the string representing the link
    */
   public String getLink() {
-    String s;
-    String linkStart;
+    String link;
     try {
-      linkStart = description.substring(description.indexOf("www."), description.indexOf("www."));
-      s = linkStart.substring(0, linkStart.indexOf(" "));
+      try {
+        link = description.substring(description.indexOf("www."),
+            description.indexOf(" ", description.indexOf("www.")));
+      } catch (Exception ignored ){
+        link = description.substring(description.indexOf("www."));
+      }
     } catch (Exception ignored) {
-      linkStart = description.substring(description.indexOf("www."), description.indexOf("http"));
-      s = linkStart.substring(0, linkStart.indexOf(" "));
+      try {
+        link = description.substring(description.indexOf("http"), description.indexOf(" ",
+            description.indexOf("http")));
+      } catch (Exception e) {
+        link = description.substring(description.indexOf("http"));
+      }
     }
-    return s;
+    return link;
   }
 
   abstract public void add(JavaJournal journal);
