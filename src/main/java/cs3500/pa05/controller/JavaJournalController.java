@@ -27,19 +27,27 @@ public interface JavaJournalController {
    * @param file the file to open from
    */
   JavaJournal openFile(File file);
+
   /**
-   * To a splash screen
+   * To show the splash screen
    * @return the scene of the screen
    */
   Scene showSplashScreen();
 
+  /**
+   * To show the password screen
+   * @param field the field for the screen
+   * @return the stage for the screen
+   */
   Stage showPasswordScreen(TextField field);
 
   /**
    * To close the splash screen after 2 seconds
    * @param splash the splash screen
-   * @param journal the journal
+   * @param journal the journal screen
    * @param scene the scene for the journal
+   * @param password the password screen
+   * @param passwordField the field for the password screen
    */
   void closeSplashScreen(Stage splash, Stage journal, Scene scene, Stage password,
                          TextField passwordField);

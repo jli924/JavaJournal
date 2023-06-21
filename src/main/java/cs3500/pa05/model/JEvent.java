@@ -49,15 +49,6 @@ public class JEvent extends JournalEntry {
     description = "";
   }
 
-  /**
-   * Builds the string equivalent of the Event
-   *
-   * @return the string equivalent of this journalEntry
-   */
-  public String journalToString() {
-    return null;
-  }
-
   public EventJson toEventJson() {
     return new EventJson(name, description, weekday, startTime, duration);
   }
@@ -65,14 +56,6 @@ public class JEvent extends JournalEntry {
   public String getStartTime() { return startTime;}
 
   public String getDuration() { return duration;}
-
-  public void setStartTime(String startTime) {
-    this.startTime = startTime;
-  }
-
-  public void setDuration(String duration) {
-    this.duration = duration;
-  }
 
   public void mutate(String[] newValues) {
     this.name = newValues[0];

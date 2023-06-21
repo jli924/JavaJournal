@@ -122,6 +122,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     this.stage = stage;
   }
 
+  /**
+   * Finds the first empty row
+   * @param gridPane the grid pane to search
+   * @param columnIndex the column to search
+   * @return the row number or -1 if no empty row is found
+   */
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
     int numRows = gridPane.getRowCount();
     for (int row = 0; row < numRows; row++) {
@@ -133,6 +139,13 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     return -1; // no empty row found
   }
 
+  /**
+   * Gets a node from a grid pane
+   * @param gridPane the grid pane to get from
+   * @param colIndex the column of the node
+   * @param rowIndex the row of the node
+   * @return the node
+   */
   private static Node getNodeFromGridPane(GridPane gridPane, int colIndex, int rowIndex) {
     for (Node node : gridPane.getChildren()) {
       Integer colIdx = GridPane.getColumnIndex(node);
@@ -251,6 +264,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     update();
   }
 
+  /**
+   * Handles the set max entries button
+   */
   private void maxEntriesHandler() {
     TextField maxEvents = new TextField();
     TextField maxTasks = new TextField();
@@ -350,6 +366,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     taskStage.show();
   }
 
+  /**
+   * Handles selecting a profile picture
+   */
   @FXML
   private void selectProfilePicture() {
     Stage stage = new Stage();
@@ -365,6 +384,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     }
   }
 
+  /**
+   * Creates a new image pattern with
+   * @param img the image
+   * @param radius the radius of the image pattern
+   * @return the image pattern
+   */
   private ImagePattern pattern(Image img, double radius) {
     double hRad = radius;   // horizontal "radius"
     double vRad = radius;   // vertical "radius"
