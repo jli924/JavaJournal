@@ -44,7 +44,7 @@ public class Driver extends Application {
   }
 }
 
-  //Stuff for testing file methods
+  //Stuff for testing file methods.
 
 //  Task task1 = new Task("task 1", "sampleDescription1",
 //      Weekday.SUNDAY, false);
