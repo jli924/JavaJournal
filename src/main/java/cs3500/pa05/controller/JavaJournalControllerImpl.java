@@ -100,6 +100,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
 
   Stage stage;
 
+  @FXML
+  Button maxEntries;
+
   /**
    * Constructor
    */
@@ -219,13 +222,29 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     profilePicture.setOnMouseClicked(event -> {
       selectProfilePicture();
     });
-    //AA
+    maxEntries.setOnAction(event -> maxEntriesHandler());
     openFile.setOnAction(event -> openFileHandler());
     saveToFile.setOnAction(event -> saveToFileHandler());
 
     initTasksandEvents();
     setDays();
     update();
+  }
+
+  private void maxEntriesHandler() {
+    TextField maxEvents = new TextField();
+    TextField maxTasks = new TextField();
+    TextField[] fields = {maxEvents, maxTasks};
+    Button save = popupView.addPrettyButton("Save", 50, 40, "pink");
+    Stage maxEntriesStage = popupView.maxEntriesScene(fields, save);
+    save.setOnAction(event -> {
+        journal.setMaxEvent(Integer.parseInt(maxEvents.getText()));
+        journal.setMaxTasks(Integer.parseInt(maxTasks.getText()));
+        maxEntriesStage.close();
+        update();
+    });
+    // showing the scene
+    maxEntriesStage.show();
   }
 
   /**
@@ -575,7 +594,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     weeklyOverview.setText("Total tasks: " + journal.getTasks().size()
         + System.lineSeparator()
         + System.lineSeparator()
-        + "Total events: " + journal.totalEvents().size()
+        + "Total events: " + journal.getJEvents().size()
         + System.lineSeparator()
         + System.lineSeparator()
         + "Tasks completed: "

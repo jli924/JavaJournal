@@ -43,7 +43,7 @@
     "maxTasks" : 10
   } ],
   "bujoFile" : "C:\\Users\\andre\\CS3500\\pa05-mvc2\\testFile1.bujo",
-  "notesAndQuotes" : "",
-  "weekTitle" : "",
+  "notesAndQuotes" : null,
+  "weekTitle" : null,
   "password" : null
 }

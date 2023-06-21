@@ -9,7 +9,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class JavaJournal {
   private Day[] days = new Day[7];
@@ -76,26 +75,11 @@ public class JavaJournal {
   }
 
   /**
-   * Gets the total list of names of Tasks
-   *
-   * @return the appended list of all names of tasks for a given week
-   */
-  public List<String> getTaskNames() {
-    List<String> outputTasks = new ArrayList<>();
-    List<Task> allTasks = getTasks();
-    for (Task task : allTasks) {
-      String str = task.getName();
-      outputTasks.add(str);
-    }
-    return outputTasks;
-  }
-
-  /**
    * Total events of this journal
    *
    * @return total events of this journal
    */
-  public List<JEvent> totalEvents() {
+  public List<JEvent> getJEvents() {
     List<JEvent> JEvents = new ArrayList<>();
     for (Day day : days) {
       JEvents.addAll(day.getEvents());

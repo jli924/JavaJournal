@@ -1,4 +1,4 @@
-
+{
   "days" : [ {
     "day" : "SUNDAY",
     "tasks" : [ ],
@@ -7,17 +7,7 @@
     "maxTasks" : 10
   }, {
     "day" : "MONDAY",
-    "tasks" : [ {
-      "name" : "baller",
-      "description" : "abc",
-      "day" : "MONDAY",
-      "complete" : false
-    }, {
-      "name" : "baller",
-      "description" : "abc",
-      "day" : "MONDAY",
-      "complete" : false
-    } ],
+    "tasks" : [ ],
     "events" : [ ],
     "maxEvents" : 10,
     "maxTasks" : 10
@@ -53,7 +43,7 @@
     "maxTasks" : 10
   } ],
   "bujoFile" : "C:\\Users\\andre\\CS3500\\pa05-mvc2\\testFile.bujo",
-  "notesAndQuotes" : "mynamejeff",
-  "weekTitle" : "12",
+  "notesAndQuotes" : null,
+  "weekTitle" : null,
   "password" : null
 }

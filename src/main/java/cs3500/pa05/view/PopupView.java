@@ -163,6 +163,48 @@ public class PopupView {
   }
 
   /**
+   * The stage for the maxEntries popup
+   *
+   * @param fields the text-fields to show
+   * @param save the button to show
+   * @return the stage
+   */
+  public Stage maxEntriesScene(TextField[] fields, Button save) {
+    GridPane pane = new GridPane();
+    Scene maxEntriesScene = new Scene(pane, 400, 450);
+    Stage maxEntriesStage = new Stage();
+    ImageView icon = addIcon(
+        "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 64, 64);
+    Label[] labels = {new Label("Max Events: "), new Label("Max Tasks: ")};
+    Label newMaxes = new Label("New Maxes");
+    newMaxes.setStyle("-fx-font-size: 21;");
+
+    // adding controls to a gridpane
+    for (int row = 1; row < 3; row++) {
+      pane.add(labels[row - 1], 0, row);
+      pane.add(fields[row - 1], 1, row);
+    }
+    pane.add(icon, 1, 0);
+    pane.add(newMaxes, 0, 0);
+    pane.add(save, 1, 4);
+
+    // setting alignment for style
+    GridPane.setHalignment(save, HPos.RIGHT);
+    GridPane.setHalignment(icon, HPos.RIGHT);
+
+    // borders and spacing
+    pane.setPadding(new Insets(50));
+    pane.setHgap(50);
+    pane.setVgap(50);
+    maxEntriesStage.setResizable(false);
+
+    // setting the scene
+    maxEntriesStage.setScene(maxEntriesScene);
+    maxEntriesStage.setTitle("New Max Entries");
+    return maxEntriesStage;
+  }
+
+  /**
    * The stage for the new week popup
    *
    * @param field the text-field to show
@@ -311,7 +353,6 @@ public class PopupView {
     stage.show();
   }
 
-  //AA
   /**
    * Represents a saveToFile or OpenFile screen where user must input filename field
    *
