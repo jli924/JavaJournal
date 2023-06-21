@@ -4,12 +4,39 @@ package cs3500.pa05.model;
  * Represents a weekday (Sunday-Saturday)
  */
 public enum Weekday {
+  /**
+   * Represents a Sunday
+   */
   SUNDAY,
+
+  /**
+   * Represents a Monday
+   */
   MONDAY,
+
+  /**
+   * Represents a Tuesday
+   */
   TUESDAY,
+
+  /**
+   * Represents a Wednesday
+   */
   WEDNESDAY,
+
+  /**
+   * Represents a Thursday
+   */
   THURSDAY,
+
+  /**
+   * Represents a Friday
+   */
   FRIDAY,
+
+  /**
+   * Represents a Saturday
+   */
   SATURDAY;
 
 
@@ -22,9 +49,9 @@ public enum Weekday {
   public static Weekday valueOfString(String weekday) {
     try {
       return Weekday.valueOf(weekday);
-    } catch (Exception ignored){
-      throw new IllegalArgumentException("Invalid weekday, " +
-          "please ensure your weekday is spelled correctly");
+    } catch (Exception ignored) {
+      throw new IllegalArgumentException("Invalid weekday, "
+          + "please ensure your weekday is spelled correctly");
     }
   }
 }

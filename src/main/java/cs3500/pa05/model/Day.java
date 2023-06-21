@@ -1,17 +1,17 @@
 package cs3500.pa05.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
 import cs3500.pa05.model.json.DayJson;
 import cs3500.pa05.model.json.EventJson;
 import cs3500.pa05.model.json.TaskJson;
 import java.util.ArrayList;
 import java.util.List;
-import com.fasterxml.jackson.annotation.JsonCreator;
 
 /**
  * To represent a day
  */
 public class Day {
-  private Weekday day;
+  private final Weekday day;
   private List<Task> tasks;
   private List<JEvent> events;
   private int maxEvents;
@@ -48,11 +48,11 @@ public class Day {
   /**
    * Adds an event to the day
    *
-   * @param JEvent the event
+   * @param event the jEvent
    */
-  public void addEvent(JEvent JEvent) {
+  public void addEvent(JEvent event) {
     if (events.size() <= maxEvents) {
-      events.add(JEvent);
+      events.add(event);
     } else {
       throw new IllegalStateException("Cannot exceed max number of events");
     }
@@ -128,7 +128,9 @@ public class Day {
    *
    * @return a weekday representation of the day
    */
-  public Weekday getDay() {return day;}
+  public Weekday getDay() {
+    return day;
+  }
 
   /**
    * Gets the max Events for a day

@@ -46,7 +46,7 @@ public class JavaJournalViewImpl implements JavaJournalView {
    * @param scene the string to set a scene too
    */
   public void setScene(String scene) {
-      this.loader.setLocation(getClass().getClassLoader().getResource(scene));
+    this.loader.setLocation(getClass().getClassLoader().getResource(scene));
   }
 
   /**

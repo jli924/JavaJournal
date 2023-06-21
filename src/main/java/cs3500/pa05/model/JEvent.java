@@ -60,6 +60,7 @@ public class JEvent extends JournalEntry {
 
   /**
    * Represents a JEvent as JSON
+   *
    * @return the EventJSON equivalent of this
    */
   public EventJson toEventJson() {
@@ -68,15 +69,21 @@ public class JEvent extends JournalEntry {
 
   /**
    * Gets the start time
+   *
    * @return the start time to return
    */
-  public String getStartTime() { return startTime;}
+  public String getStartTime() {
+    return startTime;
+  }
 
   /**
    * Gets the duration time
+   *
    * @return the duration time to return
    */
-  public String getDuration() { return duration;}
+  public String getDuration() {
+    return duration;
+  }
 
   /**
    * Mutates the string values to a JEvent

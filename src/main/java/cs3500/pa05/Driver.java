@@ -3,25 +3,16 @@ package cs3500.pa05;
 import cs3500.pa05.controller.JavaJournalController;
 import cs3500.pa05.controller.JavaJournalControllerImpl;
 import cs3500.pa05.model.JavaJournal;
-import java.io.IOException;
-import java.util.Objects;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
-import javafx.animation.PauseTransition;
-import javafx.animation.SequentialTransition;
-import javafx.application.Application;
-import javafx.application.Platform;
-import javafx.scene.Scene;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.stage.Stage;
 import cs3500.pa05.view.JavaJournalView;
 import cs3500.pa05.view.JavaJournalViewImpl;
-import javafx.scene.image.Image;
-import javafx.util.Duration;
+import javafx.application.Application;
+import javafx.scene.control.TextField;
+import javafx.stage.Stage;
 
 
+/**
+ * Driver to run the application
+ */
 public class Driver extends Application {
 
   /**
@@ -43,6 +34,11 @@ public class Driver extends Application {
         journalController.showPasswordScreen(passwordField), passwordField);
   }
 
+  /**
+   * Launches the GUI program
+   *
+   * @param args null
+   */
   public static void main(String[] args) {
     launch();
   }

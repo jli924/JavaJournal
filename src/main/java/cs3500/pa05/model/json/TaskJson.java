@@ -6,10 +6,12 @@ import cs3500.pa05.model.Weekday;
 
 /**
  * The JSON representing a Task
+ *
  * @param name the name of the task
  * @param description the descriptor of the task
  * @param day the day of the task
  * @param complete is the task complete
+ *
  */
 public record TaskJson(@JsonProperty("name") String name,
                        @JsonProperty("description") String description,
@@ -18,7 +20,9 @@ public record TaskJson(@JsonProperty("name") String name,
 
   /**
    * Transforms a TaskJson to a Task
+   *
    * @return the corresponding Task
+   *
    */
   public Task toTask() {
     if (description.isEmpty()) {

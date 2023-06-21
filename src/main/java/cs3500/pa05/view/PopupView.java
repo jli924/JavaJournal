@@ -3,7 +3,6 @@ package cs3500.pa05.view;
 import cs3500.pa05.controller.JavaJournalControllerImpl;
 import cs3500.pa05.controller.SaveProcessor;
 import cs3500.pa05.model.JEvent;
-import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import javafx.geometry.HPos;
@@ -101,17 +100,15 @@ public class PopupView {
    * @return the stage
    */
   public Stage eventScene(TextField[] fields, Button save) {
-    GridPane pane = new GridPane();
-    Scene eventScene = new Scene(pane, 400, 600);
     ImageView icon = addIcon(
         "https://www.iconsdb.com/icons/preview/pink/calendar-3-xxl.png", 64, 64);
-    Stage eventStage = new Stage();
     Label[] labels = {new Label("Event Name: "), new Label("Description: "),
         new Label("Weekday: "),
         new Label("Start Time: "), new Label("Duration: ")};
     Label newEvent = new Label("New Event");
     newEvent.setStyle("-fx-font-size: 20;");
 
+    GridPane pane = new GridPane();
     for (int row = 1; row < 6; row++) {
       pane.add(labels[row - 1], 0, row);
       pane.add(fields[row - 1], 1, row);
@@ -126,8 +123,10 @@ public class PopupView {
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
+    Stage eventStage = new Stage();
     eventStage.setResizable(false);
 
+    Scene eventScene = new Scene(pane, 400, 600);
     eventStage.setScene(eventScene);
     eventStage.setTitle("New Event");
     return eventStage;
@@ -142,8 +141,6 @@ public class PopupView {
    */
   public Stage taskScene(TextField[] fields, Button save) {
     GridPane pane = new GridPane();
-    Scene eventScene = new Scene(pane, 400, 450);
-    Stage taskStage = new Stage();
     // an icon for the popup!
     ImageView icon = addIcon(
         "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 64, 64);
@@ -152,8 +149,6 @@ public class PopupView {
     // adding a label and giving it a style
     Label newTask = new Label("New Task");
     newTask.setStyle("-fx-font-size: 21;");
-    // adding a button and giving it a style
-//    save = addPrettyButton("Save", 50, 40, "pink");
 
     // adding controls to a gridpane
     for (int row = 1; row < 4; row++) {
@@ -172,10 +167,12 @@ public class PopupView {
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
+    Stage taskStage = new Stage();
     taskStage.setResizable(false);
 
     // setting the scene
-    taskStage.setScene(eventScene);
+    Scene tasktScene = new Scene(pane, 400, 450);
+    taskStage.setScene(tasktScene);
     taskStage.setTitle("New Task");
     return taskStage;
   }
@@ -189,8 +186,6 @@ public class PopupView {
    */
   public Stage maxEntriesScene(TextField[] fields, Button save) {
     GridPane pane = new GridPane();
-    Scene maxEntriesScene = new Scene(pane, 400, 400);
-    Stage maxEntriesStage = new Stage();
     ImageView icon = addIcon(
         "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 64, 64);
     Label[] labels = {new Label("Max Events: "), new Label("Max Tasks:")};
@@ -214,31 +209,38 @@ public class PopupView {
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
+    Stage maxEntriesStage = new Stage();
     maxEntriesStage.setResizable(false);
 
     // setting the scene
+    Scene maxEntriesScene = new Scene(pane, 400, 400);
     maxEntriesStage.setScene(maxEntriesScene);
     maxEntriesStage.setTitle("New Max Entries");
     return maxEntriesStage;
   }
 
+
   /**
-   * The stage for the new week popup
+   * Sets a new time Scene for user to view
    *
-   * @param field the text-field to show
-   * @param save the button to show
-   * @return the stage
+   * @param header the header to display
+   * @param description the description to display
+   * @param stageTitle the stageTitle to name the scene
+   * @param field the user input
+   * @param save the save button
+   * @param iconUrl the icon image
+   * @param fontSize the font size
+   * @return the corresponding newTime stage
+   *
    */
   public Stage newTimeScene(String header, String description, String stageTitle,
                             TextField field, Button save, String iconUrl, int fontSize) {
     GridPane pane = new GridPane();
-    Scene weekScene = new Scene(pane, 400, 300);
-    ImageView icon = addIcon(iconUrl, 64, 64);
-    Stage weekStage = new Stage();
     Label weekOf = new Label(description);
     Label newWeek = new Label(header);
     newWeek.setStyle("-fx-font-size: " + fontSize + ";");
 
+    ImageView icon = addIcon(iconUrl, 64, 64);
     pane.add(newWeek, 0, 0);
     pane.add(weekOf, 0, 1);
     pane.add(icon, 1, 0);
@@ -251,8 +253,10 @@ public class PopupView {
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
+    Stage weekStage = new Stage();
     weekStage.setResizable(false);
 
+    Scene weekScene = new Scene(pane, 400, 300);
     weekStage.setScene(weekScene);
     weekStage.setTitle(stageTitle);
     return weekStage;
@@ -260,10 +264,12 @@ public class PopupView {
 
   /**
    * Changes a scene to editable
+   *
    * @param fields the fields to set to editable
+   *
    */
   public void editScene(TextField[] fields) {
-    for (TextField f: fields) {
+    for (TextField f : fields) {
       f.setEditable(true);
     }
   }
@@ -272,14 +278,15 @@ public class PopupView {
    * The splashScreen to be shown to the user
    *
    * @return the splashScreen to show
+   *
    */
   public Stage splashScreen() {
-    HBox hBox = new HBox();
-    Scene splash = new Scene(hBox, 1074, 714);
+    HBox hbox = new HBox();
+    Scene splash = new Scene(hbox, 1074, 714);
     Stage splashScreen = new Stage();
     ImageView icon = addIcon("appIcon.png", 100, 100);
-    hBox.getChildren().add(icon);
-    hBox.setAlignment(Pos.CENTER);
+    hbox.getChildren().add(icon);
+    hbox.setAlignment(Pos.CENTER);
     splashScreen.setScene(splash);
     splashScreen.setTitle("Java Journal");
     splashScreen.setResizable(false);
@@ -294,19 +301,20 @@ public class PopupView {
    */
   public Stage passwordScreen(TextField passwordField) {
     GridPane pane = new GridPane();
-    Scene password = new Scene(pane, 1074, 714);
-    Stage passwordStage = new Stage();
-    ImageView icon = addIcon("https://www.iconsdb.com/icons/preview/pink/padlock-3-xxl.png",
-        100, 100);
     Label enter = new Label("Please enter your password");
     Label passwordLabel = new Label("Password:");
     enter.setStyle("-fx-font-size: 18");
     passwordLabel.setStyle("-fx-font-size: 15");
+    ImageView icon = addIcon("https://www.iconsdb.com/icons/preview/pink/padlock-3-xxl.png",
+        100, 100);
     pane.add(enter, 0, 0);
     pane.add(icon, 1, 0);
     pane.add(passwordField, 1, 1);
     pane.add(passwordLabel, 0, 1);
     pane.setAlignment(Pos.CENTER);
+
+    Scene password = new Scene(pane, 1074, 714);
+    Stage passwordStage = new Stage();
     passwordStage.setScene(password);
     passwordStage.setTitle("Password");
 
@@ -332,7 +340,6 @@ public class PopupView {
                             JavaJournalControllerImpl controller, GridPane mainGrid) {
     JEvent e = (JEvent) entry;
     GridPane pane = new GridPane();
-    Scene s = new Scene(pane, 400, 600);
     Label title = new Label("Mini Viewer");
     title.setStyle("-fx-font-size: 16");
     pane.add(title, 0, 0);
@@ -369,6 +376,7 @@ public class PopupView {
     save.setOnAction(new SaveProcessor(e,
         new TextField[] {name, description, weekday,
             startTime, duration}, this, stage, label, controller, mainGrid));
+    Scene s = new Scene(pane, 400, 600);
     stage.setScene(s);
     stage.setTitle("Mini Viewer");
     stage.show();
@@ -388,15 +396,10 @@ public class PopupView {
   public void taskMiniView(Label label, Task t, Stage stage, Button completeTask,
                            JavaJournalControllerImpl controller, GridPane mainGrid) {
     GridPane pane = new GridPane();
-    Scene s = new Scene(pane, 400, 600);
-    ImageView imageView = addIcon
-        ("https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
-            48, 48);
+
     Label title = new Label("Mini Viewer");
     title.setStyle("-fx-font-size: 16");
     title.setWrapText(true);
-    boolean complete = t.isComplete();
-    String result = complete ? "Yes" : "No";
     pane.add(title, 0, 0);
     TextField name = new TextField(t.getName());
     name.setEditable(false);
@@ -411,7 +414,14 @@ public class PopupView {
     pane.add(new Label("Weekday: "), 0, 3);
     pane.add(weekday, 1, 3);
     pane.add(new Label("Complete?: "), 0, 4);
+
+    boolean complete = t.isComplete();
+    String result = complete ? "Yes" : "No";
     pane.add(new Label(result), 1, 4);
+
+    ImageView imageView = addIcon(
+        "https://www.iconsdb.com/icons/preview/pink/clipboard-2-xxl.png",
+            48, 48);
     pane.add(imageView, 1, 0);
     GridPane.setHalignment(imageView, HPos.RIGHT);
     pane.add(completeTask, 1, 5);
@@ -426,8 +436,9 @@ public class PopupView {
     pane.add(edit, 0, 6);
     pane.add(save, 1, 6);
     save.setOnAction(new SaveProcessor(t,
-        new TextField[] {name, description, weekday,},
+        new TextField[] {name, description, weekday},
         this, stage, label, controller, mainGrid));
+    Scene s = new Scene(pane, 400, 600);
     stage.setScene(s);
     stage.setTitle("Mini Viewer");
     stage.show();
@@ -436,7 +447,6 @@ public class PopupView {
   /**
    * Represents a saveToFile or OpenFile screen where user must input filename field
    *
-   * new Scene to Save to File
    * @param header The main description
    * @param description the wanted text input
    * @param stageTitle the title of the stage
@@ -449,15 +459,14 @@ public class PopupView {
   public Stage newSaveOrOpenScene(String header, String description, String stageTitle,
                                   TextField field, Button save, String iconUrl, int fontSize) {
     GridPane pane = new GridPane();
-    Scene popupScene = new Scene(pane, 400, 300);
-    ImageView icon = addIcon(iconUrl, 64, 64);
-    Stage SaveOrOpenScene = new Stage();
     Label miniLabel = new Label(description);
     Label mainLabel = new Label(header);
     mainLabel.setStyle("-fx-font-size: " + fontSize + ";");
 
     pane.add(mainLabel, 0, 0);
     pane.add(miniLabel, 0, 1);
+
+    ImageView icon = addIcon(iconUrl, 64, 64);
     pane.add(icon, 1, 0);
     pane.add(field, 1, 1);
     pane.add(save, 1, 2);
@@ -468,11 +477,14 @@ public class PopupView {
     pane.setPadding(new Insets(50));
     pane.setHgap(50);
     pane.setVgap(50);
-    SaveOrOpenScene.setResizable(false);
+    Stage saveOrOpenScene = new Stage();
+    saveOrOpenScene.setResizable(false);
 
-    SaveOrOpenScene.setScene(popupScene);
-    SaveOrOpenScene.setTitle(stageTitle);
-    return SaveOrOpenScene;
+    Scene popupScene = new Scene(pane, 400, 300);
+
+    saveOrOpenScene.setScene(popupScene);
+    saveOrOpenScene.setTitle(stageTitle);
+    return saveOrOpenScene;
   }
 
 }

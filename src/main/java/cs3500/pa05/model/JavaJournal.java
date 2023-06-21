@@ -96,12 +96,12 @@ public class JavaJournal {
    *
    * @return total events of this journal
    */
-  public List<JEvent> getJEvents() {
-    List<JEvent> JEvents = new ArrayList<>();
+  public List<JEvent> getEvents() {
+    List<JEvent> jevents = new ArrayList<>();
     for (Day day : days) {
-      JEvents.addAll(day.getEvents());
+      jevents.addAll(day.getEvents());
     }
-    return JEvents;
+    return jevents;
   }
 
   /**
@@ -154,7 +154,7 @@ public class JavaJournal {
       this.weekTitle = journalJson.weekTitle();
       this.password = journalJson.password();
     } catch (Exception e) {
-      System.err.println(e);
+      System.err.println("Error: Couldn't initialize days");
     }
   }
 
