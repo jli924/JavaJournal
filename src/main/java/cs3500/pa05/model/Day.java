@@ -123,4 +123,12 @@ public class Day {
   public void changeMaxEvents(int newMax) {
     this.maxEvents = newMax;
   }
+
+  public boolean overEvents() {
+    return this.events.size() >= this.maxEvents;
+  }
+
+  public boolean overTasks() {
+    return this.tasks.size() >= this.maxTasks;
+  }
 }

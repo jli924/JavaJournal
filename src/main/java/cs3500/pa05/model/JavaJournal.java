@@ -209,6 +209,26 @@ public class JavaJournal {
     }
   }
 
+  public boolean checkMaxEvents() {
+    boolean flag = false;
+    for (Day day : days) {
+      if (day.overEvents()) {
+        flag = true;
+      }
+    }
+    return flag;
+  }
+
+  public boolean checkMaxTasks() {
+    boolean flag = false;
+    for (Day day : days) {
+      if (day.overTasks()) {
+        flag = true;
+      }
+    }
+    return flag;
+  }
+
   public String getNotesAndQuotes() {
     return notesAndQuotes;
   }

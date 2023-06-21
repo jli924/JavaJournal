@@ -605,6 +605,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         taskQueue.getItems().add(task.getName());
       }
     }
+    if (journal.checkMaxEvents()) {
+      //TODO:POPUP WARNING
+    } else if (journal.checkMaxTasks()) {
+      //TODO:POPUP WARNING
+    }
   }
 
   public void miniViewer(Label label, JournalEntry entry) {
