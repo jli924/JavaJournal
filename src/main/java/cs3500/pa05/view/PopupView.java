@@ -328,8 +328,8 @@ public class PopupView {
    * @param controller the controller being used
    * @param mainGrid the main gird Pane where the event is stored
    */
-  public void eventMiniView(Label label, JournalEntry entry,
-                            JavaJournalControllerImpl controller, GridPane mainGrid) {
+  public void eventMiniView(Label label, JournalEntry entry, JavaJournalControllerImpl controller,
+                            GridPane mainGrid, JavaJournal journal) {
     JEvent e = (JEvent) entry;
     GridPane pane = new GridPane();
     Scene s = new Scene(pane, 400, 600);
@@ -368,7 +368,7 @@ public class PopupView {
     Stage stage = new Stage();
     save.setOnAction(new SaveProcessor(e,
         new TextField[] {name, description, weekday,
-            startTime, duration}, this, stage, label, controller, mainGrid));
+            startTime, duration}, this, stage, label, controller, mainGrid, journal));
     stage.setScene(s);
     stage.setTitle("Mini Viewer");
     stage.show();
@@ -386,7 +386,8 @@ public class PopupView {
    * @param mainGrid the mainGrid where the task visualization is stored
    */
   public void taskMiniView(Label label, Task t, Stage stage, Button completeTask,
-                           JavaJournalControllerImpl controller, GridPane mainGrid) {
+                           JavaJournalControllerImpl controller, GridPane mainGrid,
+                           JavaJournal journal) {
     GridPane pane = new GridPane();
     Scene s = new Scene(pane, 400, 600);
     ImageView imageView = addIcon
@@ -427,7 +428,7 @@ public class PopupView {
     pane.add(save, 1, 6);
     save.setOnAction(new SaveProcessor(t,
         new TextField[] {name, description, weekday,},
-        this, stage, label, controller, mainGrid));
+        this, stage, label, controller, mainGrid, journal));
     stage.setScene(s);
     stage.setTitle("Mini Viewer");
     stage.show();

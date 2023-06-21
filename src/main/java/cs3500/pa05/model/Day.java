@@ -72,6 +72,24 @@ public class Day {
   }
 
   /**
+   * Removes an event from a day
+   *
+   * @param event the event
+   */
+  public void removeEvent(JEvent event) {
+    events.remove(event);
+  }
+
+  /**
+   * Removes a task from a day
+   *
+   * @param task the task
+   */
+  public void removeTask(Task task) {
+    tasks.remove(task);
+  }
+
+  /**
    * Transforms a day to a DayJson
    *
    * @return the corresponding DayJson for this.day
@@ -164,23 +182,5 @@ public class Day {
    */
   public void changeMaxEvents(int newMax) {
     this.maxEvents = newMax;
-  }
-
-  /**
-   * Checks if the day is over the max Events
-   *
-   * @return true if the size of the events list is greater than the max events
-   */
-  public boolean overEvents() {
-    return this.events.size() > this.maxEvents;
-  }
-
-  /**
-   * Checks if the day is over the max Tasks
-   *
-   * @return true if the size of the Tasks list is greater than the max Tasks
-   */
-  public boolean overTasks() {
-    return this.tasks.size() > this.maxTasks;
   }
 }

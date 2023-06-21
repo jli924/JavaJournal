@@ -279,10 +279,15 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       try {
         int maxEvent = Integer.parseInt(maxEvents.getText());
         int maxTask = Integer.parseInt(maxTasks.getText());
-        journal.setMaxEvent(maxEvent);
-        journal.setMaxTasks(maxTask);
-        maxEntriesStage.close();
-        update();
+        if (maxTask + maxEvent > 12) {
+          popupView.invalidInputAlert("Invalid total of entries.",
+              "Please remember that the total number of entries cannot exceed 12.");
+        } else {
+          journal.setMaxEvent(maxEvent);
+          journal.setMaxTasks(maxTask);
+          maxEntriesStage.close();
+          update();
+        }
       } catch (NumberFormatException ignored) {
         popupView.invalidInputAlert("Invalid maximum.",
             "Please enter a valid max number of tasks or events.");
@@ -545,30 +550,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Handles the new save to file event
    */
   private void openFileHandler() {
-//    TextField field = new TextField();
-//    Button open = popupView.addPrettyButton("Open", 50, 30, "pink");
-//    Stage openStage = popupView.newSaveOrOpenScene("Open File:",
-//        "Filename (w/out '.bujo'): ",
-//        "Open File", field, open,
-//        "https://www.iconsdb.com/icons/preview/pink/data-transfer-download-xxl.png",
-//        19);
-//    open.setOnAction(event -> {
-//      String filename = field.getText();
-//      File file = new File(filename + ".bujo");
-//      JavaJournal newJournal = openFile(file);
-//      openStage.close();
-//      //AA starting a new file
-//      stage.close();
-//      Stage newStage = new Stage();
-//      JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
-//      JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
-//      newStage.setScene(journalController.showSplashScreen());
-//      newStage.show();
-//      Stage journal = new Stage();
-//      journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
-//
-//    });
-//    openStage.show();
     try {
       Stage openFileStage = new Stage();
       FileChooser chooser = new FileChooser();
@@ -670,7 +651,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     weeklyOverview.setText("Total tasks: " + journal.getTasks().size()
         + System.lineSeparator()
         + System.lineSeparator()
-        + "Total events: " + journal.getJEvents().size()
+        + "Total events: " + journal.getEvents().size()
         + System.lineSeparator()
         + System.lineSeparator()
         + "Tasks completed: "
@@ -680,11 +661,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         alreadyAdded.add(task);
         taskQueue.getItems().add(task.getName());
       }
-    }
-    if (journal.checkMaxEvents()) {
-      //TODO:POPUP WARNING
-    } else if (journal.checkMaxTasks()) {
-      //TODO:POPUP WARNING
     }
   }
 
@@ -696,7 +672,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    */
   public void miniViewer(Label label, JournalEntry entry) {
     try {
-      popupView.eventMiniView(label, entry, this, mainGrid);
+      popupView.eventMiniView(label, entry, this, mainGrid, journal);
     } catch (Exception e) {
       try {
         Button completeTask = popupView.addPrettyButton("Complete",
@@ -708,7 +684,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           stage.close();
           update();
         });
-        popupView.taskMiniView(label, t, stage, completeTask, this, mainGrid);
+        popupView.taskMiniView(label, t, stage, completeTask, this, mainGrid, journal);
       } catch (Exception ignored) {
         // the user clicked an invalid coordinate, we don't need to log this exception
       }
