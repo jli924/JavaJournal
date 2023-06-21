@@ -11,10 +11,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-// jfc this was so convoluted for no reason
 
 /**
- *
+ * Helps save fields from miniViewer
  */
 public class SaveProcessor implements EventHandler {
   JournalEntry entry;
@@ -25,6 +24,17 @@ public class SaveProcessor implements EventHandler {
   JavaJournalControllerImpl controller;
   GridPane pane;
 
+  /**
+   * Processes a new save
+   *
+   * @param entry the entry to save
+   * @param newValues the new Values of user input
+   * @param popupView the popupView
+   * @param stage the stage for popupView
+   * @param label the label to display
+   * @param controller the current controller
+   * @param pane the current gridPane
+   */
   public SaveProcessor(JournalEntry entry, TextField[] newValues, PopupView popupView, Stage stage,
                        Label label, JavaJournalControllerImpl controller, GridPane pane) {
     this.entry = entry;
@@ -36,6 +46,11 @@ public class SaveProcessor implements EventHandler {
     this.pane = pane;
   }
 
+  /**
+   * Helps display the popUpView and handles edits on miniViewer
+   *
+   * @param event the event which occurred
+   */
   @Override
   public void handle(Event event) {
     List<String> values = new ArrayList<>();

@@ -35,9 +35,8 @@ public interface JavaJournalController {
   Scene showSplashScreen();
 
   /**
-   * To show the password screen
-   * @param field the field for the screen
-   * @return the stage for the screen
+   * Shows a password Screen
+   * @return the stage to display
    */
   Stage showPasswordScreen(TextField field);
 

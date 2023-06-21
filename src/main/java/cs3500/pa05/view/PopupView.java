@@ -258,12 +258,21 @@ public class PopupView {
     return weekStage;
   }
 
+  /**
+   * Changes a scene to editable
+   * @param fields the fields to set to editable
+   */
   public void editScene(TextField[] fields) {
     for (TextField f: fields) {
       f.setEditable(true);
     }
   }
 
+  /**
+   * The splashScreen to be shown to the user
+   *
+   * @return the splashScreen to show
+   */
   public Stage splashScreen() {
     HBox hBox = new HBox();
     Scene splash = new Scene(hBox, 1074, 714);
@@ -277,6 +286,12 @@ public class PopupView {
     return splashScreen;
   }
 
+  /**
+   * Represents a Password screen to be shown to the user
+   *
+   * @param passwordField the textField to get the users password
+   * @return the stage to be shown
+   */
   public Stage passwordScreen(TextField passwordField) {
     GridPane pane = new GridPane();
     Scene password = new Scene(pane, 1074, 714);
@@ -305,6 +320,14 @@ public class PopupView {
     return passwordStage;
   }
 
+  /**
+   * Shows an event in a mini Viewer
+   *
+   * @param label the event label
+   * @param entry the actual event entry
+   * @param controller the controller being used
+   * @param mainGrid the main gird Pane where the event is stored
+   */
   public void eventMiniView(Label label, JournalEntry entry,
                             JavaJournalControllerImpl controller, GridPane mainGrid) {
     JEvent e = (JEvent) entry;
@@ -352,6 +375,16 @@ public class PopupView {
   }
 
   // need to find better placement for buttons
+  /**
+   * Represents a mini viewer for Tasks
+   *
+   * @param label the task label
+   * @param t the task operated on
+   * @param stage the stage to show
+   * @param completeTask button to allow for changing task completion
+   * @param controller the corresponding controller
+   * @param mainGrid the mainGrid where the task visualization is stored
+   */
   public void taskMiniView(Label label, Task t, Stage stage, Button completeTask,
                            JavaJournalControllerImpl controller, GridPane mainGrid) {
     GridPane pane = new GridPane();

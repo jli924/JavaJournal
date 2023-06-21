@@ -44,24 +44,54 @@ public abstract class JournalEntry {
     this.weekday = weekday;
   }
 
+  /**
+   * gets the Journal Entries name
+   *
+   * @return the string of the name
+   */
   public String getName() {
     return name;
   }
 
+  /**
+   * gets the Journal Entries description
+   *
+   * @return the string of the description
+   */
   public String getDescription() {
     return description;
   }
 
+  /**
+   * gets the Journal Entries weekday
+   *
+   * @return the weekday of the string weekday
+   */
   public Weekday getWeekday() {
     return weekday;
   }
 
+  /**
+   * Takes text fields and turns them into Journal Entries
+   *
+   * @param newValues the values to build an entry off of
+   */
   public abstract void mutate(String[] newValues);
 
+  /**
+   * Checks if the entry contains a link
+   *
+   * @return boolean indicator
+   */
   public boolean containsLink() {
     return (description.contains("www.") || description.contains("http"));
   }
 
+  /**
+   * Gets the link off a given event
+   *
+   * @return the string representing the link
+   */
   public String getLink() {
     String s;
     String linkStart;

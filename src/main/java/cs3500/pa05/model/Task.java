@@ -2,6 +2,9 @@ package cs3500.pa05.model;
 
 import cs3500.pa05.model.json.TaskJson;
 
+/**
+ * Represents a Task
+ */
 public class Task extends JournalEntry {
   Boolean complete;
 
@@ -47,10 +50,20 @@ public class Task extends JournalEntry {
     this.complete = true;
   }
 
+  /**
+   * Transforms a Task to a TaskJson
+   *
+   * @return the corresponding TaskJson
+   */
   public TaskJson toTaskJson() {
     return new TaskJson(name, description, weekday, complete);
   }
 
+  /**
+   * Mutates the textField to create a task from the entries
+   *
+   * @param newValues the values to build an entry off of
+   */
   public void mutate(String[] newValues) {
     this.name = newValues[0];
     this.description = newValues[1];

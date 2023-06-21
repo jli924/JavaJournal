@@ -12,11 +12,11 @@ public class JEvent extends JournalEntry {
   /**
    * Constructor with description
    *
-   * @param name
-   * @param description
-   * @param weekday
-   * @param startTime
-   * @param duration
+   * @param name the name of the event
+   * @param description the descriptor of the event
+   * @param weekday the week day of the event
+   * @param startTime the startTime of the event
+   * @param duration the duration of the event
    */
   public JEvent(String name, String description, Weekday weekday,
                 String startTime, String duration) {
@@ -32,10 +32,10 @@ public class JEvent extends JournalEntry {
   /**
    * Constructor without description
    *
-   * @param name
-   * @param weekday
-   * @param startTime
-   * @param duration
+   * @param name the name of the event
+   * @param weekday the week day of the event
+   * @param startTime the startTime of the event
+   * @param duration the duration of the event
    */
   public JEvent(String name, Weekday weekday,
                 String startTime, String duration) {
@@ -49,14 +49,58 @@ public class JEvent extends JournalEntry {
     description = "";
   }
 
+  /**
+   * Builds the string equivalent of the Event
+   *
+   * @return the string equivalent of this journalEntry
+   */
+  public String journalToString() {
+    return null;
+  }
+
+  /**
+   * Represents a JEvent as JSON
+   * @return the EventJSON equivalent of this
+   */
   public EventJson toEventJson() {
     return new EventJson(name, description, weekday, startTime, duration);
   }
 
+  /**
+   * Gets the start time
+   * @return the start time to return
+   */
   public String getStartTime() { return startTime;}
 
+  /**
+   * Gets the duration time
+   * @return the duration time to return
+   */
   public String getDuration() { return duration;}
 
+  /**
+   * Sets the start time
+   *
+   * @param startTime the start time to set
+   */
+  public void setStartTime(String startTime) {
+    this.startTime = startTime;
+  }
+
+  /**
+   * Sets the duration time
+   *
+   * @param duration the duration time to set
+   */
+  public void setDuration(String duration) {
+    this.duration = duration;
+  }
+
+  /**
+   * Mutates the string values to a JEvent
+   *
+   * @param newValues the new Values to base this JEvent on
+   */
   public void mutate(String[] newValues) {
     this.name = newValues[0];
     this.description = newValues[1];

@@ -10,6 +10,9 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a javaJournal
+ */
 public class JavaJournal {
   private Day[] days = new Day[7];
   private File bujoFile;
@@ -17,16 +20,30 @@ public class JavaJournal {
   private String weekTitle;
   private String password = "cs3500";
 
+  /**
+   * Instantiates a JavaJournal
+   *
+   * @param days the days to assign
+   * @param file the file corresponding to this Journal
+   */
   public JavaJournal(Day[] days, File file) {
     this.days = days;
     bujoFile = new File("testFile.bujo");
   }
 
+  /**
+   * Instantiates a JavaJournal based on openFile
+   *
+   * @param file the file to read in from
+   */
   public JavaJournal(File file) {
     this.bujoFile = file;
     initializeDays();
   }
 
+  /**
+   * Default initialization
+   */
   public JavaJournal() {
     for (int i = 0; i < 7; i++) {
       days[i] = new Day(Weekday.values()[i], new ArrayList<>(),
@@ -88,7 +105,9 @@ public class JavaJournal {
   }
 
   /**
-   * @param e
+   * Adds an event to the days list of events
+   *
+   * @param e the JEvent to add
    */
   public void addEvent(JEvent e) {
     for (Day day : days) {
@@ -100,7 +119,9 @@ public class JavaJournal {
   }
 
   /**
-   * @param t
+   * Adds a task to the days list of tasks
+   *
+   * @param t the Task to add
    */
   public void addTask(Task t) {
     for (Day day : days) {
@@ -111,9 +132,9 @@ public class JavaJournal {
     }
   }
 
+
   /**
-   *
-   *
+   * Initializes the days for a new JavaJournal based on file reading in
    */
   public void initializeDays() {
     // should read the bujo file data and initialize the data from
@@ -138,20 +159,27 @@ public class JavaJournal {
   }
 
   /**
+   * gets the days from a journal
    *
-   *
-   * @return
+   * @return the array of days
    */
   public Day[] getDays() {
     return days;
   }
 
+  /**
+   * Allows user to change the password
+   *
+   * @param password the string to change the password to
+   */
   public void setPassword(String password) {
     this.password = password;
   }
 
   /**
+   * Writes this javaJournal to a file
    *
+   * @param file the file to write to
    */
   public void writeToFile(File file) {
     this.bujoFile = file;
@@ -165,10 +193,11 @@ public class JavaJournal {
     }
   }
 
+
   /**
+   * Converts a journal to a JournalJson
    *
-   *
-   * @return
+   * @return the corresponding JournalJson based on this.journal
    */
   private JournalJson toJournalJson() {
     DayJson[] dayJsons = new DayJson[7];
@@ -182,33 +211,59 @@ public class JavaJournal {
   }
 
   /**
+   * Allows to write in note and quotes box
    *
-   * @param notesAndQuotes
+   * @param notesAndQuotes the string written by the user
    */
   public void addNotes(String notesAndQuotes) {
     this.notesAndQuotes = notesAndQuotes;
   }
 
+  /**
+   * Changes the weekTitle
+   *
+   * @param weekTitle the string to change the week title too
+   */
   public void setWeekTitle(String weekTitle) {
     this.weekTitle = weekTitle;
   }
 
+  /**
+   * Determines if the Journal has a file already
+   *
+   * @return a boolean indicator
+   */
   public boolean isJournalFileEmpty() {
     return this.bujoFile == null;
   }
 
+  /**
+   * Sets the max tasks for all days
+   *
+   * @param newMax the new max task number to set to
+   */
   public void setMaxTasks(int newMax) {
     for (Day day : days) {
       day.changeMaxTasks(newMax);
     }
   }
 
+  /**
+   * Sets the max events for all days
+   *
+   * @param newMax the new max event number to set to
+   */
   public void setMaxEvent(int newMax) {
     for (Day day : days) {
       day.changeMaxEvents(newMax);
     }
   }
 
+  /**
+   * Checks if user has gone over max value
+   *
+   * @return the flag indicator
+   */
   public boolean checkMaxEvents() {
     boolean flag = false;
     for (Day day : days) {
@@ -219,6 +274,11 @@ public class JavaJournal {
     return flag;
   }
 
+  /**
+   * Checks if user has gone over max value
+   *
+   * @return the flag indicator
+   */
   public boolean checkMaxTasks() {
     boolean flag = false;
     for (Day day : days) {
@@ -229,14 +289,30 @@ public class JavaJournal {
     return flag;
   }
 
+  /**
+   * Retrieves notes and quotes from the Journal
+   *
+   * @return the String in the notesAndQuotes box
+   */
   public String getNotesAndQuotes() {
     return notesAndQuotes;
   }
 
+  /**
+   * Retrieves week tittle from the Journal
+   *
+   * @return the String in the week tittle box
+   */
   public String getWeekTitle() {
     return weekTitle;
   }
 
+  /**
+   * Checks if the password is correct
+   *
+   * @param password the password to check against
+   * @return a boolean flag indicating password correctness
+   */
   public boolean correctPassword(String password) {
     return password.equals(this.password);
   }

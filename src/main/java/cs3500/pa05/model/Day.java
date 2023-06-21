@@ -72,9 +72,9 @@ public class Day {
   }
 
   /**
+   * Transforms a day to a DayJson
    *
-   *
-   * @return
+   * @return the corresponding DayJson for this.day
    */
   public DayJson toDayJson() {
     List<TaskJson> taskList = new ArrayList<>();
@@ -84,10 +84,21 @@ public class Day {
     return new DayJson(day, taskList, eventList, maxEvents, maxTasks);
   }
 
+  /**
+   * gets the events
+   *
+   * @return a list of events
+   */
   public List<JEvent> getEvents() {
     return events;
   }
 
+  /**
+   * finds a given event based on a string
+   *
+   * @param event the matching string for event to find
+   * @return the event (or null) corresponding to the string name
+   */
   public JEvent findEvent(String event) {
     for (JEvent e : events) {
       if (e.getName().equals(event)) {
@@ -97,6 +108,12 @@ public class Day {
     return null;
   }
 
+  /**
+   * Finds a given task
+   *
+   * @param task the string task to find
+   * @return the corresponding task, if in the list
+   */
   public Task findTask(String task) {
     for (Task t : tasks) {
       if (t.getName().equals(task)) {
@@ -106,29 +123,64 @@ public class Day {
     return null;
   }
 
+  /**
+   * Gets the day
+   *
+   * @return a weekday representation of the day
+   */
   public Weekday getDay() {return day;}
 
+  /**
+   * Gets the max Events for a day
+   *
+   * @return the integer representing max Events
+   */
   public int getMaxEvents() {
     return this.maxEvents;
   }
 
+  /**
+   * Gets the max Tasks for a day
+   *
+   * @return the integer representing max Tasks
+   */
   public int getMaxTasks() {
     return this.maxTasks;
   }
 
+  /**
+   * Alters the max Tasks
+   *
+   * @param newMax the new Max to change the maxTasks to
+   */
   public void changeMaxTasks(int newMax) {
     this.maxTasks = newMax;
   }
 
+  /**
+   * Alters the max Events
+   *
+   * @param newMax the new Max to change the maxEvents to
+   */
   public void changeMaxEvents(int newMax) {
     this.maxEvents = newMax;
   }
 
+  /**
+   * Checks if the day is over the max Events
+   *
+   * @return true if the size of the events list is greater than the max events
+   */
   public boolean overEvents() {
-    return this.events.size() >= this.maxEvents;
+    return this.events.size() > this.maxEvents;
   }
 
+  /**
+   * Checks if the day is over the max Tasks
+   *
+   * @return true if the size of the Tasks list is greater than the max Tasks
+   */
   public boolean overTasks() {
-    return this.tasks.size() >= this.maxTasks;
+    return this.tasks.size() > this.maxTasks;
   }
 }

@@ -123,10 +123,11 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   /**
-   * Finds the first empty row
-   * @param gridPane the grid pane to search
-   * @param columnIndex the column to search
-   * @return the row number or -1 if no empty row is found
+   * Finds the first empty gird pane spot in a column
+   *
+   * @param gridPane the gridpane to search
+   * @param columnIndex the column index to search in
+   * @return
    */
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
     int numRows = gridPane.getRowCount();
@@ -140,11 +141,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   /**
-   * Gets a node from a grid pane
-   * @param gridPane the grid pane to get from
-   * @param colIndex the column of the node
-   * @param rowIndex the row of the node
-   * @return the node
+   * gets a given node from the gridPane
+   *
+   * @param gridPane a gridPane to search
+   * @param colIndex the column index
+   * @param rowIndex the row index
+   * @return the node found at the given index
    */
   private static Node getNodeFromGridPane(GridPane gridPane, int colIndex, int rowIndex) {
     for (Node node : gridPane.getChildren()) {
@@ -265,7 +267,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   /**
-   * Handles the set max entries button
+   * Handles events when maxEntries button is clicked
    */
   private void maxEntriesHandler() {
     TextField maxEvents = new TextField();
@@ -367,7 +369,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   /**
-   * Handles selecting a profile picture
+   * Allows user to select a profile picture
    */
   @FXML
   private void selectProfilePicture() {
@@ -385,10 +387,10 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   /**
-   * Creates a new image pattern with
-   * @param img the image
-   * @param radius the radius of the image pattern
-   * @return the image pattern
+   * Helps construct the profile picture
+   * @param img the Image to construct
+   * @param radius the sizing radius
+   * @return the imagePattern of the profile picture
    */
   private ImagePattern pattern(Image img, double radius) {
     double hRad = radius;   // horizontal "radius"
@@ -439,6 +441,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     }
   }
 
+  /**
+   * Adds the labels to the gridPane
+   */
   private void setDays() {
     LocalDate date = LocalDate.now();
     DayOfWeek day = date.getDayOfWeek();
@@ -476,12 +481,21 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
 
+  /**
+   * Opens a given file
+   *
+   * @param file the file to open from
+   * @return the new JavaJournal to open;
+   */
   @Override
   public JavaJournal openFile(File file) {
     this.journal = new JavaJournal(file);
     return this.journal;
   }
 
+  /**
+   * initializes commands based off of keystroke combination presses
+   */
   public void initCommands() {
     addMenuEvent.getScene().getAccelerators().put(
         new KeyCodeCombination(KeyCode.E, KeyCombination.CONTROL_ANY), () -> addMenuEvent.fire());
@@ -648,6 +662,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
 
+  /**
+   * Updates the gridPane and journal view
+   */
   private void update() {
     weeklyOverview.setEditable(false);
     weeklyOverview.setText("Total tasks: " + journal.getTasks().size()
@@ -671,6 +688,12 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     }
   }
 
+  /**
+   * displays a miniViewer
+   *
+   * @param label the miniViewer label for the event (task/event)
+   * @param entry the given event
+   */
   public void miniViewer(Label label, JournalEntry entry) {
     try {
       popupView.eventMiniView(label, entry, this, mainGrid);
