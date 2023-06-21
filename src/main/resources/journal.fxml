@@ -51,7 +51,7 @@
             <font>
                <Font name="American Typewriter" size="27.0" />
             </font></Label>
-         <Label fx:id="month" alignment="CENTER_RIGHT" layoutX="532.0" layoutY="49.0" prefHeight="39.0" prefWidth="269.0" text="June" textFill="#050404b0">
+         <Label fx:id="month" alignment="CENTER_RIGHT" layoutX="547.0" layoutY="49.0" prefHeight="39.0" prefWidth="269.0" text="June" textFill="#050404b0">
             <font>
                <Font name="American Typewriter" size="27.0" />
             </font>
@@ -98,5 +98,6 @@
             </font>
          </Label>
          <Button fx:id="password" layoutX="478.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" style="-fx-background-color: light;" text="Set Password" />
+         <Button fx:id="maxEntries" layoutX="916.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@scene.css" text="Change max entries" />
       </children></AnchorPane>
 </Scene>

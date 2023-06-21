@@ -1,32 +1,21 @@
 package cs3500.pa05.controller;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
-import cs3500.pa05.Driver;
 import cs3500.pa05.model.Day;
 import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
-import cs3500.pa05.model.json.DayJson;
-import cs3500.pa05.model.json.JournalJson;
-import cs3500.pa05.model.json.JsonUtils;
 import cs3500.pa05.view.JavaJournalView;
 import cs3500.pa05.view.JavaJournalViewImpl;
 import cs3500.pa05.view.PopupView;
 import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.nio.file.Path;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-import java.util.Scanner;
 import javafx.animation.PauseTransition;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
@@ -439,81 +428,79 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Handles the new save to file event
    */
   private void saveToFileHandler() {
-    /*
     Stage stage = new Stage();
     FileChooser chooser = new FileChooser();
-
-    File tmp = chooser.showOpenDialog(stage);
-    String path = tmp.getAbsolutePath();
-    File file = new File(path);
+    File file = chooser.showOpenDialog(stage);
     saveToFile(file);
-     */
-    TextField field = new TextField();
-    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
-    Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
-        "New Save", field, save,
-        "https://www.iconsdb.com/icons/preview/pink/save-as-xxl.png", 19);
 
-
-    save.setOnAction(event -> {
-      String filename = field.getText();
-      File file = new File(filename + ".bujo");
-      saveToFile(file);
-      saveStage.close();
-    });
-    saveStage.show();
+//    TextField field = new TextField();
+//    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+//    Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
+//        "New Save", field, save,
+//        "https://www.iconsdb.com/icons/preview/pink/save-as-xxl.png", 19);
+//
+//
+//    save.setOnAction(event -> {
+//      String filename = field.getText();
+//      File file = new File(filename + ".bujo");
+//      saveToFile(file);
+//      saveStage.close();
+//    });
+//    saveStage.show();
   }
 
   /**
    * Handles the new save to file event
    */
   private void openFileHandler() {
-   /*
-    Stage stage = new Stage();
-    FileChooser chooser = new FileChooser();
-
-    File tmp = chooser.showOpenDialog(stage);
-    String path = tmp.getAbsolutePath();
-    File file = new File(path);
-    saveToFile(file);
-    //AA starting a new file
-    this.stage.close();
-    JavaJournal newJournal = openFile(file);
-    Stage newStage = new Stage();
-    JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
-    JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
-    newStage.setScene(journalController.showSplashScreen());
-    newStage.show();
-    Stage journal = new Stage();
-    journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
-    */
-    TextField field = new TextField();
-    Button open = popupView.addPrettyButton("Open", 50, 30, "pink");
-    Stage openStage = popupView.newSaveOrOpenScene("Open File:",
-        "Filename (w/out '.bujo'): ",
-        "Open File", field, open,
-        "https://www.iconsdb.com/icons/preview/pink/data-transfer-download-xxl.png",
-        19);
-    open.setOnAction(event -> {
-      String filename = field.getText();
-      File file = new File(filename + ".bujo");
+//    TextField field = new TextField();
+//    Button open = popupView.addPrettyButton("Open", 50, 30, "pink");
+//    Stage openStage = popupView.newSaveOrOpenScene("Open File:",
+//        "Filename (w/out '.bujo'): ",
+//        "Open File", field, open,
+//        "https://www.iconsdb.com/icons/preview/pink/data-transfer-download-xxl.png",
+//        19);
+//    open.setOnAction(event -> {
+//      String filename = field.getText();
+//      File file = new File(filename + ".bujo");
+//      JavaJournal newJournal = openFile(file);
+//      openStage.close();
+//      //AA starting a new file
+//      stage.close();
+//      Stage newStage = new Stage();
+//      JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
+//      JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
+//      newStage.setScene(journalController.showSplashScreen());
+//      newStage.show();
+//      Stage journal = new Stage();
+//      journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
+//
+//    });
+//    openStage.show();
+    try {
+      Stage openFileStage = new Stage();
+      FileChooser chooser = new FileChooser();
+      File file = chooser.showOpenDialog(openFileStage);
       JavaJournal newJournal = openFile(file);
-      openStage.close();
-      //AA starting a new file
       stage.close();
       Stage newStage = new Stage();
       JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
       JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
-      newStage.setScene(journalController.showSplashScreen());
-      newStage.show();
-      Stage journal = new Stage();
-      journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
-
-    });
-    openStage.show();
-    password.getScene().getAccelerators().put(
-        new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
-
+      if (file != null) {
+        if (file.getName().endsWith(".bujo")) {
+          newStage.setScene(journalController.showSplashScreen());
+          newStage.show();
+          Stage journal = new Stage();
+          journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
+          password.getScene().getAccelerators().put(
+              new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
+        } else {
+          popupView.invalidInputAlert("Invalid file type",
+              "File must be a .bujo file");
+        }
+      }
+    } catch (Exception ignored) {
+    }
   }
 
   /**

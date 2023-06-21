@@ -1,9 +1,6 @@
 package cs3500.pa05.controller;
 
-import cs3500.pa05.model.JEvent;
-import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
-import cs3500.pa05.model.Weekday;
 import cs3500.pa05.view.PopupView;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,6 +12,10 @@ import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
 // jfc this was so convoluted for no reason
+
+/**
+ *
+ */
 public class SaveProcessor implements EventHandler {
   JournalEntry entry;
   TextField[] newValues;

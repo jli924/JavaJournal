@@ -54,7 +54,7 @@ public class Day {
     if (events.size() <= maxEvents) {
       events.add(JEvent);
     } else {
-      throw new IllegalStateException("Cannot exceed max events");
+      throw new IllegalStateException("Cannot exceed max number of events");
     }
   }
 
@@ -67,7 +67,7 @@ public class Day {
     if (tasks.size() <= maxTasks) {
       tasks.add(task);
     } else {
-      throw new IllegalStateException("Cannot exceed max tasks");
+      throw new IllegalStateException("Cannot exceed max number of tasks");
     }
   }
 
