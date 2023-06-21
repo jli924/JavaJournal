@@ -201,9 +201,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     initButtons();
     profilePicture.setFill(new ImagePattern
         (new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
-    profilePicture.setOnMouseClicked(event -> {
-      selectProfilePicture();
-    });
   }
 
 
@@ -219,6 +216,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     newMonth.setOnAction(event -> newMonthHandler());
     newYear.setOnAction(event -> newYearHandler());
     password.setOnAction(event -> passwordHandler());
+    profilePicture.setOnMouseClicked(event -> {
+      selectProfilePicture();
+    });
     //AA
     openFile.setOnAction(event -> openFileHandler());
     saveToFile.setOnAction(event -> saveToFileHandler());
@@ -340,6 +340,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * Initializes existing tasks on the gridpane
    */
   private void initTasksandEvents() {
+    notesAndQuotes.setText(journal.getNotesAndQuotes());
+    weekLabel.setText(journal.getWeekTitle());
     int colIdx = 0;
     int rowIdx = 1;
     for (Day day : journal.getDays()) {
@@ -430,7 +432,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   private void saveToFileHandler() {
     Stage stage = new Stage();
     FileChooser chooser = new FileChooser();
-    File file = chooser.showOpenDialog(stage);
+    File file = chooser.showSaveDialog(stage);
     saveToFile(file);
 
 //    TextField field = new TextField();

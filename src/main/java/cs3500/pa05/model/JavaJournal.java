@@ -168,26 +168,6 @@ public class JavaJournal {
 
   /**
    *
-   * @return the list of dayJSONNodes
-   */
-  public List<DayJson> serializeJournal() {
-    List<DayJson> output = new ArrayList<>();
-    ObjectMapper mapper = new ObjectMapper();
-    try {
-      for (Day day : days) {
-        JsonNode node = JsonUtils.serializeRecord(day.toDayJson());
-        DayJson dayJson = mapper.convertValue(node, DayJson.class);
-        //.toPrettyString() + System.lineSeparator() + System.lineSeparator();
-        output.add(dayJson);
-      }
-    } catch (Exception e) {
-      System.err.println("Cannot serialize JSON");
-    }
-    return output;
-  }
-
-  /**
-   *
    */
   public void writeToFile(File file) {
     this.bujoFile = file;
@@ -231,5 +211,25 @@ public class JavaJournal {
 
   public boolean isJournalFileEmpty() {
     return this.bujoFile == null;
+  }
+
+  public void setMaxTasks(int newMax) {
+    for (Day day : days) {
+      day.changeMaxTasks(newMax);
+    }
+  }
+
+  public void setMaxEvent(int newMax) {
+    for (Day day : days) {
+      day.changeMaxEvents(newMax);
+    }
+  }
+
+  public String getNotesAndQuotes() {
+    return notesAndQuotes;
+  }
+
+  public String getWeekTitle() {
+    return weekTitle;
   }
 }

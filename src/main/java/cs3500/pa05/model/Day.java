@@ -115,4 +115,12 @@ public class Day {
   public int getMaxTasks() {
     return this.maxTasks;
   }
+
+  public void changeMaxTasks(int newMax) {
+    this.maxTasks = newMax;
+  }
+
+  public void changeMaxEvents(int newMax) {
+    this.maxEvents = newMax;
+  }
 }
