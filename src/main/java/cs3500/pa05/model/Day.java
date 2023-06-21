@@ -80,7 +80,6 @@ public class Day {
     List<TaskJson> taskList = new ArrayList<>();
     List<EventJson> eventList = new ArrayList<>();
     tasks.forEach((task) -> taskList.add(task.toTaskJson()));
-    tasks.forEach((task) -> taskList.add(task.toTaskJson()));
     events.forEach((event) -> eventList.add(event.toEventJson()));
     return new DayJson(day, taskList, eventList, maxEvents, maxTasks);
   }

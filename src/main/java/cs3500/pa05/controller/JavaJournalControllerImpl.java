@@ -500,6 +500,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       JavaJournal newJournal = openFile(file);
       openStage.close();
       //AA starting a new file
+      stage.close();
       Stage newStage = new Stage();
       JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
       JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
@@ -507,7 +508,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       newStage.show();
       Stage journal = new Stage();
       journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
-      stage.close();
+
     });
     openStage.show();
     password.getScene().getAccelerators().put(
