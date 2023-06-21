@@ -1,6 +1,9 @@
 package cs3500.pa05.controller;
 
+import cs3500.pa05.model.JEvent;
+import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
+import cs3500.pa05.model.Task;
 import cs3500.pa05.view.PopupView;
 import java.util.ArrayList;
 import java.util.List;
@@ -23,6 +26,7 @@ public class SaveProcessor implements EventHandler {
   Label label;
   JavaJournalControllerImpl controller;
   GridPane pane;
+  JavaJournal journal;
 
   /**
    * Processes a new save
@@ -36,7 +40,8 @@ public class SaveProcessor implements EventHandler {
    * @param pane the current gridPane
    */
   public SaveProcessor(JournalEntry entry, TextField[] newValues, PopupView popupView, Stage stage,
-                       Label label, JavaJournalControllerImpl controller, GridPane pane) {
+                       Label label, JavaJournalControllerImpl controller, GridPane pane,
+                       JavaJournal journal) {
     this.entry = entry;
     this.newValues = newValues;
     this.popupView = popupView;
@@ -44,6 +49,7 @@ public class SaveProcessor implements EventHandler {
     this.label = label;
     this.controller = controller;
     this.pane = pane;
+    this.journal = journal;
   }
 
   /**
@@ -58,7 +64,9 @@ public class SaveProcessor implements EventHandler {
       values.add(field.getText());
     }
     try {
+      entry.remove(journal);
       entry.mutate(values.toArray(new String[0]));
+      entry.add(journal);
       label.setText(entry.getName());
       label.setOnMouseClicked(event2 -> {
         controller.miniViewer(label, entry);

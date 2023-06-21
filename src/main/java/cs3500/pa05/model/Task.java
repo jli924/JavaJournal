@@ -70,4 +70,22 @@ public class Task extends JournalEntry {
     this.weekday = Weekday.valueOfString(newValues[2].toUpperCase());
     this.complete = false;
   }
+
+  /**
+   * To add a task to a java journal
+   * @param journal the journal to add to
+   */
+  @Override
+  public void add(JavaJournal journal) {
+    journal.addTask(this);
+  }
+
+  /**
+   * To remove a task from a java journal
+   * @param journal the journal to remove from
+   */
+  @Override
+  public void remove(JavaJournal journal) {
+    journal.removeTask(this);
+  }
 }

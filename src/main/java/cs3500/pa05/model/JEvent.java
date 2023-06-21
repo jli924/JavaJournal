@@ -97,4 +97,22 @@ public class JEvent extends JournalEntry {
     this.startTime = newValues[3];
     this.duration = newValues[4];
   }
+
+  /**
+   * To add an event to a java journal
+   * @param journal the journal to add to
+   */
+  @Override
+  public void add(JavaJournal journal) {
+    journal.addEvent(this);
+  }
+
+  /**
+   * To remove an event from a java journal
+   * @param journal the journal to remove from
+   */
+  @Override
+  public void remove(JavaJournal journal) {
+    journal.removeEvent(this);
+  }
 }

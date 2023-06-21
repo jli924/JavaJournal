@@ -35,6 +35,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -126,7 +127,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    *
    * @param gridPane the gridpane to search
    * @param columnIndex the column index to search in
-   * @return the integer representing the first empty row
+   * @return
    */
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
     int numRows = gridPane.getRowCount();
@@ -238,7 +239,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     showSplashScreen();
     initCommands();
     initButtons();
-    profilePicture.setFill(new ImagePattern(new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
+    profilePicture.setFill(new ImagePattern
+        (new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
   }
 
 
@@ -307,16 +309,18 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     // add functionality while the dialog runs
     save.setOnAction(event -> {
       try {
-        JEvent userJevent = new JEvent(name.getText(), description.getText(),
+        JEvent userJEvent = new JEvent(name.getText(), description.getText(),
             Weekday.valueOfString(weekday.getText().toUpperCase()),
             startTime.getText(), duration.getText());
-        journal.addEvent(userJevent);
-        Label newEvent = new Label(userJevent.getName());
+        journal.addEvent(userJEvent);
+        Label newEvent = new Label(userJEvent.getName());
         newEvent.setPadding(new Insets(5));
-        int row = findFirstEmptyRow(mainGrid, userJevent.getWeekday().ordinal());
-        int col = userJevent.getWeekday().ordinal();
+        int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
+        int col = userJEvent.getWeekday().ordinal();
         mainGrid.add(newEvent, col, row);
-        newEvent.setOnMouseClicked(event1 -> miniViewer(newEvent, userJevent));
+        newEvent.setOnMouseClicked(event1 -> {
+          miniViewer(newEvent, userJEvent);
+        });
         eventStage.close();
         update();
       } catch (Exception e) {
@@ -350,7 +354,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         int col = userTask.getWeekday().ordinal();
         mainGrid.add(newTask, col, row);
         GridPane.setColumnIndex(newTask, col);
-        newTask.setOnMouseClicked(event1 -> miniViewer(newTask, userTask));
+        newTask.setOnMouseClicked(event1 -> {
+          miniViewer(newTask, userTask);
+        });
         taskStage.close();
         update();
       } catch (Exception e) {
@@ -377,32 +383,29 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       image1.setImage(img);
       profilePicture.setFill(pattern(img, profilePicture.getRadius()));
     } catch (Exception ignored) {
-      //should be ignored but is needed for checkstyle so no empty catch block
-      System.out.println();
     }
   }
 
   /**
    * Helps construct the profile picture
-   *
    * @param img the Image to construct
    * @param radius the sizing radius
    * @return the imagePattern of the profile picture
    */
   private ImagePattern pattern(Image img, double radius) {
-    double hrad = radius;   // horizontal "radius"
-    double vrad = radius;   // vertical "radius"
+    double hRad = radius;   // horizontal "radius"
+    double vRad = radius;   // vertical "radius"
     if (img.getWidth() != img.getHeight()) {
       double ratio = img.getWidth() / img.getHeight();
       if (ratio > 1) {
         // Width is longer, left anchor is outside
-        hrad = radius * ratio;
+        hRad = radius * ratio;
       } else {
         // Height is longer, top anchor is outside
-        vrad = radius / ratio;
+        vRad = radius / ratio;
       }
     }
-    return new ImagePattern(img, -hrad, -vrad, 2 * hrad, 2 * vrad, false);
+    return new ImagePattern(img, -hRad, -vRad, 2 * hRad, 2 * vRad, false);
   }
 
 
@@ -418,14 +421,18 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       for (Task t : day.getTasks()) {
         Label initEntry = new Label(t.getName());
         initEntry.setPadding(new Insets(5));
-        initEntry.setOnMouseClicked(event -> miniViewer(initEntry, t));
+        initEntry.setOnMouseClicked(event -> {
+          miniViewer(initEntry, t);
+        });
         mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
       }
       for (JEvent e : day.getEvents()) {
         Label initEntry = new Label(e.getName());
         initEntry.setPadding(new Insets(5));
-        initEntry.setOnMouseClicked(event -> miniViewer(initEntry, e));
+        initEntry.setOnMouseClicked(event -> {
+          miniViewer(initEntry, e);
+        });
         mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
       }
@@ -517,12 +524,51 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     FileChooser chooser = new FileChooser();
     File file = chooser.showSaveDialog(stage);
     saveToFile(file);
+
+//    TextField field = new TextField();
+//    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
+//    Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
+//        "New Save", field, save,
+//        "https://www.iconsdb.com/icons/preview/pink/save-as-xxl.png", 19);
+//
+//
+//    save.setOnAction(event -> {
+//      String filename = field.getText();
+//      File file = new File(filename + ".bujo");
+//      saveToFile(file);
+//      saveStage.close();
+//    });
+//    saveStage.show();
   }
 
   /**
    * Handles the new save to file event
    */
   private void openFileHandler() {
+//    TextField field = new TextField();
+//    Button open = popupView.addPrettyButton("Open", 50, 30, "pink");
+//    Stage openStage = popupView.newSaveOrOpenScene("Open File:",
+//        "Filename (w/out '.bujo'): ",
+//        "Open File", field, open,
+//        "https://www.iconsdb.com/icons/preview/pink/data-transfer-download-xxl.png",
+//        19);
+//    open.setOnAction(event -> {
+//      String filename = field.getText();
+//      File file = new File(filename + ".bujo");
+//      JavaJournal newJournal = openFile(file);
+//      openStage.close();
+//      //AA starting a new file
+//      stage.close();
+//      Stage newStage = new Stage();
+//      JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
+//      JavaJournalView javaJournalView = new JavaJournalViewImpl(journalController);
+//      newStage.setScene(journalController.showSplashScreen());
+//      newStage.show();
+//      Stage journal = new Stage();
+//      journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
+//
+//    });
+//    openStage.show();
     try {
       Stage openFileStage = new Stage();
       FileChooser chooser = new FileChooser();
@@ -548,7 +594,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         }
       }
     } catch (Exception ignored) {
-      System.out.println();
     }
   }
 
@@ -625,7 +670,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     weeklyOverview.setText("Total tasks: " + journal.getTasks().size()
         + System.lineSeparator()
         + System.lineSeparator()
-        + "Total events: " + journal.getEvents().size()
+        + "Total events: " + journal.getJEvents().size()
         + System.lineSeparator()
         + System.lineSeparator()
         + "Tasks completed: "
@@ -637,9 +682,9 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       }
     }
     if (journal.checkMaxEvents()) {
-      System.out.println();
+      //TODO:POPUP WARNING
     } else if (journal.checkMaxTasks()) {
-      System.out.println();
+      //TODO:POPUP WARNING
     }
   }
 

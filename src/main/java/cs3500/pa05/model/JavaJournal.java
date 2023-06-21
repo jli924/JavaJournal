@@ -47,7 +47,7 @@ public class JavaJournal {
   public JavaJournal() {
     for (int i = 0; i < 7; i++) {
       days[i] = new Day(Weekday.values()[i], new ArrayList<>(),
-          new ArrayList<>(), 10, 10);
+          new ArrayList<>(), 6, 6);
     }
     //bujoFile = new File("testFile2.bujo");
   }
@@ -129,6 +129,28 @@ public class JavaJournal {
         day.addTask(t);
         break;
       }
+    }
+  }
+
+  /**
+   * Removes an event from the journal
+   *
+   * @param e the event
+   */
+  public void removeEvent(JEvent e) {
+    for (Day day : days) {
+      day.removeEvent(day.findEvent(e.getName()));
+    }
+  }
+
+  /**
+   * Removes a task from the journal
+   *
+   * @param t the task
+   */
+  public void removeTask(Task t) {
+    for (Day day : days) {
+      day.removeTask(day.findTask(t.getName()));
     }
   }
 
@@ -259,35 +281,6 @@ public class JavaJournal {
     }
   }
 
-  /**
-   * Checks if user has gone over max value
-   *
-   * @return the flag indicator
-   */
-  public boolean checkMaxEvents() {
-    boolean flag = false;
-    for (Day day : days) {
-      if (day.overEvents()) {
-        flag = true;
-      }
-    }
-    return flag;
-  }
-
-  /**
-   * Checks if user has gone over max value
-   *
-   * @return the flag indicator
-   */
-  public boolean checkMaxTasks() {
-    boolean flag = false;
-    for (Day day : days) {
-      if (day.overTasks()) {
-        flag = true;
-      }
-    }
-    return flag;
-  }
 
   /**
    * Retrieves notes and quotes from the Journal

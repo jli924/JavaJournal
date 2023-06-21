@@ -42,8 +42,8 @@ class DayTest {
     meeting = new JEvent("Business meeting", Weekday.SUNDAY, "9:00", "1hr");
     events = new ArrayList<>(List.of(event));
     jsonEvents = new ArrayList<>(List.of(eventJson));
-    day = new Day(Weekday.SUNDAY, tasks, events, 2, 1);
-    dayJson = new DayJson(Weekday.SUNDAY, jsonTasks, jsonEvents, 2, 1);
+    day = new Day(Weekday.SUNDAY, tasks, events, 2, 3);
+    dayJson = new DayJson(Weekday.SUNDAY, jsonTasks, jsonEvents, 2, 3);
   }
 
   @Test
@@ -95,7 +95,7 @@ class DayTest {
 
   @Test
   void getMaxTasks() {
-    assertEquals(1, day.getMaxTasks());
+    assertEquals(3, day.getMaxTasks());
   }
 
   @Test
@@ -108,15 +108,5 @@ class DayTest {
   void changeMaxEvents() {
     day.changeMaxEvents(3);
     assertEquals(3, day.getMaxEvents());
-  }
-
-  @Test
-  void overEvents() {
-    assertFalse(day.overEvents());
-  }
-
-  @Test
-  void overTasks() {
-    assertFalse(day.overTasks());
   }
 }

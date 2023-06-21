@@ -105,4 +105,8 @@ public abstract class JournalEntry {
     return s;
   }
 
+  abstract public void add(JavaJournal journal);
+
+  abstract public void remove(JavaJournal journal);
+
 }
