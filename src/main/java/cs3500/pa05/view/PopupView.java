@@ -76,6 +76,24 @@ public class PopupView {
   }
 
   /**
+   * Show an alert
+   *
+   * @param header the header for the alert
+   * @param message the message to show on the alert
+   */
+  public void infoAlert(String header, String message) {
+    Alert invalidInput = new Alert(Alert.AlertType.INFORMATION);
+    invalidInput.setResizable(false);
+    invalidInput.setHeaderText(header);
+    ImageView infoIcon = addIcon(
+        "https://www.iconsdb.com/icons/preview/pink/info-xxl.png",
+        40, 40);
+    invalidInput.setGraphic(infoIcon);
+    invalidInput.setContentText(message);
+    invalidInput.show();
+  }
+
+  /**
    * The stage for the event popup
    *
    * @param fields the text-fields to show
@@ -171,13 +189,13 @@ public class PopupView {
    */
   public Stage maxEntriesScene(TextField[] fields, Button save) {
     GridPane pane = new GridPane();
-    Scene maxEntriesScene = new Scene(pane, 400, 450);
+    Scene maxEntriesScene = new Scene(pane, 400, 400);
     Stage maxEntriesStage = new Stage();
     ImageView icon = addIcon(
         "https://www.iconsdb.com/icons/preview/pink/notepad-xxl.png", 64, 64);
-    Label[] labels = {new Label("Max Events: "), new Label("Max Tasks: ")};
-    Label newMaxes = new Label("New Maxes");
-    newMaxes.setStyle("-fx-font-size: 21;");
+    Label[] labels = {new Label("Max Events: "), new Label("Max Tasks:")};
+    Label newMaxes = new Label("New Maximum");
+    newMaxes.setStyle("-fx-font-size: 14;");
 
     // adding controls to a gridpane
     for (int row = 1; row < 3; row++) {
@@ -186,7 +204,7 @@ public class PopupView {
     }
     pane.add(icon, 1, 0);
     pane.add(newMaxes, 0, 0);
-    pane.add(save, 1, 4);
+    pane.add(save, 1, 3);
 
     // setting alignment for style
     GridPane.setHalignment(save, HPos.RIGHT);
@@ -255,7 +273,36 @@ public class PopupView {
     hBox.setAlignment(Pos.CENTER);
     splashScreen.setScene(splash);
     splashScreen.setTitle("Java Journal");
+    splashScreen.setResizable(false);
     return splashScreen;
+  }
+
+  public Stage passwordScreen(TextField passwordField) {
+    GridPane pane = new GridPane();
+    Scene password = new Scene(pane, 1074, 714);
+    Stage passwordStage = new Stage();
+    ImageView icon = addIcon("https://www.iconsdb.com/icons/preview/pink/padlock-3-xxl.png",
+        100, 100);
+    Label enter = new Label("Please enter your password");
+    Label passwordLabel = new Label("Password:");
+    enter.setStyle("-fx-font-size: 18");
+    passwordLabel.setStyle("-fx-font-size: 15");
+    pane.add(enter, 0, 0);
+    pane.add(icon, 1, 0);
+    pane.add(passwordField, 1, 1);
+    pane.add(passwordLabel, 0, 1);
+    pane.setAlignment(Pos.CENTER);
+    passwordStage.setScene(password);
+    passwordStage.setTitle("Password");
+
+    GridPane.setHalignment(icon, HPos.RIGHT);
+
+    pane.setPadding(new Insets(50));
+    pane.setHgap(50);
+    pane.setVgap(50);
+    passwordStage.setResizable(false);
+
+    return passwordStage;
   }
 
   public void eventMiniView(Label label, JournalEntry entry,

@@ -98,6 +98,6 @@
             </font>
          </Label>
          <Button fx:id="password" layoutX="478.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="98.0" style="-fx-background-color: light;" text="Set Password" />
-         <Button fx:id="maxEntries" layoutX="916.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@scene.css" text="Change max entries" />
+         <Button fx:id="maxEntries" layoutX="916.0" layoutY="281.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="130.0" style="-fx-background-color: pink;" stylesheets="@scene.css" text="Set max entries" />
       </children></AnchorPane>
 </Scene>

@@ -3,6 +3,7 @@ package cs3500.pa05.controller;
 import cs3500.pa05.model.JavaJournal;
 import java.io.File;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 /**
@@ -32,12 +33,15 @@ public interface JavaJournalController {
    */
   Scene showSplashScreen();
 
+  Stage showPasswordScreen(TextField field);
+
   /**
    * To close the splash screen after 2 seconds
    * @param splash the splash screen
    * @param journal the journal
    * @param scene the scene for the journal
    */
-  void closeSplashScreen(Stage splash, Stage journal, Scene scene);
+  void closeSplashScreen(Stage splash, Stage journal, Scene scene, Stage password,
+                         TextField passwordField);
 
 }

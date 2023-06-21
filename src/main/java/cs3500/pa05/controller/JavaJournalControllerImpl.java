@@ -35,6 +35,7 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
+import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -156,21 +157,42 @@ public class JavaJournalControllerImpl implements JavaJournalController {
   }
 
   /**
+   * The scene for the splash screen
+   *
+   * @return the scene
+   */
+  public Stage showPasswordScreen(TextField field) {
+    Stage password = popupView.passwordScreen(field);
+    return password;
+  }
+
+  /**
    * To close the splash screen after 2 seconds
    *
    * @param splash  the splash screen
    * @param journal the journal
    * @param scene   the scene for the journal
    */
-  public void closeSplashScreen(Stage splash, Stage journal, Scene scene) {
+  public void closeSplashScreen(Stage splash, Stage journal, Scene scene, Stage passwordStage,
+                                TextField passwordField) {
     initJournal(journal, scene);
     PauseTransition pauseTransition = new PauseTransition(Duration.seconds(1));
     pauseTransition.setOnFinished(event -> splash.close());
     pauseTransition.play();
     PauseTransition pauseTransition1 = new PauseTransition(Duration.seconds(1));
-    pauseTransition1.setOnFinished(event -> journal.show());
+    pauseTransition1.setOnFinished(event -> passwordStage.show());
     pauseTransition1.play();
+    passwordField.setOnAction(event -> {
+      if (this.journal.correctPassword(passwordField.getText())) {
+        passwordStage.close();
+        journal.show();
+      } else {
+        popupView.infoAlert("Incorrect Password",
+            "Please try again.");
+      }
+    });
   }
+
 
   /**
    * To initialize the journal's scene
@@ -219,9 +241,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     newMonth.setOnAction(event -> newMonthHandler());
     newYear.setOnAction(event -> newYearHandler());
     password.setOnAction(event -> passwordHandler());
-    profilePicture.setOnMouseClicked(event -> {
-      selectProfilePicture();
-    });
+    profilePicture.setOnMouseClicked(event -> selectProfilePicture());
     maxEntries.setOnAction(event -> maxEntriesHandler());
     openFile.setOnAction(event -> openFileHandler());
     saveToFile.setOnAction(event -> saveToFileHandler());
@@ -238,10 +258,17 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     Button save = popupView.addPrettyButton("Save", 50, 40, "pink");
     Stage maxEntriesStage = popupView.maxEntriesScene(fields, save);
     save.setOnAction(event -> {
-        journal.setMaxEvent(Integer.parseInt(maxEvents.getText()));
-        journal.setMaxTasks(Integer.parseInt(maxTasks.getText()));
+      try {
+        int maxEvent = Integer.parseInt(maxEvents.getText());
+        int maxTask = Integer.parseInt(maxTasks.getText());
+        journal.setMaxEvent(maxEvent);
+        journal.setMaxTasks(maxTask);
         maxEntriesStage.close();
         update();
+      } catch (NumberFormatException ignored) {
+        popupView.invalidInputAlert("Invalid maximum.",
+            "Please enter a valid max number of tasks or events.");
+      }
     });
     // showing the scene
     maxEntriesStage.show();
@@ -413,9 +440,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * @param file the file to save to
    */
   public void saveToFile(File file) {
-    journal.addNotes(notesAndQuotes.getText());
-    journal.setWeekTitle(weekLabel.getText());
-    journal.writeToFile(file);
+    try {
+      journal.addNotes(notesAndQuotes.getText());
+      journal.setWeekTitle(weekLabel.getText());
+      journal.writeToFile(file);
+    } catch (Exception e) {
+      popupView.infoAlert("File not saved",
+          "You did not save to a file.");
+    }
   }
 
 
@@ -503,6 +535,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       FileChooser chooser = new FileChooser();
       File file = chooser.showOpenDialog(openFileStage);
       JavaJournal newJournal = openFile(file);
+      TextField passwordField = new TextField();
       stage.close();
       Stage newStage = new Stage();
       JavaJournalController journalController = new JavaJournalControllerImpl(newJournal, newStage);
@@ -512,7 +545,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
           newStage.setScene(journalController.showSplashScreen());
           newStage.show();
           Stage journal = new Stage();
-          journalController.closeSplashScreen(newStage, journal, javaJournalView.load());
+          journalController.closeSplashScreen(newStage, journal, javaJournalView.load(),
+              journalController.showPasswordScreen(passwordField), passwordField);
           password.getScene().getAccelerators().put(
               new KeyCodeCombination(KeyCode.P, KeyCombination.CONTROL_ANY), () -> password.fire());
         } else {

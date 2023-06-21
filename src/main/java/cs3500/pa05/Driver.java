@@ -13,6 +13,7 @@ import javafx.animation.SequentialTransition;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 import cs3500.pa05.view.JavaJournalView;
@@ -37,7 +38,9 @@ public class Driver extends Application {
     stage.setScene(journalController.showSplashScreen());
     stage.show();
     Stage journal = new Stage();
-    journalController.closeSplashScreen(stage, journal, javaJournalView.load());
+    TextField passwordField = new TextField();
+    journalController.closeSplashScreen(stage, journal, javaJournalView.load(),
+        journalController.showPasswordScreen(passwordField), passwordField);
   }
 
   public static void main(String[] args) {
