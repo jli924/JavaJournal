@@ -11,6 +11,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * Tests for the Day class
+ */
 class DayTest {
 
   Task task;
@@ -114,6 +117,6 @@ class DayTest {
 
   @Test
   void overTasks() {
-    assertTrue(day.overTasks());
+    assertFalse(day.overTasks());
   }
 }

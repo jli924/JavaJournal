@@ -28,7 +28,7 @@ public class JavaJournal {
    */
   public JavaJournal(Day[] days, File file) {
     this.days = days;
-    bujoFile = new File("testFile.bujo");
+    bujoFile = new File("testfiles/testFile.bujo");
   }
 
   /**
