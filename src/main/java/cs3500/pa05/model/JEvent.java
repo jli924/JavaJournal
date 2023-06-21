@@ -79,24 +79,6 @@ public class JEvent extends JournalEntry {
   public String getDuration() { return duration;}
 
   /**
-   * Sets the start time
-   *
-   * @param startTime the start time to set
-   */
-  public void setStartTime(String startTime) {
-    this.startTime = startTime;
-  }
-
-  /**
-   * Sets the duration time
-   *
-   * @param duration the duration time to set
-   */
-  public void setDuration(String duration) {
-    this.duration = duration;
-  }
-
-  /**
    * Mutates the string values to a JEvent
    *
    * @param newValues the new Values to base this JEvent on
