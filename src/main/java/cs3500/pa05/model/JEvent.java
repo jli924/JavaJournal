@@ -50,15 +50,6 @@ public class JEvent extends JournalEntry {
   }
 
   /**
-   * Builds the string equivalent of the Event
-   *
-   * @return the string equivalent of this journalEntry
-   */
-  public String journalToString() {
-    return null;
-  }
-
-  /**
    * Represents a JEvent as JSON
    *
    * @return the EventJSON equivalent of this
@@ -100,6 +91,7 @@ public class JEvent extends JournalEntry {
 
   /**
    * To add an event to a java journal
+   *
    * @param journal the journal to add to
    */
   @Override
@@ -109,6 +101,7 @@ public class JEvent extends JournalEntry {
 
   /**
    * To remove an event from a java journal
+   *
    * @param journal the journal to remove from
    */
   @Override

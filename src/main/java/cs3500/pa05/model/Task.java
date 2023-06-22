@@ -73,6 +73,7 @@ public class Task extends JournalEntry {
 
   /**
    * To add a task to a java journal
+   *
    * @param journal the journal to add to
    */
   @Override
@@ -82,6 +83,7 @@ public class Task extends JournalEntry {
 
   /**
    * To remove a task from a java journal
+   *
    * @param journal the journal to remove from
    */
   @Override

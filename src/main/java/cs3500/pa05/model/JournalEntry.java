@@ -101,27 +101,20 @@ public abstract class JournalEntry {
       link = description.substring(description.indexOf("http"));
     }
     return link;
-//    String link;
-//    try {
-//      try {
-//        link = description.substring(description.indexOf("www."),
-//            description.indexOf(" ", description.indexOf("www.")));
-//      } catch (Exception ignored ){
-//        link = description.substring(description.indexOf("www."));
-//      }
-//    } catch (Exception ignored) {
-//      try {
-//        link = description.substring(description.indexOf("http"), description.indexOf(" ",
-//            description.indexOf("http")));
-//      } catch (Exception e) {
-//        link = description.substring(description.indexOf("http"));
-//      }
-//    }
-//    return link;
   }
 
+  /**
+   * Adds to a JavaJournal
+   *
+   * @param journal the journal to add to
+   */
   abstract public void add(JavaJournal journal);
 
+  /**
+   * removes from a JavaJournal
+   *
+   * @param journal the journal to remove something fom
+   */
   abstract public void remove(JavaJournal journal);
 
 }
