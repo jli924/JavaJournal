@@ -53,12 +53,12 @@ class JEventTest {
     assertThrows(IllegalArgumentException.class,
         ()->{
           JEvent eventND = new JEvent("Visit grandma",
-              Weekday.SUNDAY, "", "");
+              Weekday.SUNDAY, "1", "");
         });
     assertThrows(IllegalArgumentException.class,
         ()->{
           JEvent eventND = new JEvent("Visit grandma", "with description",
-              Weekday.SUNDAY, "", "");
+              Weekday.SUNDAY, "", "1");
         });
   }
 

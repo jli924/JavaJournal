@@ -46,4 +46,10 @@ class TaskTest {
     task.mutate(newValues);
     assertFalse(task.isComplete());
   }
+
+  @Test
+  void constructorTest() {
+    Task task = new Task("test", Weekday.SATURDAY, false);
+    assertEquals(task.isComplete(), false);
+  }
 }

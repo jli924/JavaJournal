@@ -2,7 +2,9 @@ package cs3500.pa05.model;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,5 +54,17 @@ class JournalEntryTest {
   void getLink() {
     assertEquals("https.fakelink.com", linkedEvent.getLink());
     assertEquals("https.fakelink.com", linkedEvent2.getLink());
+  }
+
+  @Test
+  void exceptions() {
+    assertThrows(IllegalArgumentException.class,
+        () -> {
+          JournalEntry enrty = new Task("", Weekday.SATURDAY, false);
+        });
+    assertThrows(IllegalArgumentException.class,
+        () -> {
+          JournalEntry entry1 = new Task("", "", Weekday.SATURDAY, false);
+        });
   }
 }

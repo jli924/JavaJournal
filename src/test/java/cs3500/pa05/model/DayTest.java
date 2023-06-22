@@ -2,6 +2,7 @@ package cs3500.pa05.model;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa05.model.json.DayJson;
 import cs3500.pa05.model.json.EventJson;
@@ -108,5 +109,21 @@ class DayTest {
   void changeMaxEvents() {
     day.changeMaxEvents(3);
     assertEquals(3, day.getMaxEvents());
+  }
+
+  @Test
+  void exceptions() {
+    Day day = new Day(Weekday.SATURDAY, new ArrayList<Task>(), new ArrayList<JEvent>(),
+        0, 0);
+    day.addEvent(event);
+    day.addTask(task);
+    assertThrows(IllegalStateException.class,
+        () -> {
+          day.addEvent(event);
+        });
+    assertThrows(IllegalStateException.class,
+        () -> {
+          day.addTask(task);
+        });
   }
 }
