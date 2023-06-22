@@ -2,6 +2,7 @@ package cs3500.pa05.model;
 
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import cs3500.pa05.model.json.EventJson;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,4 +47,20 @@ class JEventTest {
     assertEquals("9:00", event.getStartTime());
     assertEquals("1hr", event.getDuration());
   }
+
+  @Test
+  void exceptions() {
+    assertThrows(IllegalArgumentException.class,
+        ()->{
+          JEvent eventND = new JEvent("Visit grandma",
+              Weekday.SUNDAY, "1", "");
+        });
+    assertThrows(IllegalArgumentException.class,
+        ()->{
+          JEvent eventND = new JEvent("Visit grandma", "with description",
+              Weekday.SUNDAY, "", "1");
+        });
+  }
+
+
 }

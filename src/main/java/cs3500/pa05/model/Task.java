@@ -6,7 +6,7 @@ import cs3500.pa05.model.json.TaskJson;
  * Represents a Task
  */
 public class Task extends JournalEntry {
-  Boolean complete;
+  private Boolean complete;
 
   /**
    * Instantiates a task with a description
@@ -73,6 +73,7 @@ public class Task extends JournalEntry {
 
   /**
    * To add a task to a java journal
+   *
    * @param journal the journal to add to
    */
   @Override
@@ -82,6 +83,7 @@ public class Task extends JournalEntry {
 
   /**
    * To remove a task from a java journal
+   *
    * @param journal the journal to remove from
    */
   @Override

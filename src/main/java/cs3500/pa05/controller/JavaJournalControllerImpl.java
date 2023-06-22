@@ -35,7 +35,6 @@ import javafx.scene.input.KeyCombination;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
-import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import javafx.util.Duration;
@@ -127,7 +126,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    *
    * @param gridPane the gridpane to search
    * @param columnIndex the column index to search in
-   * @return
+   * @return the number row to input an entry at
    */
   public static int findFirstEmptyRow(GridPane gridPane, int columnIndex) {
     int numRows = gridPane.getRowCount();
@@ -177,8 +176,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
    * @return the scene
    */
   public Stage showPasswordScreen(TextField field) {
-    Stage password = popupView.passwordScreen(field);
-    return password;
+    return popupView.passwordScreen(field);
   }
 
   /**
@@ -239,8 +237,8 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     showSplashScreen();
     initCommands();
     initButtons();
-    profilePicture.setFill(new ImagePattern
-        (new Image("https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
+    profilePicture.setFill(new ImagePattern(new Image(
+        "https://i.pinimg.com/474x/ed/54/3b/ed543b461c96fb73519edf7ac8718f39.jpg")));
   }
 
 
@@ -323,9 +321,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         int row = findFirstEmptyRow(mainGrid, userJEvent.getWeekday().ordinal());
         int col = userJEvent.getWeekday().ordinal();
         mainGrid.add(newEvent, col, row);
-        newEvent.setOnMouseClicked(event1 -> {
-          miniViewer(newEvent, userJEvent);
-        });
+        newEvent.setOnMouseClicked(event1 -> miniViewer(newEvent, userJEvent));
         eventStage.close();
         update();
       } catch (Exception e) {
@@ -359,9 +355,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         int col = userTask.getWeekday().ordinal();
         mainGrid.add(newTask, col, row);
         GridPane.setColumnIndex(newTask, col);
-        newTask.setOnMouseClicked(event1 -> {
-          miniViewer(newTask, userTask);
-        });
+        newTask.setOnMouseClicked(event1 -> miniViewer(newTask, userTask));
         taskStage.close();
         update();
       } catch (Exception e) {
@@ -388,29 +382,31 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       image1.setImage(img);
       profilePicture.setFill(pattern(img, profilePicture.getRadius()));
     } catch (Exception ignored) {
+      System.out.println();
     }
   }
 
   /**
    * Helps construct the profile picture
+   *
    * @param img the Image to construct
    * @param radius the sizing radius
    * @return the imagePattern of the profile picture
    */
   private ImagePattern pattern(Image img, double radius) {
-    double hRad = radius;   // horizontal "radius"
-    double vRad = radius;   // vertical "radius"
+    double hrad = radius;   // horizontal "radius"
+    double vrad = radius;   // vertical "radius"
     if (img.getWidth() != img.getHeight()) {
       double ratio = img.getWidth() / img.getHeight();
       if (ratio > 1) {
         // Width is longer, left anchor is outside
-        hRad = radius * ratio;
+        hrad = radius * ratio;
       } else {
         // Height is longer, top anchor is outside
-        vRad = radius / ratio;
+        vrad = radius / ratio;
       }
     }
-    return new ImagePattern(img, -hRad, -vRad, 2 * hRad, 2 * vRad, false);
+    return new ImagePattern(img, -hrad, -vrad, 2 * hrad, 2 * vrad, false);
   }
 
 
@@ -426,18 +422,14 @@ public class JavaJournalControllerImpl implements JavaJournalController {
       for (Task t : day.getTasks()) {
         Label initEntry = new Label(t.getName());
         initEntry.setPadding(new Insets(5));
-        initEntry.setOnMouseClicked(event -> {
-          miniViewer(initEntry, t);
-        });
+        initEntry.setOnMouseClicked(event -> miniViewer(initEntry, t));
         mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
       }
       for (JEvent e : day.getEvents()) {
         Label initEntry = new Label(e.getName());
         initEntry.setPadding(new Insets(5));
-        initEntry.setOnMouseClicked(event -> {
-          miniViewer(initEntry, e);
-        });
+        initEntry.setOnMouseClicked(event -> miniViewer(initEntry, e));
         mainGrid.add(initEntry, colIdx, rowIdx);
         rowIdx += 1;
       }
@@ -529,21 +521,6 @@ public class JavaJournalControllerImpl implements JavaJournalController {
     FileChooser chooser = new FileChooser();
     File file = chooser.showSaveDialog(stage);
     saveToFile(file);
-
-//    TextField field = new TextField();
-//    Button save = popupView.addPrettyButton("Save", 50, 30, "pink");
-//    Stage saveStage = popupView.newSaveOrOpenScene("Save to file:", "Filename: ",
-//        "New Save", field, save,
-//        "https://www.iconsdb.com/icons/preview/pink/save-as-xxl.png", 19);
-//
-//
-//    save.setOnAction(event -> {
-//      String filename = field.getText();
-//      File file = new File(filename + ".bujo");
-//      saveToFile(file);
-//      saveStage.close();
-//    });
-//    saveStage.show();
   }
 
   /**
@@ -575,6 +552,7 @@ public class JavaJournalControllerImpl implements JavaJournalController {
         }
       }
     } catch (Exception ignored) {
+      System.out.println();
     }
   }
 
