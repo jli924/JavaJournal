@@ -71,6 +71,8 @@ class JavaJournalTest {
   JavaJournal initjournal1;
   JavaJournal journal3;
 
+  JEvent eventNew;
+
 
   @BeforeEach
   void setup() {
@@ -131,6 +133,8 @@ class JavaJournalTest {
     initDays[5] = (friday);
     initDays[6] = (saturday);
     journal3 = new JavaJournal(initDays, file1);
+
+    eventNew = new JEvent("testerEvent", "descriptor", Weekday.SATURDAY, "2:00pm", "1hr");
   }
 
   @Test
@@ -168,6 +172,8 @@ class JavaJournalTest {
     assertEquals(journal1.getEvents(), new ArrayList<>());
     journal1.addEvent(event1);
     assertEquals(journal1.getEvents(), List.of(event1));
+    journal2.addEvent(eventNew);
+    assertEquals(journal2.getEvents(), List.of(eventNew));
   }
 
   @Test
@@ -176,7 +182,32 @@ class JavaJournalTest {
     journal2.addTask(task2);
     assertEquals(journal2.getEvents(), List.of());
     assertEquals(journal2.getTasks(), List.of(task2));
+
+    Task newTask = new Task("andre", "none", Weekday.SATURDAY, false);
+    journal1.addTask(newTask);
+    assertEquals(journal1.getTasks(), List.of(newTask));
   }
+
+  @Test
+  void removeTask() {
+    Task newTask = new Task("andre", "none", Weekday.SATURDAY, false);
+    assertEquals(journal1.getTasks().size(), 0);
+    journal1.addTask(newTask);
+    assertEquals(journal1.getTasks().size(), 1);
+    journal1.removeTask(newTask);
+    assertEquals(journal1.getTasks().size(), 0);
+  }
+
+  @Test
+  void removeEvent() {
+    JEvent newTask = new JEvent ("andre", "none", Weekday.SATURDAY, "2:00", "1:00");
+    assertEquals(journal1.getEvents().size(), 0);
+    journal1.addEvent(event1);
+    assertEquals(journal1.getEvents().size(), 1);
+    journal1.removeEvent(event1);
+    assertEquals(journal1.getEvents().size(), 0);
+  }
+
 
   @Test
   void initializeDays() {
