@@ -28,7 +28,7 @@ public class JavaJournal {
    */
   public JavaJournal(Day[] days, File file) {
     this.days = days;
-    bujoFile = new File("testfiles/testFile.bujo");
+    bujoFile = file;
   }
 
   /**
@@ -199,6 +199,15 @@ public class JavaJournal {
   }
 
   /**
+   * Allows access to password in tests
+   *
+   * @return the password
+   */
+  public String getPassword() {
+    return this.password;
+  }
+
+  /**
    * Writes this javaJournal to a file
    *
    * @param file the file to write to
@@ -221,7 +230,7 @@ public class JavaJournal {
    *
    * @return the corresponding JournalJson based on this.journal
    */
-  private JournalJson toJournalJson() {
+  public JournalJson toJournalJson() {
     DayJson[] dayJsons = new DayJson[7];
     for (int i = 0; i < 7; i++) {
       Day day = days[i];
@@ -271,6 +280,24 @@ public class JavaJournal {
   }
 
   /**
+   * Gets the max tasks for all days
+   *
+   * @return the max task number
+   */
+  public int getMaxTasks() {
+    return this.days[0].getMaxTasks();
+  }
+
+  /**
+   * Gets the max event for all days
+   *
+   * @return the max event number
+   */
+  public int getMaxEvents() {
+    return this.days[0].getMaxEvents();
+  }
+
+  /**
    * Sets the max events for all days
    *
    * @param newMax the new max event number to set to
@@ -308,5 +335,23 @@ public class JavaJournal {
    */
   public boolean correctPassword(String password) {
     return password.equals(this.password);
+  }
+
+  /**
+   * Sets a file path
+   *
+   * @param file the file path to set this journal too
+   */
+  public void setFile(File file) {
+    this.bujoFile = file;
+  }
+
+  /**
+   * Used for testing to get a file
+   *
+   * @return the corresponding file being pointed at
+   */
+  public File getFile() {
+    return this.bujoFile;
   }
 }

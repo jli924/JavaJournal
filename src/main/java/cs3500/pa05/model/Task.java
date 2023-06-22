@@ -6,7 +6,7 @@ import cs3500.pa05.model.json.TaskJson;
  * Represents a Task
  */
 public class Task extends JournalEntry {
-  Boolean complete;
+  private Boolean complete;
 
   /**
    * Instantiates a task with a description
