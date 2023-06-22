@@ -1,0 +1,65 @@
+{
+  "days" : [ {
+    "day" : "SUNDAY",
+    "tasks" : [ ],
+    "events" : [ ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  }, {
+    "day" : "MONDAY",
+    "tasks" : [ ],
+    "events" : [ {
+      "name" : "dentists",
+      "description" : "adress",
+      "day" : "MONDAY",
+      "start-time" : "2:00",
+      "duration" : "1:00"
+    } ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  }, {
+    "day" : "TUESDAY",
+    "tasks" : [ ],
+    "events" : [ ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  }, {
+    "day" : "WEDNESDAY",
+    "tasks" : [ ],
+    "events" : [ ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  }, {
+    "day" : "THURSDAY",
+    "tasks" : [ ],
+    "events" : [ ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  }, {
+    "day" : "FRIDAY",
+    "tasks" : [ {
+      "name" : "ghmhcjh",
+      "description" : ".....",
+      "day" : "FRIDAY",
+      "complete" : true
+    }, {
+      "name" : "task3",
+      "description" : "Friday",
+      "day" : "FRIDAY",
+      "complete" : false
+    } ],
+    "events" : [ ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  }, {
+    "day" : "SATURDAY",
+    "tasks" : [ ],
+    "events" : [ ],
+    "maxEvents" : 2,
+    "maxTasks" : 1
+  } ],
+  "bujoFile" : "C:\\Users\\andre\\CS3500\\pa05-mvc2\\src\\main\\testfiles\\keely1",
+  "notesAndQuotes" : "keely quote \nnote ",
+  "weekTitle" : "12th",
+  "password" : "keely"
+}

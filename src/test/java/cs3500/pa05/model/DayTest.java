@@ -114,7 +114,7 @@ class DayTest {
   @Test
   void exceptions() {
     Day day = new Day(Weekday.SATURDAY, new ArrayList<Task>(), new ArrayList<JEvent>(),
-        0, 0);
+        1, 1);
     day.addEvent(event);
     day.addTask(task);
     assertThrows(IllegalStateException.class,

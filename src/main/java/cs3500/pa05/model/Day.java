@@ -51,7 +51,7 @@ public class Day {
    * @param jevent the event
    */
   public void addEvent(JEvent jevent) {
-    if (events.size() <= maxEvents) {
+    if (events.size() < maxEvents) {
       events.add(jevent);
     } else {
       throw new IllegalStateException("Cannot exceed max number of events");
@@ -64,7 +64,7 @@ public class Day {
    * @param task the event
    */
   public void addTask(Task task) {
-    if (tasks.size() <= maxTasks) {
+    if (tasks.size() < maxTasks) {
       tasks.add(task);
     } else {
       throw new IllegalStateException("Cannot exceed max number of tasks");
