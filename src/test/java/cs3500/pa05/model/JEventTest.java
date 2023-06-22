@@ -1,12 +1,9 @@
 package cs3500.pa05.model;
 
-import static org.junit.jupiter.api.Assertions.*;
 
-import cs3500.pa05.model.json.DayJson;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import cs3500.pa05.model.json.EventJson;
-import cs3500.pa05.model.json.TaskJson;
-import java.util.ArrayList;
-import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

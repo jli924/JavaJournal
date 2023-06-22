@@ -23,7 +23,7 @@
     - Set new month (CTRL + M)
     - Set new year (CTRL + Y)
     - Set new password (CTRL + P)
-  - When a task or event is added, it will show up on the journal under its set day
+  - When a task or event is added, it will show up on the journal under its set day (keep in mind that a maximum of 12 total entries is allowed)
     - Clicking on a task or event that was added will bring up a mini viewer, where you can set a task as complete
     - You can also edit a task or event the same way
 # GUI SCREENSHOT

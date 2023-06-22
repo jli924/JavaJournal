@@ -73,13 +73,13 @@
             </font>
          </Label>
          <ListView fx:id="taskQueue" layoutX="19.0" layoutY="500.0" prefHeight="200.0" prefWidth="145.0" />
-         <Button fx:id="saveToFile" minWidth="47.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="47.0" style="-fx-background-color: light;" text="Save" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="openFile" layoutX="48.0" minWidth="48.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="48.0" style="-fx-background-color: light;" text="Open" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="addMenuEvent" layoutX="96.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: light;" text="New Event" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="addMenuTask" layoutX="174.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="74.0" style="-fx-background-color: light;" text="New Task" textOverrun="WORD_ELLIPSIS" />
-         <Button fx:id="newWeek" layoutX="248.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: light;" text="New Week" />
-         <Button fx:id="newMonth" layoutX="326.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="84.0" style="-fx-background-color: light;" text="New Month" />
-         <Button fx:id="newYear" layoutX="405.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="72.0" style="-fx-background-color: light;" text="New Year" />
+         <Button fx:id="saveToFile" minWidth="47.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="47.0" style="-fx-background-color: white;" text="Save" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="openFile" layoutX="48.0" minWidth="48.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="48.0" style="-fx-background-color: white;" text="Open" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="addMenuEvent" layoutX="96.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: white;" text="New Event" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="addMenuTask" layoutX="174.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="74.0" style="-fx-background-color: white;" text="New Task" textOverrun="WORD_ELLIPSIS" />
+         <Button fx:id="newWeek" layoutX="248.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="78.0" style="-fx-background-color: white;" text="New Week" />
+         <Button fx:id="newMonth" layoutX="326.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="84.0" style="-fx-background-color: white;" text="New Month" />
+         <Button fx:id="newYear" layoutX="405.0" mnemonicParsing="false" prefHeight="28.0" prefWidth="72.0" style="-fx-background-color: white;" text="New Year" />
          <TextField fx:id="weekLabel" layoutX="287.0" layoutY="49.0" prefHeight="39.0" prefWidth="275.0">
             <font>
                <Font size="18.0" />

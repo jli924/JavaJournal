@@ -7,8 +7,6 @@ import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
 import cs3500.pa05.model.Task;
 import java.io.IOException;
-import java.net.URISyntaxException;
-import java.net.URL;
 import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,8 +21,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
-import java.awt.Desktop;
-import java.net.URI;
 
 /**
  * The GUIs for popups
@@ -414,11 +410,9 @@ public class PopupView {
       Hyperlink link = new Hyperlink(t.getLink());
       link.setOnAction(event -> {
         try {
-          openWebpage(t.getLink());
-        } catch (Exception ignored) {
-          System.out.println(ignored);
-          invalidInputAlert("Invalid link.",
-              "The link you entered was invalid.");
+          Runtime.getRuntime().exec(new String[]{"open", t.getLink()});
+        } catch (IOException e) {
+          throw new RuntimeException(e);
         }
       });
       pane.add(new Label("Links:"), 0, 3 + row);
@@ -496,13 +490,5 @@ public class PopupView {
     SaveOrOpenScene.setScene(popupScene);
     SaveOrOpenScene.setTitle(stageTitle);
     return SaveOrOpenScene;
-  }
-
-  public static void openWebpage(String urlString) {
-    try {
-      Desktop.getDesktop().browse(new URL(urlString).toURI());
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
   }
 }

@@ -95,21 +95,29 @@ public abstract class JournalEntry {
   public String getLink() {
     String link;
     try {
-      try {
-        link = description.substring(description.indexOf("www."),
-            description.indexOf(" ", description.indexOf("www.")));
-      } catch (Exception ignored ){
-        link = description.substring(description.indexOf("www."));
-      }
+      link = description.substring(description.indexOf("http"), description.indexOf(" ",
+          description.indexOf("http")));
     } catch (Exception ignored) {
-      try {
-        link = description.substring(description.indexOf("http"), description.indexOf(" ",
-            description.indexOf("http")));
-      } catch (Exception e) {
-        link = description.substring(description.indexOf("http"));
-      }
+      link = description.substring(description.indexOf("http"));
     }
     return link;
+//    String link;
+//    try {
+//      try {
+//        link = description.substring(description.indexOf("www."),
+//            description.indexOf(" ", description.indexOf("www.")));
+//      } catch (Exception ignored ){
+//        link = description.substring(description.indexOf("www."));
+//      }
+//    } catch (Exception ignored) {
+//      try {
+//        link = description.substring(description.indexOf("http"), description.indexOf(" ",
+//            description.indexOf("http")));
+//      } catch (Exception e) {
+//        link = description.substring(description.indexOf("http"));
+//      }
+//    }
+//    return link;
   }
 
   abstract public void add(JavaJournal journal);

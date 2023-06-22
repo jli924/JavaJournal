@@ -1,9 +1,7 @@
 package cs3500.pa05.controller;
 
-import cs3500.pa05.model.JEvent;
 import cs3500.pa05.model.JavaJournal;
 import cs3500.pa05.model.JournalEntry;
-import cs3500.pa05.model.Task;
 import cs3500.pa05.view.PopupView;
 import java.util.ArrayList;
 import java.util.List;
