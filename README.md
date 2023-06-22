@@ -28,6 +28,7 @@
     - You can also edit a task or event the same way
   - If there is a link in a description, it can be used by navigating to the mini viewer
 # GUI SCREENSHOT
+- Open Intellij to view
 ![](Screen Shot 2023-06-21 at 12.42.08 PM.png)
 # SOLID PRINCIPLES
 - Single Responsibility
