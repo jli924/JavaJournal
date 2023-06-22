@@ -1,6 +1,7 @@
 package cs3500.pa05.model.json;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 import cs3500.pa05.model.Task;
 import cs3500.pa05.model.Weekday;
