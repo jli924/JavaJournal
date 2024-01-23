@@ -58,7 +58,7 @@
     "maxEvents" : 6,
     "maxTasks" : 6
   } ],
-  "bujoFile" : "C:\\Users\\andre\\CS3500\\pa05-mvc2\\src\\main\\testfiles\\andreTest",
+  "bujoFile" : "/Applications/cs3500/pa05-mvc2/src/main/testfiles/andreTest",
   "notesAndQuotes" : null,
   "weekTitle" : null,
   "password" : "cs3500"
